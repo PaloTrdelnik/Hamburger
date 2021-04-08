@@ -7,16 +7,18 @@ public class Player : KinematicBody2D
     int MOVE_SPEED = 500;
 
     [Export]
-    int JUMP_FORCE = 1500;
+    int JUMP_FORCE = 1200;
 
     [Export]
-    int GRAVITY = 5000;
+    int GRAVITY = 80;
     
     [Export]
-    int MAX_FALL_SPEED = 200;
+    int MAX_FALL_SPEED = 1000;
 
     private int _yVelo = 0;
     private bool _facingRight = true;
+
+    Inventory Inv = new Inventory();
 
 
     // Called when the node enters the scene tree for the first time.
