@@ -1,4 +1,4 @@
-//#define INV_DEBUG
+#define INV_DEBUG
 
 using Godot;
 using System;
@@ -9,10 +9,21 @@ public class Inventory : Node
     [Export]
     public int INVENTORY_SIZE = 20;
 
+    public bool bAddedItem = false;
+    public bool bRemovedItem = false;
+
     private int _numOfItemsInside = 0;
     
     private Dictionary<string, Item> _items = new Dictionary<string, Item>();
 
+    public Item GetItem(Item item)
+    {
+        return _items[item.InvKey];
+    }
+    public Item GetItem(string itemInvKey)
+    {
+        return _items[itemInvKey];
+    }
     public void Add(Item item)
     {
         Item itemToAdd = new Item();
@@ -21,84 +32,100 @@ public class Inventory : Node
         {
             
             itemToAdd.Amount = INVENTORY_SIZE - _numOfItemsInside;
-            itemToAdd.Name = item.Name;
+            itemToAdd.InvKey = item.InvKey;
+
+            if (itemToAdd.Amount == 0)
+            {
+                bAddedItem = false;
+            }
+
 #if INV_DEBUG || LCH_DEBUG
-            GD.Print("INV_DEBUG: " + "|WARNING|" + " Full amount of Item " + itemToAdd.Name + 
+            GD.Print("INV_DEBUG: " + "|WARNING|" + " Full amount of Item " + itemToAdd.InvKey +
                 " does not fit in inventory\n" + Convert.ToString(item.Amount - itemToAdd.Amount) + " throwed");
 #endif
         }
         else 
         {
             itemToAdd.Amount = item.Amount;
-            itemToAdd.Name = item.Name;
+            itemToAdd.InvKey = item.InvKey;
         }
 
-        if (_items.ContainsKey(item.Name))
+        if (_items.ContainsKey(item.InvKey))
         {
-            _items[item.Name].Amount += itemToAdd.Amount;
+            _items[itemToAdd.InvKey].Amount += itemToAdd.Amount;
+            bAddedItem = true;
 
 #if INV_DEBUG || LCH_DEBUG
-            GD.Print("INV_DEBUG: "+"Amount of item " + itemToAdd.Name + 
+            GD.Print("INV_DEBUG: "+"Amount of item " + itemToAdd.InvKey + 
                 " has been increased by " + Convert.ToString(itemToAdd.Amount));
 #endif
         }
         else
         {
-            _items.Add(item.Name, itemToAdd);
-
+            if (itemToAdd.Amount > 0)
+            {
+                _items.Add(itemToAdd.InvKey, itemToAdd);
+                bAddedItem = true;
+            }
+            
 #if INV_DEBUG || LCH_DEBUG
-            GD.Print("INV_DEBUG: " + "Item " + itemToAdd.Name + 
+            GD.Print("INV_DEBUG: " + "Item " + itemToAdd.InvKey + 
                 " has been aded with amount: " + Convert.ToString(itemToAdd.Amount));
 #endif
         }
+        _numOfItemsInside += itemToAdd.Amount;
     }
 
     public void Remove(Item item)
     {
         
-        if (_items.ContainsKey(item.Name))
+        if (_items.ContainsKey(item.InvKey))
         {
-            if (_items[item.Name].Amount >= item.Amount)
+            if (_items[item.InvKey].Amount >= item.Amount)
             {
-                _items[item.Name].Amount -= item.Amount;
+                _items[item.InvKey].Amount -= item.Amount;
 
 #if INV_DEBUG || LCH_DEBUG
-                GD.Print("INV_DEBUG: " + "Amount of item " + item.Name + 
+                GD.Print("INV_DEBUG: " + "Amount of item " + item.InvKey +
                     " has been decreased by " + Convert.ToString(item.Amount));
 #endif
 
-                if (_items[item.Name].Amount == 0)
+                if (_items[item.InvKey].Amount == 0)
                 {
-                    _items.Remove(item.Name);
+                    _items.Remove(item.InvKey);
 
 #if INV_DEBUG || LCH_DEBUG
-                    GD.Print("INV_DEBUG: " + "Item " + item.Name + 
+                    GD.Print("INV_DEBUG: " + "Item " + item.InvKey +
                         " has been removed from inventory");
 #endif
                 }
+                _numOfItemsInside -= item.Amount;
+                bRemovedItem = true;
             }
             else
             {
 #if INV_DEBUG || LCH_DEBUG
-                GD.Print("INV_DEBUG: " + "|WARNING|" + " Amount of item " + item.Name +
-                    " is lower tan you wnat to remove\n" + Convert.ToString(_items[item.Name].Amount) + 
-                    " in inventory / " + Convert.ToString(item.Amount) + " to be removed" );
+                GD.Print("INV_DEBUG: " + "|WARNING|" + " Amount of item " + item.InvKey +
+                    " is lower tan you wnat to remove\n" + Convert.ToString(_items[item.InvKey].Amount) +
+                    " in inventory / " + Convert.ToString(item.Amount) + " to be removed");
 #endif
+                bRemovedItem = false;
             }
         }
         else
         {
 #if INV_DEBUG || LCH_DEBUG
-            GD.Print("INV_DEBUG: " + "Item: " + item.Name + " was not found inventory");
+            GD.Print("INV_DEBUG: " + "Item: " + item.InvKey + " was not found inventory");
 #endif
+            bRemovedItem = false;
         }
     }
 
     public bool IsInInv(Item item)
     {
-        if (_items.ContainsKey(item.Name))
+        if (_items.ContainsKey(item.InvKey))
         {
-            if (_items[item.Name].Amount >= item.Amount)
+            if (_items[item.InvKey].Amount >= item.Amount)
             {
                 return true;
             }
@@ -110,11 +137,11 @@ public class Inventory : Node
         return false;
     }
 
-    public bool IsInInv(string itemName, int itemAmount)
+    public bool IsInInv(string itemInvKey, int itemAmount)
     {
-        if (_items.ContainsKey(itemName))
+        if (_items.ContainsKey(itemInvKey))
         {
-            if (_items[itemName].Amount >= itemAmount)
+            if (_items[itemInvKey].Amount >= itemAmount)
             {
                 return true;
             }

@@ -15,30 +15,55 @@ public class Player : KinematicBody2D
     [Export]
     int MAX_FALL_SPEED = 1000;
 
+    [Signal]
+    public delegate void SInvItemChange(Player player, Item item);
+    
+    public bool bFreezeInput = false;
+    public bool bFreeze = false;
+    public Inventory Inv = new Inventory();
+
+
     private int _yVelo = 0;
     private bool _facingRight = true;
-
-    Inventory Inv = new Inventory();
-
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         
     }
+
+    public void OnInteractionSAddToInv(Item item)
+    {
+        Inv.Add(item);
+        if (Inv.bAddedItem || Inv.bRemovedItem)
+        {
+            EmitSignal(nameof(SInvItemChange),this, item);
+        }
+    }
+
     public override void _PhysicsProcess(float delta)
     {
         int moveDir = 0;
         if (Input.IsActionPressed("ui_right"))
         {
             moveDir += 1;
-            
+
         }
 
         if (Input.IsActionPressed("ui_left"))
         {
             moveDir -= 1;
-            
+
+        }
+
+        if (bFreezeInput)
+        {
+            moveDir = 0;
+        }
+        if (bFreeze)
+        {
+            moveDir = 0;
+            _yVelo = 0;
         }
 
         Vector2 moveVector = new Vector2(moveDir * MOVE_SPEED, _yVelo);
@@ -52,8 +77,16 @@ public class Player : KinematicBody2D
 
         if (grounded && Input.IsActionJustPressed("ui_up"))
         {
-            _yVelo = -JUMP_FORCE;
+            if (bFreezeInput)
+            {
+                _yVelo = 0;
+            }
+            else
+            {
+                _yVelo = -JUMP_FORCE;
+            }
         }
+
         if (grounded && _yVelo > 5)
         {
             _yVelo = 5;
@@ -80,7 +113,7 @@ public class Player : KinematicBody2D
                 PlayAnim("idle");
             }
 
-            else 
+            else
             {
                 PlayAnim("walk");
             }
@@ -89,7 +122,7 @@ public class Player : KinematicBody2D
         {
             PlayAnim("jump");
         }
-            
+
     }
 
     private void Flip()
