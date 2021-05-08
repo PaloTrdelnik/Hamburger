@@ -1,0 +1,53 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Items/TimeDilation/TimeDilation.jpg" type="Texture" id=1]
+[ext_resource path="res://GUI/ItemAmount/AmountGUI.tscn" type="PackedScene" id=2]
+[ext_resource path="res://GUI/Taskbar/TaskBarItem/TaskBarItem.cs" type="Script" id=3]
+
+[node name="TaskBarItem" type="Container"]
+margin_right = 64.0
+margin_bottom = 112.0
+rect_scale = Vector2( 0.5, 0.5 )
+rect_clip_content = true
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+margin_right = 64.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 64, 110 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+max_value = 10.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 64.0
+margin_bottom = 112.0
+
+[node name="CenterContainer2" type="CenterContainer" parent="VBoxContainer"]
+margin_right = 64.0
+margin_bottom = 64.0
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/CenterContainer2"]
+margin_right = 64.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+rect_clip_content = true
+size_flags_horizontal = 15
+size_flags_vertical = 15
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 5
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+margin_top = 68.0
+margin_right = 64.0
+margin_bottom = 112.0
+
+[node name="AmountContainer" parent="VBoxContainer/CenterContainer" instance=ExtResource( 2 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 12.0
+margin_right = 52.0

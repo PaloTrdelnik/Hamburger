@@ -6,8 +6,7 @@ using System.Collections.Generic;
 
 public class Inventory : Node
 {
-    [Export]
-    public int INVENTORY_SIZE = 20;
+    public int INVENTORY_SIZE = 30;
 
     public bool bAddedItem = false;
     public bool bRemovedItem = false;

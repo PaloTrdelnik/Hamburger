@@ -1,0 +1,2 @@
+Fix buy and sell item with different values
+Fix interacion collect: Player collects item even if inventory is full

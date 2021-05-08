@@ -16,20 +16,31 @@ public class Player : KinematicBody2D
     int MAX_FALL_SPEED = 1000;
 
     [Signal]
-    public delegate void SInvItemChange(Player player, Item item);
-    
+    public delegate void SInvItemChange(Player player, string itemInvKey);
+
+    [Signal]
+    public delegate void SSlowDownTime(int amount, int length); // length in milliseconds
+
+    [Signal]
+    public delegate void SItemDurabilityUpdateBegin(string itemKey);
+
+    [Signal]
+    public delegate void SItemDurabilityUpdateEnd(string itemKey);
+
     public bool bFreezeInput = false;
-    public bool bFreeze = false;
+    public bool bFreeze = true;
     public Inventory Inv = new Inventory();
 
+    private GUI _gui;
+    private ItemUser _itemUser;
 
     private int _yVelo = 0;
     private bool _facingRight = true;
 
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
+    public void OnItemUserSItemUseEnd(string itemKey)
     {
-        
+        GD.Print("ItemUseEnd");
+        EmitSignal(nameof(SItemDurabilityUpdateEnd), itemKey);
     }
 
     public void OnInteractionSAddToInv(Item item)
@@ -37,8 +48,15 @@ public class Player : KinematicBody2D
         Inv.Add(item);
         if (Inv.bAddedItem || Inv.bRemovedItem)
         {
-            EmitSignal(nameof(SInvItemChange),this, item);
+            EmitSignal(nameof(SInvItemChange),this, item.InvKey);
         }
+    }
+
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
+    {
+        _gui = GetParent().GetNode<GUI>("GUI");
+        _itemUser = GetNode<ItemUser>("ItemUser");
     }
 
     public override void _PhysicsProcess(float delta)
@@ -125,6 +143,11 @@ public class Player : KinematicBody2D
 
     }
 
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(float delta)
+    {
+        CheckForAbilityInput();
+    }
     private void Flip()
     {
         var pSprite = GetNode<Sprite>("Sprite");
@@ -147,9 +170,46 @@ public class Player : KinematicBody2D
             pAnimPlayer.Play(animName);
         }
     }
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
+
+    private void CheckForAbilityInput()
+    {
+        Taskbar tBar = _gui.GetNode<Taskbar>("InGameGUIControl/Taskbar");
+
+        if (Input.IsActionJustPressed("Game_Taskbar_item1"))
+        {
+            UseItemFromTaskBar(tBar, 0);
+        }
+    }
+
+    private void UseItemFromTaskBar(Taskbar tBar, int itemSlot)
+    {
+        if (itemSlot + 1 <= tBar.GetChildCount())
+        {
+            TaskBarItem slot = tBar.GetChild<TaskBarItem>(0);
+
+            string slotItemKey = slot.ItemKey;
+
+            UseItem(slotItemKey);
+        }
+    }
+
+    private void UseItem(string itemKey)
+    {
+        Item rem = new Item { InvKey = itemKey, Amount = 1 };
+
+        if (Inv.IsInInv(rem))
+        {
+            if (itemKey == "TimeDilation")
+            {
+                if(_itemUser.UseItem(itemKey))
+                {
+                    GD.Print("aaa");
+                    EmitSignal(nameof(SInvItemChange), this, itemKey);
+                    EmitSignal(nameof(SSlowDownTime), 5, 10000);
+                    EmitSignal(nameof(SItemDurabilityUpdateBegin), itemKey);
+                }
+
+            }
+        }
+    }
 }
