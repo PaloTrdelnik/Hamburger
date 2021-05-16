@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://GUI/PropertyUssage/PropertyUsageGUI.tscn" type="PackedScene" id=1]
+[ext_resource path="res://GUI/PropertyUssage/Horizontal/PropertyUsageHGUI.cs" type="Script" id=2]
+[ext_resource path="res://GUI/Usage/Usage.tscn" type="PackedScene" id=3]
+[ext_resource path="res://GUI/Fonts/ArialUnicodeMS.ttf" type="DynamicFontData" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 4 )
+
+[node name="PropertyUsageHGUI" instance=ExtResource( 1 )]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -210.0
+margin_right = 0.0
+grow_horizontal = 0
+script = ExtResource( 2 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." index="0"]
+margin_right = 210.0
+margin_bottom = 44.0
+
+[node name="Name" type="Label" parent="HBoxContainer" index="0"]
+margin_right = 131.0
+margin_bottom = 44.0
+custom_fonts/font = SubResource( 1 )
+text = "Property:"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Usage" parent="HBoxContainer" index="1" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 135.0
+margin_right = 210.0
+margin_bottom = 44.0
+
+[editable path="HBoxContainer/Usage"]

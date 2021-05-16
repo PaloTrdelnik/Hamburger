@@ -14,17 +14,58 @@ public class Shop : Node2D
     public Dictionary<string, ShopItem> ShopPrizes = new Dictionary<string, ShopItem>
     {
         {"Money", new ShopItem{ MarketValue = 1, ValueBuyOffset = 0, ValueSellOffset = 0 } },
-        {"TimeDilation", new ShopItem{ MarketValue = 1, ValueBuyOffset = 0, ValueSellOffset = 0 } },
+        {"TimeDilation", new ShopItem{ MarketValue = 2, ValueBuyOffset = 3, ValueSellOffset = -1 } },
     };
 
-    public void OnGUISBuyItem(Player player, string itemKey)
+    public void OnGUISBuyItem(Player player, string itemKeyToBuy, int amount)
     {
-        Trade(player, "Money", itemKey);
+        string MoneyItemKey = "Money";
+
+        //check if items are in inventory
+        if (player.Inv.IsInInv(MoneyItemKey, 1))
+        {
+            int moneyAmount = player.Inv.GetItem(MoneyItemKey).Amount;
+            int moneyValueAmount = ShopPrizes[MoneyItemKey].GetRealSellPrize() * moneyAmount;
+
+            int itemToBuyValueAmount = ShopPrizes[itemKeyToBuy].GetRealBuyPrize() * amount;
+
+            if (moneyValueAmount >= itemToBuyValueAmount)
+            {
+                int numOfItemsToRemove = (ShopPrizes[itemKeyToBuy].GetRealBuyPrize() * amount) / ShopPrizes[MoneyItemKey].GetRealSellPrize();
+                GD.Print(numOfItemsToRemove);
+                if (player.Inv.IsInInv(MoneyItemKey, numOfItemsToRemove))
+                {
+                    Item iRem = new Item { Amount = numOfItemsToRemove, InvKey = MoneyItemKey };
+                    Item iAdd = new Item { Amount = amount, InvKey = itemKeyToBuy };
+
+                    player.Inv.Remove(iRem);
+                    player.Inv.Add(iAdd);
+
+                    EmitSignal(nameof(SItemSold), MoneyItemKey);
+                    EmitSignal(nameof(SItemBought), itemKeyToBuy);
+                }
+            }
+        }
     }
 
-    public void OnGUISSellItem(Player player, string itemKey)
+    public void OnGUISSellItem(Player player, string itemKeyToSell, int amount)
     {
-        Trade(player, itemKey, "Money");
+        string MoneyItemKey = "Money";
+
+        //check if items are in inventory
+        if (player.Inv.IsInInv(itemKeyToSell, amount))
+        {
+            int moneyAmountToAdd = ShopPrizes[itemKeyToSell].GetRealSellPrize() * amount / ShopPrizes[MoneyItemKey].GetRealBuyPrize();
+
+            Item iRem = new Item { Amount = amount, InvKey = itemKeyToSell };
+            Item iAdd = new Item { Amount = moneyAmountToAdd, InvKey = MoneyItemKey };
+
+            player.Inv.Remove(iRem);
+            player.Inv.Add(iAdd);
+
+            EmitSignal(nameof(SItemSold), itemKeyToSell);
+            EmitSignal(nameof(SItemBought), MoneyItemKey);
+        }
     }
 
     // Called when the node enters the scene tree for the first time.
@@ -39,6 +80,7 @@ public class Shop : Node2D
     //      
     //  }
 
+    //works only for items with same value
     private void Trade(Player player, string itemKeyFrom, string itemKeyTo)
     {
         //check if items are in inventory

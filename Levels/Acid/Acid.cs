@@ -3,21 +3,25 @@ using System;
 
 public class Acid : Area2D
 {
-    [Export]
-    public float Difficulty = 1f;
-
     public float SpeedOfRaise = 1f;
 
     private float _aToP_Distance = 1f;
-    private float _aToP_Offset = 30f;
+    private float _aToP_Offset = 500f;
     private Level _level;
     private Player _player;
 
 
     private void AcidRaise(float delta, float pixPerSec)
     {
-        Vector2 higherScale = new Vector2(1, Scale.y + (pixPerSec + _aToP_Distance * _level.TimeSpeed + Difficulty) * delta);
+        Vector2 higherScale = new Vector2(Scale.x, Scale.y + (pixPerSec + _level.TimeSpeed * _level.Difficulty + _aToP_Distance) * delta);
         Scale = higherScale;
+        //_aToP_Distance
+    }
+
+    public void ResetAcid()
+    {
+        Vector2 resetScale = new Vector2(Scale.x, 1.0f);
+        Scale = resetScale;
     }
 
     // Called when the node enters the scene tree for the first time.

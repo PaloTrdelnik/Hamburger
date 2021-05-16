@@ -1,2 +1,8 @@
-Fix buy and sell item with different values
-Fix interacion collect: Player collects item even if inventory is full
+Reorganise GUI
+Rewrite inventory to use Enums instead of string (for addressing) 
+Change GameOverGUI to show how far player has actually come and show all his records
+Fix using items when you are in GameOverGUI
+Repair inheritance of ItemAmount
+Rewrite Property logic to be more as inventory
+Change toolbar binding
+Add GUI to all names of GUI elements

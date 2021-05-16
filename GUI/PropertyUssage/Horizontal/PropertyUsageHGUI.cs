@@ -1,23 +1,12 @@
 using Godot;
 using System;
 
-public class Interaction : Area2D
+public class PropertyUsageHGUI : PropertyUsageGUI
 {
-    [Signal]
-    public delegate void SAddToInv(Item item);
-
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-
-    }
-
-    public void _on_Interaction_area_entered(Area2D area)
-    { 
-        if (area is Item)
-        {
-            EmitSignal(nameof(SAddToInv), (Item)area);
-        }
+        _usageCont = GetNode<Usage>("HBoxContainer/Usage");
     }
 
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.

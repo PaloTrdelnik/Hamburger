@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 public class Inventory : Node
 {
+    public PropertyUsage UsageProp;
+
     public int INVENTORY_SIZE = 30;
 
     public bool bAddedItem = false;
@@ -27,10 +29,10 @@ public class Inventory : Node
     {
         Item itemToAdd = new Item();
 
-        if (item.Amount + _numOfItemsInside > INVENTORY_SIZE)
+        if (item.Amount + UsageProp.GetAmount() > UsageProp.GetMaximum())
         {
-            
-            itemToAdd.Amount = INVENTORY_SIZE - _numOfItemsInside;
+
+            itemToAdd.Amount = UsageProp.GetMaximum() - UsageProp.GetAmount();
             itemToAdd.InvKey = item.InvKey;
 
             if (itemToAdd.Amount == 0)
@@ -72,7 +74,7 @@ public class Inventory : Node
                 " has been aded with amount: " + Convert.ToString(itemToAdd.Amount));
 #endif
         }
-        _numOfItemsInside += itemToAdd.Amount;
+        UsageProp += itemToAdd.Amount;
     }
 
     public void Remove(Item item)
@@ -98,7 +100,7 @@ public class Inventory : Node
                         " has been removed from inventory");
 #endif
                 }
-                _numOfItemsInside -= item.Amount;
+                UsageProp -= item.Amount;
                 bRemovedItem = true;
             }
             else
@@ -152,10 +154,21 @@ public class Inventory : Node
         return false;
     }
 
+    public bool ISInvFull()
+    {
+        return UsageProp.IsUsageMaximal();
+        //return false;
+    }
+
+    public Inventory()
+    {
+        UsageProp = new PropertyUsage(0, 30);
+    }
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        
+
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.

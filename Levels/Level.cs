@@ -7,6 +7,9 @@ public class Level : Node2D
     [Signal]
     public delegate void SPlayerGO(Player player);
 
+    [Signal]
+    public delegate void SPlayerUpdateScore(Player player);
+
     //player in level
     //[Signal]
     //public delegate void SPlayerInvItemChange(Player player, string itemInvKey);
@@ -15,22 +18,34 @@ public class Level : Node2D
     public delegate void SSlowDownTimeBegin(float amount, float length);
 
     public float TimeSpeed = 1.0f;
+    public float Difficulty = 5.0f;
 
     private float _timeSpeedUp = 0.0f;
     private float _timeSlowDownDifference = 0.0f;
 
     private Player _player;
 
+    private MoveIntervalChecker _diffInterChecker;
+    private MoveIntervalChecker _scoreInterChecker;
+
+    private ItemSpawner2D _moneySpawner;
+    private ItemSpawner2D _timeDilSpawner;
+
+    private Acid _acid;
+
     public void OnGUISRestartLevel()
     {
         //reset acid scale
-        Vector2 higherScale = new Vector2(1, 1);
-        GetNode<Area2D>("Acid").Scale = higherScale;
+        _acid.ResetAcid();
 
         //reset time
         TimeSpeed = 1.0f;
         _timeSpeedUp = 0.0f;
         _timeSlowDownDifference = 0.0f;
+
+        //reset difficulty
+        Difficulty = 5.0f;
+        _diffInterChecker.ResetIntervals();
 
         //player in level
         //Player player = GetNode<Player>("Player");
@@ -40,6 +55,20 @@ public class Level : Node2D
         _player.bFreeze = false;
         //reset itemuse
         _player.GetNode<ItemUser>("ItemUser").ResetItemUse();
+        //reset score
+        _player.ScoreProp.SetAmount(0);
+        _scoreInterChecker.ResetIntervals();
+        EmitSignal(nameof(SPlayerUpdateScore), _player);
+
+        //randomize item spawn
+        _moneySpawner.RemoveItems();
+        _moneySpawner.RandomizeSpawnLevel(0, 2);
+
+        _timeDilSpawner.RemoveItems();
+        _timeDilSpawner.RandomizeSpawnLevel(0, 2);
+        //spawn items
+        _moneySpawner.SpawnItemByLevel();
+        _timeDilSpawner.SpawnItemByLevel();
     }
     public void OnGUISQuitLevel()
     {
@@ -51,6 +80,19 @@ public class Level : Node2D
     //{
     //	EmitSignal(nameof(SPlayerInvItemChange), player, item.InvKey);
     //}
+
+    public void OnScoreIntervalCheckerSIntervalReached()
+    {
+        _player.ScoreProp += 1;
+        EmitSignal(nameof(SPlayerUpdateScore), _player);
+        GD.Print("Score Increased");
+    }
+
+    public void OnMoveIntervalCheckerSIntervalReached()
+    {
+        Difficulty += 10.0f;
+        GD.Print("Difficulty increased");
+    }
 
     public void OnAcidBodyEntered(Node body)
     {
@@ -72,16 +114,33 @@ public class Level : Node2D
 
     public override void _Ready()
     {
+        //get ref for acid
+        _acid = GetNode<Acid>("Acid");
         //get player reference
         _player = GetParent().GetNode<Player>("Player");
         //connect the signals from player
         _player.Connect("SSlowDownTime", this, nameof(OnSlowDownTime));
         //connect the signals from GUI
         GUI gui = GetParent().GetNode<GUI>("GUI");
+        //setup score interval
+        _scoreInterChecker = GetNode<MoveIntervalChecker>("ScoreIntervalChecker");
+        _scoreInterChecker.InstanceToCheck = _player;
 
         //connect signals from GUI
         gui.Connect("SRestartLevel", this, nameof(OnGUISRestartLevel));
         gui.Connect("SQuitLevel", this, nameof(OnGUISQuitLevel));
+
+        //setup difficulty Interval
+        _diffInterChecker = GetNode<MoveIntervalChecker>("DifficultyIntervalChecker");
+        _diffInterChecker.InstanceToCheck = _player;
+
+        //find refs for itm spawn
+        _moneySpawner = GetNode<ItemSpawner2D>("MoneySpawner2D");
+        _timeDilSpawner = GetNode<ItemSpawner2D>("TimeDilationSpawner2D");
+
+        //randomize item spawn
+        _moneySpawner.RandomizeSpawnPointsLevels(0, 2);
+        _timeDilSpawner.RandomizeSpawnPointsLevels(0, 2);
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.

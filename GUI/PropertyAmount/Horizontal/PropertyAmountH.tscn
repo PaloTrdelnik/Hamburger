@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://GUI/PropertyAmount/Horizontal/PropertyAmountH.cs" type="Script" id=1]
+[ext_resource path="res://GUI/Fonts/ArialUnicodeMS.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://GUI/ItemAmount/AmountGUI.tscn" type="PackedScene" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 2 )
+
+[node name="PropertyAmountH" type="AspectRatioContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 94.0
+margin_bottom = 44.0
+
+[node name="Name" type="Label" parent="HBoxContainer"]
+margin_right = 72.0
+margin_bottom = 44.0
+custom_fonts/font = SubResource( 1 )
+text = "Item:"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AmountContainer" parent="HBoxContainer" instance=ExtResource( 3 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 76.0
+margin_right = 94.0
+
+[node name="Unit" parent="HBoxContainer/AmountContainer" index="1"]
+visible = false
+
+[editable path="HBoxContainer/AmountContainer"]

@@ -30,6 +30,7 @@ public class Player : KinematicBody2D
     public bool bFreezeInput = false;
     public bool bFreeze = true;
     public Inventory Inv = new Inventory();
+    public Property ScoreProp = new Property();
 
     private GUI _gui;
     private ItemUser _itemUser;
@@ -45,10 +46,14 @@ public class Player : KinematicBody2D
 
     public void OnInteractionSAddToInv(Item item)
     {
-        Inv.Add(item);
-        if (Inv.bAddedItem || Inv.bRemovedItem)
+        if (!Inv.ISInvFull())
         {
-            EmitSignal(nameof(SInvItemChange),this, item.InvKey);
+            Inv.Add(item);
+            if (Inv.bAddedItem ||Inv.bRemovedItem)
+            {
+                EmitSignal(nameof(SInvItemChange),this, item.InvKey);
+                item.QueueFree();
+            }
         }
     }
 
@@ -62,13 +67,13 @@ public class Player : KinematicBody2D
     public override void _PhysicsProcess(float delta)
     {
         int moveDir = 0;
-        if (Input.IsActionPressed("ui_right"))
+        if (Input.IsActionPressed("Game_Right"))
         {
             moveDir += 1;
 
         }
 
-        if (Input.IsActionPressed("ui_left"))
+        if (Input.IsActionPressed("Game_Left"))
         {
             moveDir -= 1;
 
@@ -93,7 +98,7 @@ public class Player : KinematicBody2D
 
         _yVelo += GRAVITY;
 
-        if (grounded && Input.IsActionJustPressed("ui_up"))
+        if (grounded && Input.IsActionJustPressed("Game_Jump"))
         {
             if (bFreezeInput)
             {
@@ -109,6 +114,7 @@ public class Player : KinematicBody2D
         {
             _yVelo = 5;
         }
+
         if (_yVelo > MAX_FALL_SPEED)
         {
             _yVelo = MAX_FALL_SPEED;
@@ -173,19 +179,19 @@ public class Player : KinematicBody2D
 
     private void CheckForAbilityInput()
     {
-        Taskbar tBar = _gui.GetNode<Taskbar>("InGameGUIControl/Taskbar");
+        ToolBar tBar = _gui.GetNode<ToolBar>("InGameGUIControl/ToolBar");
 
-        if (Input.IsActionJustPressed("Game_Taskbar_item1"))
+        if (Input.IsActionJustPressed("Game_ToolBar_item1"))
         {
-            UseItemFromTaskBar(tBar, 0);
+            UseItemFromToolBar(tBar, 0);
         }
     }
 
-    private void UseItemFromTaskBar(Taskbar tBar, int itemSlot)
+    private void UseItemFromToolBar(ToolBar tBar, int itemSlot)
     {
         if (itemSlot + 1 <= tBar.GetChildCount())
         {
-            TaskBarItem slot = tBar.GetChild<TaskBarItem>(0);
+            ToolBarItem slot = tBar.GetChild<ToolBarItem>(0);
 
             string slotItemKey = slot.ItemKey;
 
@@ -203,12 +209,10 @@ public class Player : KinematicBody2D
             {
                 if(_itemUser.UseItem(itemKey))
                 {
-                    GD.Print("aaa");
                     EmitSignal(nameof(SInvItemChange), this, itemKey);
                     EmitSignal(nameof(SSlowDownTime), 5, 10000);
                     EmitSignal(nameof(SItemDurabilityUpdateBegin), itemKey);
                 }
-
             }
         }
     }

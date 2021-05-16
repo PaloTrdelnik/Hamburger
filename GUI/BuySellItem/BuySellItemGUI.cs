@@ -33,8 +33,8 @@ public class BuySellItemGUI : VBoxContainer
         Label buyPrice = GetNode<Label>("CenterContainer/VBoxContainer/HBoxContainer/BuyPriceLabel");
         Label sellPrice = GetNode<Label>("CenterContainer/VBoxContainer/HBoxContainer/SellPriceLabel");
 
-        sellPrice.Text = Convert.ToString(shop.ShopPrizes[ItemKey].MarketValue + shop.ShopPrizes[ItemKey].ValueSellOffset);
-        buyPrice.Text = Convert.ToString(shop.ShopPrizes[ItemKey].MarketValue + shop.ShopPrizes[ItemKey].ValueBuyOffset);
+        sellPrice.Text = Convert.ToString(shop.ShopPrizes[ItemKey].GetRealSellPrize());
+        buyPrice.Text = Convert.ToString(shop.ShopPrizes[ItemKey].GetRealBuyPrize());
 
     }
 

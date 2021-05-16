@@ -3,5 +3,5 @@
 [ext_resource path="res://Items/Item.tscn" type="PackedScene" id=1]
 
 [node name="Money" instance=ExtResource( 1 )]
-Amount = 5
+Amount = 1
 InvKey = "Money"

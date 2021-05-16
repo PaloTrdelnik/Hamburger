@@ -1,12 +1,15 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Sounds/InGame_snd.wav" type="AudioStream" id=1]
 [ext_resource path="res://Sounds/GameOver_snd.wav" type="AudioStream" id=2]
 [ext_resource path="res://GUI/GUI.cs" type="Script" id=3]
 [ext_resource path="res://Sounds/MainMenu_snd.ogg" type="AudioStream" id=4]
 [ext_resource path="res://GUI/ItemAmount/Items/MoneyAmountContainer.tscn" type="PackedScene" id=5]
-[ext_resource path="res://GUI/Taskbar/Taskbar.tscn" type="PackedScene" id=6]
+[ext_resource path="res://GUI/ToolBar/ToolBar.tscn" type="PackedScene" id=6]
 [ext_resource path="res://GUI/BuySellItem/Items/BuySellTimeDilationGUI.tscn" type="PackedScene" id=7]
+[ext_resource path="res://GUI/PropertyAmount/BigPropertyAmount.tscn" type="PackedScene" id=8]
+[ext_resource path="res://GUI/PropertyAmount/Horizontal/PropertyAmountH.tscn" type="PackedScene" id=9]
+[ext_resource path="res://GUI/PropertyUssage/Horizontal/Properties/PropertyUsageHGUI_Inventory.tscn" type="PackedScene" id=10]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://GUI/Fonts/ArialUnicodeMS.ttf"
@@ -16,16 +19,22 @@ size = 32
 font_data = SubResource( 1 )
 
 [sub_resource type="InputEventAction" id=3]
-action = "ui_accept"
+action = "Game_Restart"
 
 [sub_resource type="ShortCut" id=4]
 shortcut = SubResource( 3 )
 
 [sub_resource type="InputEventAction" id=5]
-action = "ui_accept"
+action = "Game_Back"
 
 [sub_resource type="ShortCut" id=6]
 shortcut = SubResource( 5 )
+
+[sub_resource type="InputEventAction" id=7]
+action = "Game_Shop"
+
+[sub_resource type="ShortCut" id=8]
+shortcut = SubResource( 7 )
 
 [node name="GUI" type="CanvasLayer"]
 script = ExtResource( 3 )
@@ -34,6 +43,10 @@ script = ExtResource( 3 )
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -0.967041
+margin_top = -2.90115
+margin_right = -0.967041
+margin_bottom = -2.90112
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -74,20 +87,63 @@ grow_vertical = 2
 margin_right = 172.0
 margin_bottom = 50.0
 custom_fonts/font = SubResource( 2 )
+shortcut = SubResource( 6 )
 text = "Main Menu"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MoneyAmountContainer" parent="InGameGUIControl" instance=ExtResource( 5 )]
+[node name="VBoxContainer" type="VBoxContainer" parent="InGameGUIControl"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -210.0
+margin_bottom = 92.0
+grow_horizontal = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Taskbar" parent="InGameGUIControl" instance=ExtResource( 6 )]
+[node name="MoneyAmountContainer" parent="InGameGUIControl/VBoxContainer" instance=ExtResource( 5 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_right = 210.0
+
+[node name="PropertyUsageHGUI" parent="InGameGUIControl/VBoxContainer" instance=ExtResource( 10 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_top = 48.0
+margin_right = 210.0
+margin_bottom = 92.0
+
+[node name="ToolBar" parent="InGameGUIControl" instance=ExtResource( 6 )]
 margin_right = 338.0
+
+[node name="PropertyAmountH" parent="InGameGUIControl" instance=ExtResource( 9 )]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -47.0
+margin_right = 47.0
+margin_bottom = 44.0
+
+[node name="HBoxContainer" parent="InGameGUIControl/PropertyAmountH" index="0"]
+margin_right = 115.0
+
+[node name="Name" parent="InGameGUIControl/PropertyAmountH/HBoxContainer" index="0"]
+margin_right = 93.0
+text = "Score:"
+
+[node name="AmountContainer" parent="InGameGUIControl/PropertyAmountH/HBoxContainer" index="1"]
+margin_left = 97.0
+margin_right = 115.0
 
 [node name="GameOverGUIControl" type="Control" parent="."]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_top = -2.97189
+margin_bottom = -2.97192
 rect_pivot_offset = Vector2( -279.942, 214 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -96,6 +152,8 @@ __meta__ = {
 [node name="CenterContainer" type="CenterContainer" parent="GameOverGUIControl"]
 anchor_right = 1.0
 anchor_bottom = 0.36
+margin_left = -0.720703
+margin_right = -0.720703
 margin_bottom = -1.52588e-05
 __meta__ = {
 "_edit_use_anchors_": false
@@ -103,9 +161,9 @@ __meta__ = {
 
 [node name="GameOverLab" type="Label" parent="GameOverGUIControl/CenterContainer"]
 margin_left = 428.0
-margin_top = 86.0
+margin_top = 85.0
 margin_right = 595.0
-margin_bottom = 130.0
+margin_bottom = 129.0
 custom_fonts/font = SubResource( 2 )
 text = "Game Over"
 align = 1
@@ -116,45 +174,49 @@ __meta__ = {
 [node name="GameOverSndPlayer" type="AudioStreamPlayer" parent="GameOverGUIControl"]
 stream = ExtResource( 2 )
 
-[node name="VSplitContainer" type="VSplitContainer" parent="GameOverGUIControl"]
-anchor_top = 1.0
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverGUIControl"]
+anchor_top = 0.347
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -272.0
-split_offset = 40
-collapsed = true
+margin_top = -0.200043
+grow_vertical = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CenterContainer2" type="CenterContainer" parent="GameOverGUIControl/VSplitContainer"]
+[node name="BigScoreAmount" parent="GameOverGUIControl/VBoxContainer" instance=ExtResource( 8 )]
 margin_right = 1024.0
-margin_bottom = 50.0
+margin_bottom = 181.0
+
+[node name="CenterContainer2" type="CenterContainer" parent="GameOverGUIControl/VBoxContainer"]
+margin_top = 185.0
+margin_right = 1024.0
+margin_bottom = 235.0
 grow_vertical = 2
 
-[node name="Restart" type="Button" parent="GameOverGUIControl/VSplitContainer/CenterContainer2"]
+[node name="Restart" type="Button" parent="GameOverGUIControl/VBoxContainer/CenterContainer2"]
 margin_left = 454.0
 margin_right = 570.0
 margin_bottom = 50.0
 custom_fonts/font = SubResource( 2 )
-shortcut = SubResource( 6 )
+shortcut = SubResource( 4 )
 text = "Restart"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CenterContainer" type="CenterContainer" parent="GameOverGUIControl/VSplitContainer"]
-margin_top = 62.0
+[node name="CenterContainer" type="CenterContainer" parent="GameOverGUIControl/VBoxContainer"]
+margin_top = 239.0
 margin_right = 1024.0
-margin_bottom = 272.0
+margin_bottom = 289.0
 grow_vertical = 2
 
-[node name="Main Menu" type="Button" parent="GameOverGUIControl/VSplitContainer/CenterContainer"]
+[node name="Main Menu" type="Button" parent="GameOverGUIControl/VBoxContainer/CenterContainer"]
 margin_left = 426.0
-margin_top = 80.0
 margin_right = 598.0
-margin_bottom = 130.0
+margin_bottom = 50.0
 custom_fonts/font = SubResource( 2 )
+shortcut = SubResource( 6 )
 text = "Main Menu"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -163,6 +225,7 @@ __meta__ = {
 [node name="MainMenuGUIControl" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+input_pass_on_modal_close_click = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -212,6 +275,7 @@ margin_left = 475.0
 margin_right = 549.0
 margin_bottom = 50.0
 custom_fonts/font = SubResource( 2 )
+shortcut = SubResource( 4 )
 text = "Play"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -228,6 +292,7 @@ margin_left = 468.0
 margin_right = 555.0
 margin_bottom = 50.0
 custom_fonts/font = SubResource( 2 )
+shortcut = SubResource( 8 )
 text = "Shop"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -280,18 +345,22 @@ margin_right = 619.0
 margin_bottom = 279.0
 
 [node name="ItemAmountContainer" parent="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI" index="0"]
-margin_right = 128.0
+margin_right = 214.0
 
 [node name="Name" parent="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI/ItemAmountContainer" index="0"]
-margin_left = 6.0
-margin_right = 78.0
+margin_left = 0.0
+margin_right = 192.0
+
+[node name="AmountContainer" parent="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI/ItemAmountContainer" index="1"]
+margin_left = 196.0
+margin_right = 214.0
 
 [node name="CenterContainer" parent="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI" index="1"]
-margin_right = 128.0
+margin_right = 214.0
 
 [node name="VBoxContainer" parent="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI/CenterContainer" index="0"]
-margin_left = 0.0
-margin_right = 128.0
+margin_left = 43.0
+margin_right = 171.0
 
 [node name="CenterContainer" type="CenterContainer" parent="ShopGUIControl"]
 anchor_right = 1.0
@@ -330,6 +399,7 @@ grow_vertical = 2
 margin_right = 172.0
 margin_bottom = 50.0
 custom_fonts/font = SubResource( 2 )
+shortcut = SubResource( 6 )
 text = "Main Menu"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -339,13 +409,35 @@ __meta__ = {
 stream = ExtResource( 4 )
 autoplay = true
 
-[node name="MoneyAmountContainer" parent="ShopGUIControl" instance=ExtResource( 5 )]
+[node name="VBoxContainer" type="VBoxContainer" parent="ShopGUIControl"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -210.0
+margin_bottom = 92.0
+grow_horizontal = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MoneyAmountContainer" parent="ShopGUIControl/VBoxContainer" instance=ExtResource( 5 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_right = 210.0
+
+[node name="PropertyUsageHGUI" parent="ShopGUIControl/VBoxContainer" instance=ExtResource( 10 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_top = 48.0
+margin_right = 210.0
+margin_bottom = 92.0
 
 [connection signal="SUpdateShopPrizes" from="." to="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI" method="OnGUISUpdateShopPrizes"]
 [connection signal="button_down" from="InGameGUIControl/IngemMenuContainer/CenterContainer2/Restart" to="." method="OnRestartButtonDown"]
 [connection signal="button_down" from="InGameGUIControl/IngemMenuContainer/CenterContainer/Main Menu" to="." method="OnMainMenuButtonDown"]
-[connection signal="button_down" from="GameOverGUIControl/VSplitContainer/CenterContainer2/Restart" to="." method="OnRestartButtonDown"]
-[connection signal="button_down" from="GameOverGUIControl/VSplitContainer/CenterContainer/Main Menu" to="." method="OnMainMenuButtonDown"]
+[connection signal="button_down" from="GameOverGUIControl/VBoxContainer/CenterContainer2/Restart" to="." method="OnRestartButtonDown"]
+[connection signal="button_down" from="GameOverGUIControl/VBoxContainer/CenterContainer/Main Menu" to="." method="OnMainMenuButtonDown"]
 [connection signal="button_down" from="MainMenuGUIControl/VBoxContainer/CenterContainer2/Play" to="." method="OnPlayButtonDown"]
 [connection signal="button_down" from="MainMenuGUIControl/VBoxContainer/CenterContainer3/Shop" to="." method="OnShopButtonDown"]
 [connection signal="button_down" from="MainMenuGUIControl/VBoxContainer/CenterContainer/Quit" to="." method="OnQuitButtonDown"]
@@ -353,6 +445,8 @@ autoplay = true
 [connection signal="SRequestSellItem" from="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI" to="." method="OnBuySellItemGUISRequestSellItem"]
 [connection signal="button_down" from="ShopGUIControl/ShopMenuContainer/CenterContainer/Main Menu" to="." method="OnMainMenuButtonDownWithoutUnload"]
 
+[editable path="InGameGUIControl/PropertyAmountH"]
+[editable path="InGameGUIControl/PropertyAmountH/HBoxContainer/AmountContainer"]
 [editable path="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI"]
 [editable path="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI/ItemAmountContainer"]
 [editable path="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI/ItemAmountContainer/AmountContainer"]

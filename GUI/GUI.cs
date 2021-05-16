@@ -16,10 +16,10 @@ public class GUI : CanvasLayer
     public delegate void SQuitLevel();
 
     [Signal]
-    public delegate void SBuyItem(Player player, string itemKey);
+    public delegate void SBuyItem(Player player, string itemKeyToBuy, int amount);
 
     [Signal]
-    public delegate void SSellItem(Player player, string itemKey);
+    public delegate void SSellItem(Player player, string itemKeyToSell, int amount);
 
     [Signal]
     public delegate void SUpdateShopPrizes(Shop shop);
@@ -33,7 +33,9 @@ public class GUI : CanvasLayer
 
     private ItemAmountGUI _moneyAmount;
     private ItemAmountGUI _moneyShopAmount;
-    private Taskbar _taskBar;
+    private PropertyUsageHGUI _invUsage;
+    private PropertyUsageHGUI _invShopUsage;
+    private ToolBar _toolBar;
 
     public void OnPlayButtonDown()
     {
@@ -73,11 +75,12 @@ public class GUI : CanvasLayer
 
     public void OnBuySellItemGUISRequestBuyItem(string itemKey)
     {
-        EmitSignal(nameof(SBuyItem), _player, itemKey);
+        EmitSignal(nameof(SBuyItem), _player, itemKey, 1);
+        GD.Print("asas");
     }
     public void OnBuySellItemGUISRequestSellItem(string itemKey)
     {
-        EmitSignal(nameof(SSellItem), _player, itemKey);
+        EmitSignal(nameof(SSellItem), _player, itemKey, 1);
     }
     //temporary label changing
     public void OnShopSItemBought(string itemKey)
@@ -91,6 +94,8 @@ public class GUI : CanvasLayer
 
         _moneyAmount.UpdateAmount(_player);
         _moneyShopAmount.UpdateAmount(_player);
+        //update inventory usage
+        _invShopUsage.UpdateAmount(_player.Inv.UsageProp);
     }
     //temporary label changing
     public void OnShopSItemSold(string itemKey)
@@ -104,11 +109,14 @@ public class GUI : CanvasLayer
 
         _moneyAmount.UpdateAmount(_player);
         _moneyShopAmount.UpdateAmount(_player);
+        //update inventory usage
+        _invShopUsage.UpdateAmount(_player.Inv.UsageProp);
     }
 
     public void OnMainSLevelLoaded(Node level)
     {
         level.Connect("SPlayerGO", this, nameof(OnLevelSPlayerGO));
+        level.Connect("SPlayerUpdateScore", this, nameof(OnLevelSPlayerUpdateScore));
      
         //player in level
         //level.Connect("SPlayerInvItemChange", this, nameof(OnLevelSPlayerInvItemChange));
@@ -124,23 +132,34 @@ public class GUI : CanvasLayer
         if (itemInvKey == "TimeDilation")
         {
             GD.Print("GUI");
-            _taskBar.UpdateAmount(player, itemInvKey);
+            _toolBar.UpdateAmount(player, itemInvKey);
         }
+        //update ussage of inventory
+        _invUsage.UpdateAmount(_player.Inv.UsageProp.GetAmount());
     }
 
     public void OnPlayerSItemDurabilityUpdateBegin(string itemKey)
     {
-        _taskBar.GetNode<TaskBarItem>("TaskBar" + itemKey).StartUpdateUseDurabilityBar(_player);
+        _toolBar.GetNode<ToolBarItem>("ToolBar" + itemKey).StartUpdateUseDurabilityBar(_player);
     }
 
     public void OnPlayerSItemDurabilityUpdateEnd(string itemKey)
     {
-        _taskBar.GetNode<TaskBarItem>("TaskBar" + itemKey).StopUpdateUseDurabilityBar();
+        _toolBar.GetNode<ToolBarItem>("ToolBar" + itemKey).StopUpdateUseDurabilityBar();
     }
 
     public void OnLevelSPlayerGO(Player player)
     { 
         ChangeGUI("GameOverGUI");
+
+        BigPropertyAmount bigScoreProp = GetNode<BigPropertyAmount>("GameOverGUIControl/VBoxContainer/BigScoreAmount");
+        bigScoreProp.UpdatePropertyAmount(player.ScoreProp);
+    }
+
+    public void OnLevelSPlayerUpdateScore(Player player)
+    {
+        PropertyAmountH scoreProp = GetNode<PropertyAmountH>("InGameGUIControl/PropertyAmountH");
+        scoreProp.UpdateAmount(player.ScoreProp.GetAmount());
     }
 
     public void ChangeGUI(string nameOfGUI)
@@ -152,6 +171,8 @@ public class GUI : CanvasLayer
                 case "GameOverGUI":
                     GetNode<AudioStreamPlayer>("GameOverGUIControl/GameOverSndPlayer").Stop();
                     GetNode<Control>("GameOverGUIControl").Hide();
+                    BigPropertyAmount bigScoreProp = GetNode<BigPropertyAmount>("GameOverGUIControl/VBoxContainer/BigScoreAmount");
+                    bigScoreProp.HideNewRecord();
                     break;
 
                 case "InGameGUI":
@@ -182,7 +203,10 @@ public class GUI : CanvasLayer
                 case "InGameGUI":
                     GetNode<AudioStreamPlayer>("InGameGUIControl/InGameSndPlayer").Play();
                     GetNode<Control>("InGameGUIControl").Show();
-                    _taskBar.UpdateAmountOfAllitems(_player);
+                    _toolBar.UpdateAmountOfAllitems(_player);
+                    //update ussage of inventory
+                    _invUsage.UpdateMaximum(_player.Inv.UsageProp);
+                    _invUsage.UpdateAmount(_player.Inv.UsageProp);
                     break;
 
                 case "MainMenuGUI":
@@ -196,14 +220,14 @@ public class GUI : CanvasLayer
                     EmitSignal(nameof(SUpdateShopPrizes), _shop);
                     BuySellItemGUI buySellTDGui = GetNode<BuySellItemGUI>("ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI");
                     buySellTDGui.UpdateAmount(_player);
+                    //update ussage of inventory
+                    _invShopUsage.UpdateMaximum(_player.Inv.UsageProp);
+                    _invShopUsage.UpdateAmount(_player.Inv.UsageProp);
                     break;
             }
 
             ActualGUI = nameOfGUI;
         }
-
-            
-
     }
 
     // Called when the node enters the scene tree for the first time.
@@ -212,10 +236,13 @@ public class GUI : CanvasLayer
         _player = GetParent().GetNode<Player>("Player");
         _shop = GetParent().GetNode<Shop>("Shop");
 
-        _moneyAmount = GetNode<ItemAmountGUI>("InGameGUIControl/MoneyAmountContainer");
-        _moneyShopAmount = GetNode<ItemAmountGUI>("ShopGUIControl/MoneyAmountContainer");
+        _moneyAmount = GetNode<ItemAmountGUI>("InGameGUIControl/VBoxContainer/MoneyAmountContainer");
+        _moneyShopAmount = GetNode<ItemAmountGUI>("ShopGUIControl/VBoxContainer/MoneyAmountContainer");
 
-        _taskBar = GetNode<Taskbar>("InGameGUIControl/Taskbar");
+        _invUsage = GetNode<PropertyUsageHGUI>("InGameGUIControl/VBoxContainer/PropertyUsageHGUI");
+        _invShopUsage = GetNode<PropertyUsageHGUI>("ShopGUIControl/VBoxContainer/PropertyUsageHGUI");
+
+        _toolBar = GetNode<ToolBar>("InGameGUIControl/ToolBar");
     }
 
     //// Called every frame. 'delta' is the elapsed time since the previous frame.

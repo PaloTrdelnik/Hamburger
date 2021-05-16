@@ -1,0 +1,167 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://GUI/PropertyAmount/Vertical/PropertyAmountV.tscn" type="PackedScene" id=1]
+[ext_resource path="res://GUI/PropertyAmount/Horizontal/PropertyAmountH.tscn" type="PackedScene" id=2]
+
+[sub_resource type="CSharpScript" id=1]
+resource_name = "BigScoreAmount"
+script/source = "using Godot;
+using System;
+
+public class BigScoreAmount : CenterContainer
+{
+    // Declare member variables here. Examples:
+    // private int a = 2;
+    // private string b = \"text\";
+
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
+    {
+        
+    }
+
+//  // Called every frame. 'delta' is the elapsed time since the previous frame.
+//  public override void _Process(float delta)
+//  {
+//      
+//  }
+}
+"
+
+[sub_resource type="DynamicFontData" id=2]
+font_path = "res://GUI/Fonts/ArialUnicodeMS.ttf"
+
+[sub_resource type="DynamicFont" id=3]
+size = 20
+font_data = SubResource( 2 )
+
+[sub_resource type="DynamicFontData" id=4]
+font_path = "res://GUI/Fonts/ArialUnicodeMS.ttf"
+
+[sub_resource type="DynamicFont" id=5]
+size = 150
+use_filter = true
+extra_spacing_top = -50
+extra_spacing_bottom = -35
+font_data = SubResource( 4 )
+
+[sub_resource type="DynamicFontData" id=6]
+font_path = "res://GUI/Fonts/ArialUnicodeMS.ttf"
+
+[sub_resource type="DynamicFont" id=7]
+size = 38
+font_data = SubResource( 6 )
+
+[node name="BigPropertyAmount" type="CenterContainer"]
+margin_right = 94.0
+margin_bottom = 197.0
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 4.0
+margin_top = 8.0
+margin_right = 89.0
+margin_bottom = 189.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PropertyAmountV" parent="VBoxContainer" instance=ExtResource( 1 )]
+margin_right = 85.0
+margin_bottom = 149.0
+
+[node name="VBoxContainer" parent="VBoxContainer/PropertyAmountV" index="0"]
+margin_right = 85.0
+margin_bottom = 149.0
+
+[node name="CenterContainer2" parent="VBoxContainer/PropertyAmountV/VBoxContainer" index="0"]
+margin_right = 85.0
+margin_bottom = 28.0
+
+[node name="Name" parent="VBoxContainer/PropertyAmountV/VBoxContainer/CenterContainer2" index="0"]
+margin_left = 13.0
+margin_right = 71.0
+margin_bottom = 28.0
+custom_fonts/font = SubResource( 3 )
+text = "Score:"
+
+[node name="CenterContainer" parent="VBoxContainer/PropertyAmountV/VBoxContainer" index="1"]
+margin_top = 32.0
+margin_right = 85.0
+margin_bottom = 149.0
+
+[node name="AmountContainer" parent="VBoxContainer/PropertyAmountV/VBoxContainer/CenterContainer" index="0"]
+margin_left = 1.0
+margin_right = 84.0
+margin_bottom = 117.0
+
+[node name="Amount" parent="VBoxContainer/PropertyAmountV/VBoxContainer/CenterContainer/AmountContainer" index="0"]
+margin_right = 83.0
+margin_bottom = 117.0
+custom_fonts/font = SubResource( 5 )
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+margin_top = 153.0
+margin_right = 85.0
+margin_bottom = 181.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PropertyAmountH" parent="VBoxContainer/CenterContainer" instance=ExtResource( 2 )]
+margin_right = 85.0
+margin_bottom = 28.0
+
+[node name="HBoxContainer" parent="VBoxContainer/CenterContainer/PropertyAmountH" index="0"]
+margin_right = 85.0
+margin_bottom = 28.0
+
+[node name="Name" parent="VBoxContainer/CenterContainer/PropertyAmountH/HBoxContainer" index="0"]
+margin_right = 70.0
+margin_bottom = 28.0
+custom_fonts/font = SubResource( 3 )
+text = "Record:"
+
+[node name="AmountContainer" parent="VBoxContainer/CenterContainer/PropertyAmountH/HBoxContainer" index="1"]
+margin_left = 74.0
+margin_right = 85.0
+margin_bottom = 28.0
+
+[node name="Amount" parent="VBoxContainer/CenterContainer/PropertyAmountH/HBoxContainer/AmountContainer" index="0"]
+margin_right = 11.0
+margin_bottom = 28.0
+custom_fonts/font = SubResource( 3 )
+
+[node name="Unit" parent="VBoxContainer/CenterContainer/PropertyAmountH/HBoxContainer/AmountContainer" index="1"]
+margin_left = 15.0
+margin_right = 26.0
+margin_bottom = 28.0
+custom_fonts/font = SubResource( 3 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="NewRecordLab" type="Label" parent="CanvasLayer"]
+visible = false
+light_mask = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 371.869
+margin_top = 109.532
+margin_right = 371.869
+margin_bottom = 109.532
+rect_rotation = 20.9
+custom_fonts/font = SubResource( 7 )
+text = "New record!!!"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[editable path="VBoxContainer/PropertyAmountV"]
+[editable path="VBoxContainer/PropertyAmountV/VBoxContainer/CenterContainer/AmountContainer"]
+[editable path="VBoxContainer/CenterContainer/PropertyAmountH"]
+[editable path="VBoxContainer/CenterContainer/PropertyAmountH/HBoxContainer/AmountContainer"]

@@ -8,7 +8,9 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 15, 27 )
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CapsuleShape2D" id=7]
+radius = 9.8811
+height = 7.21883
 
 [sub_resource type="Animation" id=3]
 resource_name = "idle"
@@ -72,11 +74,13 @@ smoothing_enabled = true
 smoothing_speed = 3.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -0.054306, 0 )
 shape = SubResource( 1 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 17.865 )
-shape = SubResource( 2 )
+rotation = 1.5708
+shape = SubResource( 7 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 4.16531, 0 )

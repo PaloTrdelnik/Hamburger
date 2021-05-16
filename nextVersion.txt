@@ -1,0 +1,9 @@
+Fix buy and sell item with different values
+Fix interaction collect: Player collects item even if inventory is full
+Fix ToolBar name (Taskbar)
+Add inventory usage
+Change GameOverGUI to show how far player has actually come and show all his records
+Move difficulty form Acid to Level and change it by the player's distance to begin
+Add keyboard shortcuts for buttons
+Remake map with challenge and learning in mind
+Add random spawning of items, that resets after every restart of game
