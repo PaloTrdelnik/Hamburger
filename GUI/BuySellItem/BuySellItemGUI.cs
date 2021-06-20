@@ -12,9 +12,12 @@ public class BuySellItemGUI : VBoxContainer
     [Signal]
     public delegate void SRequestSellItem(string itemKey);
 
+    private AmountGUI _sellPriceAmount;
+    private AmountGUI _buyPriceAmount;
+
     public void UpdateAmount(Player player)
     {
-        AmountGUI amountGui = GetNode<AmountGUI>("ItemAmountContainer/AmountContainer");
+        AmountGUI amountGui = GetNode<AmountGUI>("CenterContainer2/ItemAmountTextContainer/AmountContainer");
 
         if (player.Inv.IsInInv(ItemKey, 1))
         {
@@ -30,12 +33,8 @@ public class BuySellItemGUI : VBoxContainer
 
     public void OnGUISUpdateShopPrizes(Shop shop)
     {
-        Label buyPrice = GetNode<Label>("CenterContainer/VBoxContainer/HBoxContainer/BuyPriceLabel");
-        Label sellPrice = GetNode<Label>("CenterContainer/VBoxContainer/HBoxContainer/SellPriceLabel");
-
-        sellPrice.Text = Convert.ToString(shop.ShopPrizes[ItemKey].GetRealSellPrize());
-        buyPrice.Text = Convert.ToString(shop.ShopPrizes[ItemKey].GetRealBuyPrize());
-
+        _buyPriceAmount.UpdateAmount(shop.ShopPrizes[ItemKey].GetRealBuyPrize());
+        _sellPriceAmount.UpdateAmount(shop.ShopPrizes[ItemKey].GetRealSellPrize());
     }
 
     public void OnBuyButtonDown()
@@ -51,7 +50,8 @@ public class BuySellItemGUI : VBoxContainer
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        
+        _buyPriceAmount = GetNode<AmountGUI>("CenterContainer/VBoxContainer/HBoxContainer/BuyPriceAmountContainer");
+        _sellPriceAmount = GetNode<AmountGUI>("CenterContainer/VBoxContainer/HBoxContainer2/SellPriceAmountContainer");
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.

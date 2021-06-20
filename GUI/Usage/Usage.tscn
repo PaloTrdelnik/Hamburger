@@ -20,6 +20,7 @@ __meta__ = {
 [node name="AmountLab" type="Label" parent="."]
 margin_right = 18.0
 margin_bottom = 44.0
+rect_pivot_offset = Vector2( 0, 22 )
 custom_fonts/font = SubResource( 1 )
 text = "0"
 
@@ -34,6 +35,7 @@ text = "/"
 margin_left = 35.0
 margin_right = 53.0
 margin_bottom = 44.0
+rect_pivot_offset = Vector2( 0, 22 )
 custom_fonts/font = SubResource( 1 )
 text = "0"
 

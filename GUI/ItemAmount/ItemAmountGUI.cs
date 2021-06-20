@@ -6,6 +6,8 @@ public class ItemAmountGUI : HBoxContainer
     [Export]
     public string ItemKey = "Item";
 
+    public AnimationPlayer AnimPlayer;
+
     public void UpdateAmount(Player player)
     {
         AmountGUI amountGui = GetNode<AmountGUI>("AmountContainer");

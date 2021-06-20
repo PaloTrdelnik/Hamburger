@@ -53,8 +53,8 @@ public class Level : Node2D
         _player.Position = GetNode<Position2D>("PlayerStart").Position;
         //unfreeze the player
         _player.bFreeze = false;
-        //reset itemuse
-        _player.GetNode<ItemUser>("ItemUser").ResetItemUse();
+        //reset item use
+        _player.ItemUser.ResetItemUse();
         //reset score
         _player.ScoreProp.SetAmount(0);
         _scoreInterChecker.ResetIntervals();
@@ -85,13 +85,11 @@ public class Level : Node2D
     {
         _player.ScoreProp += 1;
         EmitSignal(nameof(SPlayerUpdateScore), _player);
-        GD.Print("Score Increased");
     }
 
     public void OnMoveIntervalCheckerSIntervalReached()
     {
         Difficulty += 10.0f;
-        GD.Print("Difficulty increased");
     }
 
     public void OnAcidBodyEntered(Node body)
@@ -102,6 +100,8 @@ public class Level : Node2D
 
             EmitSignal(nameof(SPlayerGO), body);
             player.bFreeze = true;
+            //reset item use
+            player.ItemUser.ResetItemUse();
         }
     }
 

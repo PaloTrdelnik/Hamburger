@@ -1,9 +1,28 @@
-Fix buy and sell item with different values
-Fix interaction collect: Player collects item even if inventory is full
-Fix ToolBar name (Taskbar)
-Add inventory usage
-Change GameOverGUI to show how far player has actually come and show all his records
-Move difficulty form Acid to Level and change it by the player's distance to begin
-Add keyboard shortcuts for buttons
-Remake map with challenge and learning in mind
-Add random spawning of items, that resets after every restart of game
+Game Design:
+
+Add BlockChallenges to improve game feel
+Design item spawning in BlockChallenges
+Make level form BlockChallenges
+Add ability to buy improvements
+Add end of game
+Add Acid Raise stop after reaching some height
+Add controls for audio
+Add info about producers of game
+
+Sound:
+Find better songs for game
+
+GUI:
+
+Make ShopGUI accessible form GameOverGUI
+Add notification to GameOverGUI if there is new improvement available
+Create GameFinishedGUI
+Improve toolbar binding(keyboard)
+Improve key binding for buttons in menu
+
+Bugs:
+
+Fix using items when you are in GameOverGUI
+Fix start game by key at beginning 
+Fix reset camera after level unload
+Fix stop Acid Raise at start suntil player's camera is in the right position

@@ -1,65 +1,70 @@
 using Godot;
 using System;
 
-public class ToolBarItem : AspectRatioContainer
+public class ToolBarItem : MarginContainer
 {
     [Export]
     public string ItemKey = "Item";
 
-    private bool _updatePBar = false;
+    public AnimationPlayer AnimPlayer;
+
     private Timer _uDurabilityTimer;
+    private ItemAmountImageContainer _itemAmountGui;
+    private ProgressBar _pBar;
 
     public void UpdateAmount(Player player)
     {
-        AmountGUI amountGui = GetNode<AmountGUI>("VBoxContainer/CenterContainer/AmountContainer");
-
-        if (player.Inv.IsInInv(ItemKey, 1))
-        {
-            Item itemInv = (Item)player.Inv.GetItem(ItemKey);
-
-            amountGui.UpdateAmount(Convert.ToString(itemInv.Amount));
-        }
-        else
-        {
-            amountGui.UpdateAmount(0);
-        }
+        _itemAmountGui.UpdateAmount(player);
     }
 
-    public void StartUpdateUseDurabilityBar(Player player)
+    public void PlayShowUpAnim()
+    {
+        AnimPlayer.Play("ShowUp_anim");
+    }
+
+    public void PlayUseItemAnim(Player player)
     {
         _uDurabilityTimer = player.GetNode<ItemUser>("ItemUser").GetItem(ItemKey).UseDurabilityTimer;
-        ProgressBar pBar = GetNode<ProgressBar>("ProgressBar");
 
-        pBar.MaxValue = _uDurabilityTimer.WaitTime;
-        GD.Print(_uDurabilityTimer.TimeLeft);
-        _updatePBar = true;        
+        _itemAmountGui.PlayUpdateAmountAnim();
+
+        ResetAnim("UseItem_anim");
+        AnimPlayer.Play("UseItem_anim", customSpeed: 1/ _uDurabilityTimer.WaitTime);
+
     }
 
-    public void StopUpdateUseDurabilityBar()
+    public void PlayHideAnim()
     {
-        ProgressBar pBar = GetNode<ProgressBar>("ProgressBar");
+        AnimPlayer.Play("Hide_anim");
+    }
 
-        pBar.Value = 0;
-        _updatePBar = false;
+    public void ResetAnim()
+    {
+        ResetAnim("UseItem_anim");
+
+        AnimPlayer.Play("ShowUp_anim");
+        AnimPlayer.Seek(0.0f, true);
+        AnimPlayer.Stop();
+    }
+
+    public void ResetAnim(string animationName)
+    {
+        AnimPlayer.Play(animationName);
+        AnimPlayer.Seek(0.0f, true);
+        AnimPlayer.Stop();
     }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-
+        _itemAmountGui = GetNode<ItemAmountImageContainer>("ItemAmountImageContainer");
+        _pBar = GetNode<ProgressBar>("ProgressBar");
+        AnimPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
-        if (_updatePBar)
-        {
-            ProgressBar pBar = GetNode<ProgressBar>("ProgressBar");
 
-            //GD.Print("Update progress bar");
-
-            pBar.Value = _uDurabilityTimer.TimeLeft;
-            pBar.Update();
-        }
     }
 }

@@ -1,0 +1,80 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://GUI/ScreenCover/ScreenCover.tscn" type="PackedScene" id=1]
+[ext_resource path="res://GraphicDesign/GodotLogoScreenBackgroundCover.png" type="Texture" id=2]
+[ext_resource path="res://GUI/ScreenCover/Covers/StartScreenCover.cs" type="Script" id=3]
+[ext_resource path="res://GraphicDesign/LCH_Logo_kriv2_Black_512.png" type="Texture" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Blink_anim"
+length = 4.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Godot_TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 1.6, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("LCH_TextureRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 2.4, 2.8, 4.1, 4.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[node name="ScreenCover" instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+
+[node name="ColorRect" parent="." index="0"]
+margin_top = 0.0
+margin_bottom = 0.0
+color = Color( 1, 1, 1, 1 )
+
+[node name="CenterContainer" type="CenterContainer" parent="ColorRect" index="0"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Godot_TextureRect" type="TextureRect" parent="ColorRect/CenterContainer" index="0"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 312.0
+margin_top = 73.0
+margin_right = 712.0
+margin_bottom = 527.0
+rect_min_size = Vector2( 400, 454 )
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LCH_TextureRect" type="TextureRect" parent="ColorRect/CenterContainer" index="1"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 256.0
+margin_top = 44.0
+margin_right = 768.0
+margin_bottom = 556.0
+rect_min_size = Vector2( 512, 512 )
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ColorRect/CenterContainer" index="2"]
+anims/Blink_anim = SubResource( 1 )

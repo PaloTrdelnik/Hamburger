@@ -3,6 +3,8 @@ using System;
 
 public class PropertyAmount : AspectRatioContainer
 {
+    public AnimationPlayer AnimPlayer;
+
     protected AmountGUI _amountGui;
 
     public void UpdateAmount(string amount)

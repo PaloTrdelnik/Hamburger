@@ -10,6 +10,7 @@ position = Vector2( -0.01, -0.5 )
 shape = SubResource( 1 )
 
 [node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color( 1, 1, 1, 0.639216 )
 margin_left = -300.0
 margin_top = -1.0
 margin_right = 300.0

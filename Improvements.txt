@@ -1,8 +1,29 @@
-Reorganise GUI
+Game Design:
+
 Rewrite inventory to use Enums instead of string (for addressing) 
-Change GameOverGUI to show how far player has actually come and show all his records
-Fix using items when you are in GameOverGUI
-Repair inheritance of ItemAmount
 Rewrite Property logic to be more as inventory
-Change toolbar binding
+
+Sound:
+
+GUI:
+
+Add GameStopGUI
+Remake ShopGUI
+Add version code to MainMenuGUI
+Redesign GUI code
+Repair inheritance of ItemAmount
+Fix reference design in ToolBarItem
 Add GUI to all names of GUI elements
+
+Graphics Design:
+
+Remake character sprites
+Add TimeDilation_anim
+Change title screen image (with animation)
+Resize title screen buttons
+Remake icons
+Remake logo and caption
+Make icon
+
+Bugs:
+

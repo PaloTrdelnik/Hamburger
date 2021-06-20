@@ -3,6 +3,7 @@ using System;
 
 public class PropertyUsageGUI : AspectRatioContainer
 {
+    public AnimationPlayer AnimPlayer;
     protected Usage _usageCont;
 
     public void UpdateAmount(PropertyUsage usageProp)

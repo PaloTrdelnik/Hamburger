@@ -6,6 +6,7 @@
 [ext_resource path="res://GUI/GUI.tscn" type="PackedScene" id=4]
 
 [node name="Main" type="Node2D"]
+position = Vector2( -2.32019, 0 )
 script = ExtResource( 3 )
 
 [node name="GUI" parent="." instance=ExtResource( 4 )]
@@ -16,11 +17,10 @@ script = ExtResource( 2 )
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 102.242, -100.295 )
 z_index = 3
-MOVE_SPEED = 400
-JUMP_FORCE = 1200
-GRAVITY = 80
 
 [connection signal="SLevelLoaded" from="." to="GUI" method="OnMainSLevelLoaded"]
+[connection signal="SLevelUnloaded" from="." to="GUI" method="OnMainSLevelUnloaded"]
+[connection signal="ready" from="." to="GUI" method="OnMainFinalReady"]
 [connection signal="SBuyItem" from="GUI" to="Shop" method="OnGUISBuyItem"]
 [connection signal="SLoadlevel" from="GUI" to="." method="OnGUISLoadlevel"]
 [connection signal="SSellItem" from="GUI" to="Shop" method="OnGUISSellItem"]
@@ -28,5 +28,5 @@ GRAVITY = 80
 [connection signal="SItemBought" from="Shop" to="GUI" method="OnShopSItemBought"]
 [connection signal="SItemSold" from="Shop" to="GUI" method="OnShopSItemSold"]
 [connection signal="SInvItemChange" from="Player" to="GUI" method="OnPlayerSInvItemChange"]
-[connection signal="SItemDurabilityUpdateBegin" from="Player" to="GUI" method="OnPlayerSItemDurabilityUpdateBegin"]
-[connection signal="SItemDurabilityUpdateEnd" from="Player" to="GUI" method="OnPlayerSItemDurabilityUpdateEnd"]
+[connection signal="SItemUseDurabilityBegin" from="Player" to="GUI" method="OnPlayerSItemUseDurabilityBegin"]
+[connection signal="SItemUseDurabilityEnd" from="Player" to="GUI" method="OnPlayerSItemUseDurabilityEnd"]

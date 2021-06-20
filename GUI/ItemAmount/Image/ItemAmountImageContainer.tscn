@@ -1,0 +1,85 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Items/Money/Money.jpg" type="Texture" id=1]
+[ext_resource path="res://GUI/ItemAmount/ItemAmountGUI.tscn" type="PackedScene" id=2]
+[ext_resource path="res://GUI/ItemAmount/Image/ItemAmountImageContainer.cs" type="Script" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Hide_anim"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "ShowUp_anim"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "UpdateAmount_anim"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("AmountContainer/Amount:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 1, 1 ) ]
+}
+
+[node name="ItemAmountImageContainer" instance=ExtResource( 2 )]
+anchor_left = 0.971503
+anchor_right = 1.0008
+margin_left = -93.8191
+margin_right = 0.180786
+margin_bottom = 73.0
+script = ExtResource( 3 )
+
+[node name="CenterContainer" type="CenterContainer" parent="." index="0"]
+margin_right = 60.0
+margin_bottom = 85.0
+rect_min_size = Vector2( 30, 30 )
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer" index="0"]
+margin_top = 12.0
+margin_right = 60.0
+margin_bottom = 72.0
+rect_min_size = Vector2( 60, 60 )
+texture = ExtResource( 1 )
+expand = true
+
+[node name="AmountContainer" parent="." index="1"]
+margin_left = 64.0
+margin_right = 134.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
+anims/Hide_anim = SubResource( 1 )
+anims/ShowUp_anim = SubResource( 2 )
+anims/UpdateAmount_anim = SubResource( 3 )
+
+[editable path="AmountContainer"]

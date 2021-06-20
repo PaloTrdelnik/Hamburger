@@ -1,41 +1,127 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://GUI/PropertyUssage/PropertyUsageGUI.tscn" type="PackedScene" id=1]
 [ext_resource path="res://GUI/PropertyUssage/Horizontal/PropertyUsageHGUI.cs" type="Script" id=2]
 [ext_resource path="res://GUI/Usage/Usage.tscn" type="PackedScene" id=3]
-[ext_resource path="res://GUI/Fonts/ArialUnicodeMS.ttf" type="DynamicFontData" id=4]
 
-[sub_resource type="DynamicFont" id=1]
-size = 32
-font_data = ExtResource( 4 )
+[sub_resource type="DynamicFontData" id=5]
+font_path = "res://GUI/Fonts/angerpoise-lampshade.regular.ttf"
+
+[sub_resource type="DynamicFont" id=6]
+size = 70
+font_data = SubResource( 5 )
+
+[sub_resource type="Animation" id=1]
+resource_name = "Hide_anim"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "ShowUp_anim"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "UpdateAmount_anim"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer/Usage/AmountLab:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "UpdateMaximum_anim"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer/Usage/MaximumLab:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 1, 1 ) ]
+}
 
 [node name="PropertyUsageHGUI" instance=ExtResource( 1 )]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -210.0
+margin_left = -75.0
 margin_right = 0.0
 grow_horizontal = 0
 script = ExtResource( 2 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." index="0"]
-margin_right = 210.0
-margin_bottom = 44.0
+margin_right = 137.0
+margin_bottom = 85.0
 
-[node name="Name" type="Label" parent="HBoxContainer" index="0"]
-margin_right = 131.0
-margin_bottom = 44.0
-custom_fonts/font = SubResource( 1 )
-text = "Property:"
-align = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Usage" parent="HBoxContainer" index="1" instance=ExtResource( 3 )]
+[node name="Usage" parent="HBoxContainer" index="0" instance=ExtResource( 3 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 135.0
-margin_right = 210.0
-margin_bottom = 44.0
+margin_right = 137.0
+margin_bottom = 85.0
+
+[node name="AmountLab" parent="HBoxContainer/Usage" index="0"]
+margin_right = 35.0
+margin_bottom = 85.0
+rect_pivot_offset = Vector2( 0, 42.5 )
+custom_fonts/font = SubResource( 6 )
+
+[node name="SeparatorLab" parent="HBoxContainer/Usage" index="1"]
+margin_left = 39.0
+margin_right = 63.0
+margin_bottom = 85.0
+custom_fonts/font = SubResource( 6 )
+
+[node name="MaximumLab" parent="HBoxContainer/Usage" index="2"]
+margin_left = 67.0
+margin_right = 102.0
+margin_bottom = 85.0
+rect_pivot_offset = Vector2( 0, 42.5 )
+custom_fonts/font = SubResource( 6 )
+
+[node name="Unit" parent="HBoxContainer/Usage" index="3"]
+margin_left = 106.0
+margin_right = 137.0
+margin_bottom = 85.0
+custom_fonts/font = SubResource( 6 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+anims/Hide_anim = SubResource( 1 )
+anims/ShowUp_anim = SubResource( 2 )
+anims/UpdateAmount_anim = SubResource( 3 )
+anims/UpdateMaximum_anim = SubResource( 4 )
 
 [editable path="HBoxContainer/Usage"]

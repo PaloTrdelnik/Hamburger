@@ -1,59 +1,28 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://GUI/ToolBar/ToolBarItem/ToolBarItem.cs" type="Script" id=1]
-[ext_resource path="res://GUI/ItemAmount/AmountGUI.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Items/TimeDilation/TimeDilation.jpg" type="Texture" id=3]
+[ext_resource path="res://GUI/ToolBar/ToolBarItem/ToolBarItem.tscn" type="PackedScene" id=1]
 
-[node name="ToolBarTimeDilation" type="AspectRatioContainer"]
-margin_right = 64.0
-margin_bottom = 112.0
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="ToolBarTimeDilation" instance=ExtResource( 1 )]
+modulate = Color( 1, 1, 1, 1 )
+margin_right = 153.0
 ItemKey = "TimeDilation"
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
-margin_top = 1.0
-margin_right = 64.0
-margin_bottom = 111.0
-rect_min_size = Vector2( 0, 110 )
-size_flags_vertical = 1
+[node name="ProgressBar" parent="." index="0"]
+margin_right = 153.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_right = 64.0
-margin_bottom = 112.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="ItemAmountImageContainer" parent="." index="1"]
+margin_right = 153.0
+ItemKey = "TimeDilation"
 
-[node name="CenterContainer2" type="CenterContainer" parent="VBoxContainer"]
-margin_right = 64.0
-margin_bottom = 64.0
+[node name="AmountContainer" parent="ItemAmountImageContainer" index="1"]
+margin_right = 139.0
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/CenterContainer2"]
-margin_right = 64.0
-margin_bottom = 64.0
-rect_min_size = Vector2( 64, 64 )
-rect_clip_content = true
-size_flags_horizontal = 15
-size_flags_vertical = 15
-texture = ExtResource( 3 )
-expand = true
-stretch_mode = 5
-
-[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
-margin_top = 68.0
-margin_right = 64.0
-margin_bottom = 112.0
-
-[node name="AmountContainer" parent="VBoxContainer/CenterContainer" instance=ExtResource( 2 )]
-anchor_left = 0.0
-anchor_right = 0.0
-margin_left = 23.0
-margin_right = 41.0
-
-[node name="Unit" parent="VBoxContainer/CenterContainer/AmountContainer" index="1"]
+[node name="Unit" parent="ItemAmountImageContainer/AmountContainer" index="1"]
 visible = false
 
-[editable path="VBoxContainer/CenterContainer/AmountContainer"]
+[node name="MarginContainer" parent="ItemAmountImageContainer" index="3"]
+margin_left = 143.0
+margin_right = 153.0
+
+[editable path="ItemAmountImageContainer"]
+[editable path="ItemAmountImageContainer/AmountContainer"]

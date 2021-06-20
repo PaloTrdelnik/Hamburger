@@ -19,6 +19,61 @@ public class ToolBar : HBoxContainer
             item.UpdateAmount(player);
         }
     }
+
+    public async void PlayShowUpAnim()
+    {
+        foreach (var child in GetChildren())
+        {
+            if (child is ToolBarItem)
+            {
+                ToolBarItem toolBarItemChild = (ToolBarItem)child;
+
+                toolBarItemChild.PlayShowUpAnim();
+                await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
+            }
+        }
+    }
+
+    public async void PlayHideAnim()
+    {
+        foreach (var child in GetChildren())
+        {
+            if (child is ToolBarItem)
+            {
+                ToolBarItem toolBarItemChild = (ToolBarItem)child;
+
+                toolBarItemChild.PlayHideAnim();
+                await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
+            }
+        }
+    }
+
+    public void ResetAnim()
+    {
+        foreach (var child in GetChildren())
+        {
+            if (child is ToolBarItem)
+            {
+                ToolBarItem toolBarItemChild = (ToolBarItem)child;
+
+                toolBarItemChild.ResetAnim();
+            }
+        }
+    }
+
+    public void ResetAnim(string animationName)
+    {
+        foreach (var child in GetChildren())
+        {
+            if (child is ToolBarItem)
+            {
+                ToolBarItem toolBarItemChild = (ToolBarItem)child;
+
+                toolBarItemChild.ResetAnim(animationName);
+            }
+        }
+    }
+
     public override void _Ready()
     {
         

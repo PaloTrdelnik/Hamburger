@@ -6,9 +6,9 @@
 [ext_resource path="res://Character/ItemUser.cs" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 15, 27 )
+extents = Vector2( 13.6457, 27 )
 
-[sub_resource type="CapsuleShape2D" id=7]
+[sub_resource type="CapsuleShape2D" id=2]
 radius = 9.8811
 height = 7.21883
 
@@ -61,26 +61,28 @@ tracks/0/keys = {
 }
 
 [sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 15, 25 )
+extents = Vector2( 14.6826, 25 )
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 2 )
-JUMP_FORCE = 900
-GRAVITY = 10000
+MOVE_SPEED = 300
+JUMP_FORCE = 1100
+GRAVITY = 95
+MAX_FALL_SPEED = 1200
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 smoothing_enabled = true
-smoothing_speed = 3.0
+smoothing_speed = 1.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -0.054306, 0 )
+position = Vector2( -2.32069, 0.25182 )
 shape = SubResource( 1 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 17.865 )
 rotation = 1.5708
-shape = SubResource( 7 )
+shape = SubResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 4.16531, 0 )
@@ -97,6 +99,7 @@ anims/walk = SubResource( 5 )
 script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interaction"]
+position = Vector2( -3.10578, 0 )
 shape = SubResource( 6 )
 
 [node name="ItemUser" type="Node" parent="."]

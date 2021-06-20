@@ -4,7 +4,7 @@ using System;
 public class Player : KinematicBody2D
 {
     [Export]
-    int MOVE_SPEED = 500;
+    int MOVE_SPEED = 20;
 
     [Export]
     int JUMP_FORCE = 1200;
@@ -22,26 +22,26 @@ public class Player : KinematicBody2D
     public delegate void SSlowDownTime(int amount, int length); // length in milliseconds
 
     [Signal]
-    public delegate void SItemDurabilityUpdateBegin(string itemKey);
+    public delegate void SItemUseDurabilityBegin(string itemKey);
 
     [Signal]
-    public delegate void SItemDurabilityUpdateEnd(string itemKey);
+    public delegate void SItemUseDurabilityEnd(string itemKey);
 
     public bool bFreezeInput = false;
     public bool bFreeze = true;
     public Inventory Inv = new Inventory();
     public Property ScoreProp = new Property();
+    public ItemUser ItemUser;
 
     private GUI _gui;
-    private ItemUser _itemUser;
 
     private int _yVelo = 0;
+    private float _pushForce = 200;
     private bool _facingRight = true;
 
     public void OnItemUserSItemUseEnd(string itemKey)
     {
-        GD.Print("ItemUseEnd");
-        EmitSignal(nameof(SItemDurabilityUpdateEnd), itemKey);
+        EmitSignal(nameof(SItemUseDurabilityEnd), itemKey);
     }
 
     public void OnInteractionSAddToInv(Item item)
@@ -61,7 +61,7 @@ public class Player : KinematicBody2D
     public override void _Ready()
     {
         _gui = GetParent().GetNode<GUI>("GUI");
-        _itemUser = GetNode<ItemUser>("ItemUser");
+        ItemUser = GetNode<ItemUser>("ItemUser");
     }
 
     public override void _PhysicsProcess(float delta)
@@ -79,20 +79,19 @@ public class Player : KinematicBody2D
 
         }
 
-        if (bFreezeInput)
+        //handle RigidBody2D collisions
+        for (int index = 0; index < GetSlideCount(); index++)
         {
-            moveDir = 0;
+            KinematicCollision2D collision = GetSlideCollision(index);
+            if (collision.Collider != null)
+            {
+                if (collision.Collider.IsClass("RigidBody2D"))
+                {
+                    RigidBody2D body = (RigidBody2D)collision.Collider;
+                    body.ApplyCentralImpulse(-collision.Normal * _pushForce);
+                }
+            }
         }
-        if (bFreeze)
-        {
-            moveDir = 0;
-            _yVelo = 0;
-        }
-
-        Vector2 moveVector = new Vector2(moveDir * MOVE_SPEED, _yVelo);
-        Vector2 upDirection = new Vector2(0, -1);
-
-        MoveAndSlide(moveVector, upDirection);
 
         bool grounded = IsOnFloor();
 
@@ -120,6 +119,21 @@ public class Player : KinematicBody2D
             _yVelo = MAX_FALL_SPEED;
         }
 
+        if (bFreezeInput)
+        {
+            moveDir = 0;
+        }
+        if (bFreeze)
+        {
+            moveDir = 0;
+            _yVelo = 0;
+        }
+
+        Vector2 moveVector = new Vector2(moveDir * MOVE_SPEED, _yVelo);
+        Vector2 upDirection = new Vector2(0, -1);
+
+        MoveAndSlide(moveVector, upDirection, infiniteInertia: false);
+
         if (!_facingRight && moveDir > 0)
         {
             Flip();
@@ -129,22 +143,24 @@ public class Player : KinematicBody2D
         {
             Flip();
         }
-
-        if (grounded)
+        if (!bFreeze)
         {
-            if (moveDir == 0)
+            if (grounded)
             {
-                PlayAnim("idle");
-            }
+                if (moveDir == 0)
+                {
+                    PlayAnim("idle");
+                }
 
+                else
+                {
+                    PlayAnim("walk");
+                }
+            }
             else
             {
-                PlayAnim("walk");
+                PlayAnim("jump");
             }
-        }
-        else
-        {
-            PlayAnim("jump");
         }
 
     }
@@ -207,11 +223,11 @@ public class Player : KinematicBody2D
         {
             if (itemKey == "TimeDilation")
             {
-                if(_itemUser.UseItem(itemKey))
+                if(ItemUser.UseItem(itemKey))
                 {
                     EmitSignal(nameof(SInvItemChange), this, itemKey);
                     EmitSignal(nameof(SSlowDownTime), 5, 10000);
-                    EmitSignal(nameof(SItemDurabilityUpdateBegin), itemKey);
+                    EmitSignal(nameof(SItemUseDurabilityBegin), itemKey);
                 }
             }
         }

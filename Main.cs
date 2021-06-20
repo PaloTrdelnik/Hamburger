@@ -6,6 +6,9 @@ public class Main : Node2D
 	[Signal]
 	public delegate void SLevelLoaded(Node level);
 
+	[Signal]
+	public delegate void SLevelUnloaded();
+
 	public Level ActualLevel;
 	
 	public void OnGUISLoadlevel(string resPath)
@@ -22,6 +25,7 @@ public class Main : Node2D
 	public void OnGUISUnloadLevel()
 	{
 		ActualLevel.QueueFree();
+		EmitSignal(nameof(SLevelUnloaded));
 	}
 
 	public override void _Ready()

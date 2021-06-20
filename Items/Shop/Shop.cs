@@ -14,7 +14,7 @@ public class Shop : Node2D
     public Dictionary<string, ShopItem> ShopPrizes = new Dictionary<string, ShopItem>
     {
         {"Money", new ShopItem{ MarketValue = 1, ValueBuyOffset = 0, ValueSellOffset = 0 } },
-        {"TimeDilation", new ShopItem{ MarketValue = 2, ValueBuyOffset = 3, ValueSellOffset = -1 } },
+        {"TimeDilation", new ShopItem{ MarketValue = 2, ValueBuyOffset = 0, ValueSellOffset = 0 } },
     };
 
     public void OnGUISBuyItem(Player player, string itemKeyToBuy, int amount)
