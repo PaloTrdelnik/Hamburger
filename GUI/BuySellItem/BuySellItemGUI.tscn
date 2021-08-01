@@ -9,51 +9,51 @@
 [ext_resource path="res://GraphicDesign/Button_background.png" type="Texture" id=8]
 [ext_resource path="res://GUI/Amount/AmountGUI.tscn" type="PackedScene" id=9]
 
-[sub_resource type="Theme" id=3]
+[sub_resource type="Theme" id=1]
 
-[sub_resource type="StyleBoxTexture" id=4]
+[sub_resource type="StyleBoxTexture" id=2]
 texture = ExtResource( 6 )
 region_rect = Rect2( 200, 0, 20, 512 )
 
-[sub_resource type="StyleBoxTexture" id=5]
+[sub_resource type="StyleBoxTexture" id=3]
 texture = ExtResource( 5 )
 region_rect = Rect2( 200, 0, 20, 512 )
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 8 )
+region_rect = Rect2( 200, 0, 20, 512 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.501961, 0.501961, 0.501961, 1 )
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
 [sub_resource type="StyleBoxTexture" id=6]
 texture = ExtResource( 8 )
 region_rect = Rect2( 200, 0, 20, 512 )
 
-[sub_resource type="StyleBoxFlat" id=7]
-bg_color = Color( 0.501961, 0.501961, 0.501961, 1 )
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-
-[sub_resource type="StyleBoxTexture" id=8]
-texture = ExtResource( 8 )
-region_rect = Rect2( 200, 0, 20, 512 )
-
-[sub_resource type="DynamicFontData" id=9]
+[sub_resource type="DynamicFontData" id=13]
 font_path = "res://GUI/Fonts/mayor.regular.ttf"
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=8]
 size = 60
 outline_size = 3
 outline_color = Color( 1, 0.34902, 0, 1 )
 use_filter = true
-font_data = SubResource( 9 )
+font_data = SubResource( 13 )
 
-[sub_resource type="InputEventAction" id=2]
+[sub_resource type="InputEventAction" id=14]
 action = "Game_Back"
 
-[sub_resource type="ShortCut" id=11]
-shortcut = SubResource( 2 )
+[sub_resource type="ShortCut" id=10]
+shortcut = SubResource( 14 )
 
-[sub_resource type="DynamicFontData" id=24]
+[sub_resource type="DynamicFontData" id=23]
 font_path = "res://GUI/Fonts/angerpoise-lampshade.regular.ttf"
 
-[sub_resource type="DynamicFont" id=13]
+[sub_resource type="DynamicFont" id=24]
 size = 50
-font_data = SubResource( 24 )
+font_data = SubResource( 23 )
 
 [node name="BuySellItemGUI" type="VBoxContainer"]
 anchor_right = 1.0
@@ -69,9 +69,8 @@ __meta__ = {
 }
 
 [node name="CenterContainer2" type="CenterContainer" parent="."]
-margin_top = 24.0
 margin_right = 215.0
-margin_bottom = 109.0
+margin_bottom = 85.0
 
 [node name="ItemAmountTextContainer" parent="CenterContainer2" instance=ExtResource( 2 )]
 anchor_left = 0.0
@@ -81,9 +80,9 @@ margin_right = 213.0
 margin_bottom = 85.0
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
-margin_top = 113.0
+margin_top = 89.0
 margin_right = 215.0
-margin_bottom = 458.0
+margin_bottom = 434.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 margin_right = 215.0
@@ -127,14 +126,14 @@ rect_pivot_offset = Vector2( 166, 25 )
 focus_mode = 2
 mouse_filter = 0
 size_flags_horizontal = 3
-theme = SubResource( 3 )
-custom_styles/hover = SubResource( 4 )
-custom_styles/pressed = SubResource( 5 )
-custom_styles/focus = SubResource( 6 )
-custom_styles/disabled = SubResource( 7 )
-custom_styles/normal = SubResource( 8 )
-custom_fonts/font = SubResource( 10 )
-shortcut = SubResource( 11 )
+theme = SubResource( 1 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/disabled = SubResource( 5 )
+custom_styles/normal = SubResource( 6 )
+custom_fonts/font = SubResource( 8 )
+shortcut = SubResource( 10 )
 text = "Buy"
 icon = null
 
@@ -148,13 +147,13 @@ margin_bottom = 61.0
 [node name="Amount" parent="CenterContainer/VBoxContainer/HBoxContainer/BuyPriceAmountContainer" index="0"]
 margin_right = 25.0
 margin_bottom = 61.0
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 24 )
 
 [node name="Unit" parent="CenterContainer/VBoxContainer/HBoxContainer/BuyPriceAmountContainer" index="1"]
 margin_left = 29.0
 margin_right = 51.0
 margin_bottom = 61.0
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 24 )
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
 margin_top = 284.0
@@ -178,14 +177,14 @@ rect_pivot_offset = Vector2( 166, 25 )
 focus_mode = 2
 mouse_filter = 0
 size_flags_horizontal = 3
-theme = SubResource( 3 )
-custom_styles/hover = SubResource( 4 )
-custom_styles/pressed = SubResource( 5 )
-custom_styles/focus = SubResource( 6 )
-custom_styles/disabled = SubResource( 7 )
-custom_styles/normal = SubResource( 8 )
-custom_fonts/font = SubResource( 10 )
-shortcut = SubResource( 11 )
+theme = SubResource( 1 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/disabled = SubResource( 5 )
+custom_styles/normal = SubResource( 6 )
+custom_fonts/font = SubResource( 8 )
+shortcut = SubResource( 10 )
 text = "Sell"
 icon = null
 
@@ -199,13 +198,13 @@ margin_bottom = 61.0
 [node name="Amount" parent="CenterContainer/VBoxContainer/HBoxContainer2/SellPriceAmountContainer" index="0"]
 margin_right = 25.0
 margin_bottom = 61.0
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 24 )
 
 [node name="Unit" parent="CenterContainer/VBoxContainer/HBoxContainer2/SellPriceAmountContainer" index="1"]
 margin_left = 29.0
 margin_right = 51.0
 margin_bottom = 61.0
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 24 )
 
 [connection signal="button_down" from="CenterContainer/VBoxContainer/HBoxContainer/Buy" to="." method="OnBuyButtonDown"]
 [connection signal="button_down" from="CenterContainer/VBoxContainer/HBoxContainer/BuyButtonText" to="." method="OnBuyButtonDown"]

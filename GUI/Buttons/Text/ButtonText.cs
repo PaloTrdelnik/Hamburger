@@ -17,6 +17,7 @@ public class ButtonText : Button
 
     public void ResetAnim()
     {
+        AnimPlayer.Stop();
         AnimPlayer.Play("ShowUp_anim");
         AnimPlayer.Seek(0.0f, true);
         AnimPlayer.Stop();

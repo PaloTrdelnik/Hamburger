@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Levels/BlockChallenge/BlockChallenge.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Items/TimeDilation/TimeDilation.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Items/ItemSpawner/SpawnPoint/SpawnPoint2D.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Items/ItemSpawner/Spwners/Probability/HeightProbSpawn/Probabilities/ItemSpawner2D_HeightMediumProbSpawn.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Items/ItemSpawner/Spwners/Probability/HeightProbSpawn/Probabilities/ItemSpawner2D_HeightLowProbSpawn.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Items/Money/Money.tscn" type="PackedScene" id=6]
+
+[node name="TileMap" instance=ExtResource( 1 )]
+tile_data = PoolIntArray( -851968, 3, 0, -851962, 0, 0, -851961, 0, 0, -851960, 0, 0, -851950, 3, 0, -786432, 3, 0, -786414, 3, 0, -720896, 3, 0, -720878, 3, 0, -655360, 3, 0, -655359, 0, 0, -655358, 0, 0, -655357, 0, 0, -655356, 0, 0, -655342, 3, 0, -589824, 3, 0, -589820, 3, 0, -589806, 3, 0, -524288, 3, 0, -524284, 3, 0, -524270, 3, 0, -458752, 3, 0, -458748, 3, 0, -458747, 0, 0, -458746, 0, 0, -458745, 0, 0, -458744, 0, 0, -458734, 3, 0, -393216, 3, 0, -393198, 3, 0, -327680, 3, 0, -327662, 3, 0, -262144, 3, 0, -262141, 0, 0, -262140, 0, 0, -262139, 0, 0, -262138, 0, 0, -262137, 0, 0, -262136, 0, 0, -262135, 0, 0, -262134, 0, 0, -262133, 0, 0, -262132, 0, 0, -262126, 3, 0, -196608, 3, 0, -196590, 3, 0, -131072, 3, 0, -131054, 3, 0, -65536, 3, 0, -65535, 0, 0, -65534, 0, 0, -65523, 0, 0, -65522, 0, 0, -65521, 0, 0, -65520, 0, 0, -65519, 0, 0, -65518, 3, 0 )
+
+[node name="ItemSpawner2D3" parent="." index="0" instance=ExtResource( 4 )]
+ItemScene = ExtResource( 6 )
+
+[node name="SpawnPoint2D2" parent="ItemSpawner2D3" index="0" instance=ExtResource( 3 )]
+position = Vector2( 112, -208 )
+SpawnLevel = 30
+
+[node name="SpawnPoint2D5" parent="ItemSpawner2D3" index="1" instance=ExtResource( 3 )]
+position = Vector2( 48, -208 )
+SpawnLevel = 30
+
+[node name="ItemSpawner2D" parent="." index="1" instance=ExtResource( 5 )]
+ItemScene = ExtResource( 2 )
+
+[node name="SpawnPoint2D" parent="ItemSpawner2D" index="0" instance=ExtResource( 3 )]
+position = Vector2( 544, -80 )
+SpawnLevel = 6

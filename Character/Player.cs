@@ -4,16 +4,16 @@ using System;
 public class Player : KinematicBody2D
 {
     [Export]
-    int MOVE_SPEED = 20;
+    public int MOVE_SPEED = 20;
 
     [Export]
-    int JUMP_FORCE = 1200;
+    public int JUMP_FORCE = 1200;
 
     [Export]
-    int GRAVITY = 80;
+    public int GRAVITY = 80;
     
     [Export]
-    int MAX_FALL_SPEED = 1000;
+    public int MAX_FALL_SPEED = 1000;
 
     [Signal]
     public delegate void SInvItemChange(Player player, string itemInvKey);
@@ -29,12 +29,13 @@ public class Player : KinematicBody2D
 
     public bool bFreezeInput = false;
     public bool bFreeze = true;
+    public bool bMoved = false;
     public Inventory Inv = new Inventory();
     public Property ScoreProp = new Property();
     public ItemUser ItemUser;
+    public AnimationPlayer AnimPlayer;
 
     private GUI _gui;
-
     private int _yVelo = 0;
     private float _pushForce = 200;
     private bool _facingRight = true;
@@ -57,10 +58,19 @@ public class Player : KinematicBody2D
         }
     }
 
+    public bool IsReadyForGameplay(Vector2 playerStartPos)
+    {
+        if (playerStartPos.DistanceTo(GlobalPosition) > 35 && bMoved)
+            return true;
+        else
+            return false;
+    }
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         _gui = GetParent().GetNode<GUI>("GUI");
+        AnimPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         ItemUser = GetNode<ItemUser>("ItemUser");
     }
 
@@ -70,13 +80,13 @@ public class Player : KinematicBody2D
         if (Input.IsActionPressed("Game_Right"))
         {
             moveDir += 1;
-
+            bMoved = true;
         }
 
         if (Input.IsActionPressed("Game_Left"))
         {
             moveDir -= 1;
-
+            bMoved = true;
         }
 
         //handle RigidBody2D collisions
@@ -179,18 +189,22 @@ public class Player : KinematicBody2D
 
     }
 
-    private void PlayAnim(string animName)
+    public void PlayAnim(string animName)
     {
-        var pAnimPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-
-        if (pAnimPlayer.IsPlaying() && pAnimPlayer.CurrentAnimation == animName)
+        if (AnimPlayer.IsPlaying() && AnimPlayer.CurrentAnimation == animName)
         {
             return;
         }
         else
         {
-            pAnimPlayer.Play(animName);
+            AnimPlayer.Play(animName);
         }
+    }
+    public void ResetAnim()
+    {
+        AnimPlayer.Play("Disappear_anim");
+        AnimPlayer.Seek(0.0f, true);
+        AnimPlayer.Stop();
     }
 
     private void CheckForAbilityInput()
@@ -219,7 +233,7 @@ public class Player : KinematicBody2D
     {
         Item rem = new Item { InvKey = itemKey, Amount = 1 };
 
-        if (Inv.IsInInv(rem))
+        if (Inv.IsInInv(rem) && !bFreeze)
         {
             if (itemKey == "TimeDilation")
             {

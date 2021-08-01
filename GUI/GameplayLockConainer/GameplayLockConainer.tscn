@@ -1,0 +1,103 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://GUI/Caption/Caption.tscn" type="PackedScene" id=1]
+[ext_resource path="res://GUI/GameplayLockConainer/GameplayLockConainer.cs" type="Script" id=2]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://GUI/Fonts/angerpoise-lampshade.regular.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+size = 70
+font_data = SubResource( 1 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "Hide_anim"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.95, 0.95 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.125 ),
+"transitions": PoolRealArray( 1, 2 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.125, 0.325, 0.4 ),
+"transitions": PoolRealArray( 2, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 0.99, 0.99 ), Vector2( 1, 1 ) ]
+}
+
+[node name="GameplayLockContainer" type="Control"]
+margin_right = 426.0
+margin_bottom = 256.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Caption" parent="." instance=ExtResource( 1 )]
+modulate = Color( 1, 1, 1, 1 )
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 426.0
+margin_bottom = 85.0
+rect_pivot_offset = Vector2( 181, 100 )
+custom_fonts/font = SubResource( 2 )
+text = "Improvements"
+
+[node name="AnimationPlayer" parent="Caption" index="0"]
+anims/Hide_anim = SubResource( 3 )
+anims/ShowUp_anim = SubResource( 4 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_top = 89.0
+margin_right = 426.0
+margin_bottom = 448.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="ScrollContainer"]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/CenterContainer"]
+rect_pivot_offset = Vector2( -272, -9 )
+
+[editable path="Caption"]

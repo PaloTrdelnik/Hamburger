@@ -4,6 +4,7 @@ using System;
 public class ButtonImage : CenterContainer
 {
     public AnimationPlayer AnimPlayer;
+    private TextureRect TexRect;
 
     public void PlayShowUpAnim()
     {
@@ -22,10 +23,16 @@ public class ButtonImage : CenterContainer
         AnimPlayer.Stop();
     }
 
+    public void SwapTexture(Texture texture)
+    {
+        TexRect.Texture = texture;
+    }
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         AnimPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        TexRect = GetNode<TextureRect>("TextureRect");
     }
 
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.

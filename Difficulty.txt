@@ -1,0 +1,42 @@
+JUMP
+
+Space to land----|
+Distance to jump-|
+Side of jump
+
+Dead ends
+Save after fail
+Number of ways
+Props
+Distance to jump (Double jump)
+
+Learn--------1-2 times
+Practise-----1-2 times
+//Fail-------
+
+Learning Functions:
+
+L_main()
+{
+    Add difficulty: Space to land || Distance to jump
+    Repeat:
+    Add difficulty: Side of Jump
+}
+
+Variations
+Learning
+
+Ideas to improve:
+Adjust jump (make player smaller)
+
+Tana:
+Main problem: acid 30bpoints
+Better every: 6th run
+Max score: 42
+Runs: Around 25
+
+Marek:
+Main problem: acid 28 points
+Better every: 2nd run
+Max score: 28
+Runs: Around 7

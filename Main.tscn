@@ -1,13 +1,16 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Character/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Items/Shop/Shop.cs" type="Script" id=2]
 [ext_resource path="res://Main.cs" type="Script" id=3]
 [ext_resource path="res://GUI/GUI.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Gameplay/GameplayUnlocker/GameplayUnlocker.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Gameplay/PreloadedGameplay/Gameplays/PreloadedGameplay_Level.tscn" type="PackedScene" id=6]
 
 [node name="Main" type="Node2D"]
-position = Vector2( -2.32019, 0 )
 script = ExtResource( 3 )
+
+[node name="GameplayUnlocker" parent="." instance=ExtResource( 5 )]
 
 [node name="GUI" parent="." instance=ExtResource( 4 )]
 
@@ -16,15 +19,24 @@ script = ExtResource( 2 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 102.242, -100.295 )
+scale = Vector2( 0.7, 0.7 )
 z_index = 3
+JUMP_FORCE = 1080
 
+[node name="PreloadedGameplay_Level" parent="." instance=ExtResource( 6 )]
+
+[connection signal="SLevelLoaded" from="." to="PreloadedGameplay_Level" method="OnMainSLevelLoaded"]
 [connection signal="SLevelLoaded" from="." to="GUI" method="OnMainSLevelLoaded"]
+[connection signal="SLevelUnloaded" from="." to="PreloadedGameplay_Level" method="OnMainSLevelUnloaded"]
 [connection signal="SLevelUnloaded" from="." to="GUI" method="OnMainSLevelUnloaded"]
 [connection signal="ready" from="." to="GUI" method="OnMainFinalReady"]
+[connection signal="SGameplayLockUnlocked" from="GameplayUnlocker" to="GUI" method="OnGameplayUnlockerSGameplayLockUnlocked"]
+[connection signal="SBuyGLock" from="GUI" to="Shop" method="OnGUISBuyGLock"]
 [connection signal="SBuyItem" from="GUI" to="Shop" method="OnGUISBuyItem"]
 [connection signal="SLoadlevel" from="GUI" to="." method="OnGUISLoadlevel"]
 [connection signal="SSellItem" from="GUI" to="Shop" method="OnGUISSellItem"]
 [connection signal="SUnloadLevel" from="GUI" to="." method="OnGUISUnloadLevel"]
+[connection signal="SGLockBought" from="Shop" to="GameplayUnlocker" method="OnShopSGLockBought"]
 [connection signal="SItemBought" from="Shop" to="GUI" method="OnShopSItemBought"]
 [connection signal="SItemSold" from="Shop" to="GUI" method="OnShopSItemSold"]
 [connection signal="SInvItemChange" from="Player" to="GUI" method="OnPlayerSInvItemChange"]

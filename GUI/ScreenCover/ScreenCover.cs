@@ -3,6 +3,12 @@ using System;
 
 public class ScreenCover : Control
 {
+    [Signal]
+    public delegate void CoveringStarted();
+
+    [Signal]
+    public delegate void CoveringFinished();
+
     enum PlayingAnimation
     {
         ShowScreenAnim,
@@ -29,7 +35,9 @@ public class ScreenCover : Control
         _actualAnim = PlayingAnimation.ShowScreenAnim;
         await ToSignal(GetTree().CreateTimer(AnimLength), "timeout");
         _actualAnim = PlayingAnimation.None;
+
         Hide();
+        EmitSignal(nameof(CoveringFinished));
     }
 
     public async void PlayHideScreenAnim()
@@ -41,6 +49,8 @@ public class ScreenCover : Control
         PlayScreenTransition();
 
         _actualAnim = PlayingAnimation.HideScreenAnim;
+
+        EmitSignal(nameof(CoveringStarted));
         await ToSignal(GetTree().CreateTimer(AnimLength), "timeout");
         _actualAnim = PlayingAnimation.None;
     }

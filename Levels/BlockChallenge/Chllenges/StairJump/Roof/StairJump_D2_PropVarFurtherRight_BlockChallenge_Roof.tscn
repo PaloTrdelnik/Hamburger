@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Levels/BlockChallenge/BlockChallenge.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Levels/Props/Prop.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Items/ItemSpawner/SpawnPoint/SpawnPoint2D.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Items/ItemSpawner/Spwners/Constant/ItemSpawner2D_Constaint.tscn" type="PackedScene" id=4]
+
+[node name="TileMap" instance=ExtResource( 1 )]
+tile_data = PoolIntArray( -655350, 8, 0, -655349, 8, 0, -655348, 8, 0, -589814, 7, 0, -589813, 7, 0, -589812, 7, 0, -393211, 8, 0, -393210, 8, 0, -393209, 8, 0, -327675, 7, 0, -327674, 7, 0, -327673, 7, 0, -131072, 8, 0, -131071, 8, 0, -131070, 8, 0, -65536, 7, 0, -65535, 7, 0, -65534, 7, 0 )
+
+[node name="ItemSpawner2D" parent="." index="0" instance=ExtResource( 4 )]
+ItemScene = ExtResource( 2 )
+
+[node name="SpawnPoint2D2" parent="ItemSpawner2D" index="0" instance=ExtResource( 3 )]
+position = Vector2( 384, -304 )
+SpawnLevel = 30
+
+[node name="SpawnPoint2D3" parent="ItemSpawner2D" index="1" instance=ExtResource( 3 )]
+position = Vector2( 224, -176 )
+SpawnLevel = 30
+
+[node name="SpawnPoint2D4" parent="ItemSpawner2D" index="2" instance=ExtResource( 3 )]
+position = Vector2( 64, -48 )
+SpawnLevel = 30

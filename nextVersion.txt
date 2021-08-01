@@ -1,28 +1,16 @@
 Game Design:
 
-Add BlockChallenges to improve game feel
-Design item spawning in BlockChallenges
-Make level form BlockChallenges
-Add ability to buy improvements
-Add end of game
-Add Acid Raise stop after reaching some height
-Add controls for audio
 Add info about producers of game
+Add multiple improvements
+Adjust item spawning amount (optimisation)
 
 Sound:
-Find better songs for game
 
 GUI:
-
-Make ShopGUI accessible form GameOverGUI
-Add notification to GameOverGUI if there is new improvement available
-Create GameFinishedGUI
-Improve toolbar binding(keyboard)
-Improve key binding for buttons in menu
+Add ItemContainer to ShopGUI
+Add tutorials about keybinding and gameplay
+Remake sound mixing and functionality after ChangeGUI() function
+Add version code to MainMenuGUI
 
 Bugs:
 
-Fix using items when you are in GameOverGUI
-Fix start game by key at beginning 
-Fix reset camera after level unload
-Fix stop Acid Raise at start suntil player's camera is in the right position

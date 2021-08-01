@@ -1,0 +1,232 @@
+[gd_scene load_steps=27 format=2]
+
+[ext_resource path="res://GraphicDesign/Picture_office.png" type="Texture" id=1]
+[ext_resource path="res://GraphicDesign/Button_background_hover.png" type="Texture" id=2]
+[ext_resource path="res://GUI/Caption/Caption.tscn" type="PackedScene" id=3]
+[ext_resource path="res://GraphicDesign/Button_background.png" type="Texture" id=4]
+[ext_resource path="res://GUI/Buttons/Text/ButtonText.tscn" type="PackedScene" id=5]
+[ext_resource path="res://GraphicDesign/Button_background_click.png" type="Texture" id=6]
+[ext_resource path="res://GUI/GameplayLock/GameplayLockGUI.cs" type="Script" id=7]
+[ext_resource path="res://GUI/Amount/AmountGUI.tscn" type="PackedScene" id=8]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://GUI/Fonts/angerpoise-lampshade.regular.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+size = 70
+font_data = SubResource( 1 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "Hide_anim"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.95, 0.95 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.125 ),
+"transitions": PoolRealArray( 1, 2 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.125, 0.325, 0.4 ),
+"transitions": PoolRealArray( 2, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 0.99, 0.99 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="DynamicFontData" id=5]
+font_path = "res://GUI/Fonts/angerpoise-lampshade.regular.ttf"
+
+[sub_resource type="DynamicFont" id=6]
+size = 30
+font_data = SubResource( 5 )
+
+[sub_resource type="Theme" id=7]
+
+[sub_resource type="StyleBoxTexture" id=8]
+texture = ExtResource( 2 )
+region_rect = Rect2( 200, 0, 20, 512 )
+
+[sub_resource type="StyleBoxTexture" id=9]
+texture = ExtResource( 6 )
+region_rect = Rect2( 200, 0, 20, 512 )
+
+[sub_resource type="StyleBoxTexture" id=10]
+texture = ExtResource( 4 )
+region_rect = Rect2( 200, 0, 20, 512 )
+
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 0.501961, 0.501961, 0.501961, 1 )
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxTexture" id=12]
+texture = ExtResource( 4 )
+region_rect = Rect2( 200, 0, 20, 512 )
+
+[sub_resource type="DynamicFontData" id=13]
+font_path = "res://GUI/Fonts/mayor.regular.ttf"
+
+[sub_resource type="DynamicFont" id=14]
+size = 60
+outline_size = 3
+outline_color = Color( 1, 0.34902, 0, 1 )
+use_filter = true
+font_data = SubResource( 13 )
+
+[sub_resource type="InputEventAction" id=15]
+action = "Game_Back"
+
+[sub_resource type="ShortCut" id=16]
+shortcut = SubResource( 15 )
+
+[sub_resource type="DynamicFontData" id=17]
+font_path = "res://GUI/Fonts/angerpoise-lampshade.regular.ttf"
+
+[sub_resource type="DynamicFont" id=18]
+size = 50
+font_data = SubResource( 17 )
+
+[node name="GameplayLockGUI" type="VBoxContainer"]
+margin_right = 498.0
+margin_bottom = 271.0
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Caption" parent="." instance=ExtResource( 3 )]
+modulate = Color( 1, 1, 1, 1 )
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 498.0
+margin_bottom = 85.0
+rect_pivot_offset = Vector2( 181, 100 )
+custom_fonts/font = SubResource( 2 )
+text = "GLock Name"
+
+[node name="AnimationPlayer" parent="Caption" index="0"]
+anims/Hide_anim = SubResource( 3 )
+anims/ShowUp_anim = SubResource( 4 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_top = 89.0
+margin_right = 498.0
+margin_bottom = 217.0
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer"]
+margin_right = 128.0
+margin_bottom = 128.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/CenterContainer"]
+margin_right = 128.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 128, 128 )
+texture = ExtResource( 1 )
+expand = true
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+margin_left = 132.0
+margin_top = 25.0
+margin_right = 498.0
+margin_bottom = 102.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+custom_fonts/font = SubResource( 6 )
+text = "GLock label can explain what GLock unlocks"
+autowrap = true
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+margin_top = 221.0
+margin_right = 498.0
+margin_bottom = 282.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer"]
+margin_left = 110.0
+margin_right = 388.0
+margin_bottom = 61.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UnlockButtonText" parent="CenterContainer/HBoxContainer" instance=ExtResource( 5 )]
+modulate = Color( 1, 1, 1, 1 )
+margin_right = 223.0
+margin_bottom = 61.0
+rect_pivot_offset = Vector2( 166, 25 )
+focus_mode = 2
+mouse_filter = 0
+size_flags_horizontal = 3
+theme = SubResource( 7 )
+custom_styles/hover = SubResource( 8 )
+custom_styles/pressed = SubResource( 9 )
+custom_styles/focus = SubResource( 10 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 12 )
+custom_fonts/font = SubResource( 14 )
+shortcut = SubResource( 16 )
+text = "Unlock"
+icon = null
+
+[node name="BuyPriceAmountContainer" parent="CenterContainer/HBoxContainer" instance=ExtResource( 8 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 227.0
+margin_right = 278.0
+margin_bottom = 61.0
+
+[node name="Amount" parent="CenterContainer/HBoxContainer/BuyPriceAmountContainer" index="0"]
+margin_right = 25.0
+margin_bottom = 61.0
+custom_fonts/font = SubResource( 18 )
+
+[node name="Unit" parent="CenterContainer/HBoxContainer/BuyPriceAmountContainer" index="1"]
+margin_left = 29.0
+margin_right = 51.0
+margin_bottom = 61.0
+custom_fonts/font = SubResource( 18 )
+
+[connection signal="button_down" from="CenterContainer/HBoxContainer/UnlockButtonText" to="." method="OnUnlockButtonTextButtonDown"]
+
+[editable path="Caption"]
+[editable path="CenterContainer/HBoxContainer/BuyPriceAmountContainer"]

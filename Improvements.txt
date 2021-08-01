@@ -2,28 +2,38 @@ Game Design:
 
 Rewrite inventory to use Enums instead of string (for addressing) 
 Rewrite Property logic to be more as inventory
+Add multiple improvements//
+Adjust item spawning amount (optimisation)//
 
 Sound:
 
 GUI:
 
+Add ItemContainer to ShopGUI//
+Add tutorials about keybinding and gameplay//
+Remake sound mixing and functionality after ChangeGUI() function//
 Add GameStopGUI
-Remake ShopGUI
-Add version code to MainMenuGUI
+Add version code to MainMenuGUI//
+Check for window scaling issues
 Redesign GUI code
+Find better solution for Double restart
 Repair inheritance of ItemAmount
 Fix reference design in ToolBarItem
 Add GUI to all names of GUI elements
 
 Graphics Design:
 
+Remake level background
 Remake character sprites
 Add TimeDilation_anim
 Change title screen image (with animation)
 Resize title screen buttons
+Remake ShopGUI
 Remake icons
 Remake logo and caption
-Make icon
+Make app icon
+Try to fix shimmering
+Solve problem with unused fonts
 
 Bugs:
 

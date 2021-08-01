@@ -4,18 +4,27 @@ using System;
 public class Acid : Area2D
 {
     public float SpeedOfRaise = 1f;
+    public float MaxHeight = 1f;
+    public float DistToPlayer_Offset = 500f;
 
-    private float _aToP_Distance = 1f;
-    private float _aToP_Offset = 500f;
+    private float _distToPlayer = 1f;
+    private bool _bRaise = false;
     private Level _level;
     private Player _player;
 
-
-    private void AcidRaise(float delta, float pixPerSec)
+    public bool IsRaising()
     {
-        Vector2 higherScale = new Vector2(Scale.x, Scale.y + (pixPerSec + _level.TimeSpeed * _level.Difficulty + _aToP_Distance) * delta);
-        Scale = higherScale;
-        //_aToP_Distance
+        return _bRaise;
+    }
+
+    public void StartRaise()
+    {
+        _bRaise = true;
+    }
+
+    public void StopRaise()
+    {
+        _bRaise = false;
     }
 
     public void ResetAcid()
@@ -34,11 +43,23 @@ public class Acid : Area2D
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
-        //calculating player distance form acid
-        _aToP_Distance = _player.Position.y + _aToP_Offset - (Position.y - Scale.y);
-        _aToP_Distance = Math.Min(_aToP_Distance, 0f);
-        _aToP_Distance = Math.Abs(_aToP_Distance);
+        if (_bRaise)
+        {
+            //calculating player distance form acid
+            _distToPlayer = _player.Position.y + DistToPlayer_Offset - (Position.y - Scale.y);
+            _distToPlayer = Math.Min(_distToPlayer, 0f);
+            _distToPlayer = Math.Abs(_distToPlayer);
 
-        AcidRaise(delta, 20f);
+            AcidRaise(delta, 20f);
+        }
+    }
+
+    private void AcidRaise(float delta, float pixPerSec)
+    {
+        if (Scale.y < MaxHeight)
+        {
+            Vector2 higherScale = new Vector2(Scale.x, Scale.y + (pixPerSec + _level.TimeSpeed * _level.Difficulty + _distToPlayer) * delta);
+            Scale = higherScale;
+        }
     }
 }

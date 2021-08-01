@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Levels/BlockChallenge/BlockChallenge.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Levels/Props/Prop.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Items/TimeDilation/TimeDilation.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Items/ItemSpawner/SpawnPoint/SpawnPoint2D.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Items/ItemSpawner/Spwners/Constant/ItemSpawner2D_Constaint.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Items/ItemSpawner/Spwners/Probability/HeightProbSpawn/Probabilities/ItemSpawner2D_HeightMediumProbSpawn.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Items/ItemSpawner/Spwners/Probability/HeightProbSpawn/Probabilities/ItemSpawner2D_HeightLowProbSpawn.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Items/Money/Money.tscn" type="PackedScene" id=8]
+
+[node name="TileMap" instance=ExtResource( 1 )]
+tile_data = PoolIntArray( -917504, 8, 0, -917503, 8, 0, -917502, 8, 0, -917498, 8, 0, -917497, 8, 0, -917496, 8, 0, -917495, 8, 0, -786433, 6, 0, -851968, 7, 0, -851967, 7, 0, -851966, 7, 0, -851962, 7, 0, -851961, 7, 0, -851960, 7, 0, -851959, 7, 0, -851951, 6, 0, -720897, 6, 0, -786415, 6, 0, -655361, 6, 0, -720887, 8, 0, -720879, 6, 0, -589825, 6, 0, -655351, 7, 0, -655350, 8, 0, -655349, 8, 0, -655348, 8, 0, -655347, 8, 0, -655346, 8, 0, -655345, 8, 0, -655344, 8, 0, -655343, 6, 0, -524289, 6, 0, -589815, 6, 0, -589814, 7, 0, -589813, 7, 0, -589812, 7, 0, -589811, 7, 0, -589810, 7, 0, -589809, 7, 0, -589808, 7, 0, -589807, 6, 0, -458753, 6, 0, -524284, 8, 0, -524283, 8, 0, -524282, 8, 0, -524281, 8, 0, -524280, 8, 0, -524271, 6, 0, -393217, 6, 0, -458752, 8, 0, -458751, 8, 0, -458748, 7, 0, -458747, 7, 0, -458746, 7, 0, -458745, 7, 0, -458744, 7, 0, -458735, 6, 0, -327681, 6, 0, -393216, 7, 0, -393215, 7, 0, -393199, 6, 0, -262145, 6, 0, -327663, 6, 0, -196609, 6, 0, -262143, 8, 0, -262142, 8, 0, -262141, 8, 0, -262140, 8, 0, -262139, 8, 0, -262138, 8, 0, -262137, 8, 0, -262136, 8, 0, -262135, 8, 0, -262134, 8, 0, -262133, 8, 0, -262127, 6, 0, -131073, 6, 0, -196607, 7, 0, -196606, 7, 0, -196605, 7, 0, -196604, 7, 0, -196603, 7, 0, -196602, 7, 0, -196601, 7, 0, -196600, 7, 0, -196599, 7, 0, -196598, 7, 0, -196597, 7, 0, -196591, 6, 0, -65537, 6, 0, -131058, 8, 0, -131057, 8, 0, -131056, 8, 0, -131055, 6, 0, -1, 6, 0, -65522, 7, 0, -65521, 7, 0, -65520, 7, 0, -65519, 6, 0 )
+
+[node name="ItemSpawner2D" parent="." index="0" instance=ExtResource( 5 )]
+ItemScene = ExtResource( 2 )
+
+[node name="SpawnPoint2D2" parent="ItemSpawner2D" index="0" instance=ExtResource( 4 )]
+position = Vector2( 416, -304 )
+SpawnLevel = 30
+
+[node name="ItemSpawner2D3" parent="." index="1" instance=ExtResource( 6 )]
+ItemScene = ExtResource( 8 )
+
+[node name="SpawnPoint2D4" parent="ItemSpawner2D3" index="0" instance=ExtResource( 4 )]
+position = Vector2( 544, -272 )
+SpawnLevel = 30
+
+[node name="SpawnPoint2D3" parent="ItemSpawner2D3" index="1" instance=ExtResource( 4 )]
+position = Vector2( 480, -80 )
+SpawnLevel = 20
+
+[node name="SpawnPoint2D5" parent="ItemSpawner2D3" index="2" instance=ExtResource( 4 )]
+position = Vector2( 256, -272 )
+SpawnLevel = 20
+
+[node name="SpawnPoint2D6" parent="ItemSpawner2D3" index="3" instance=ExtResource( 4 )]
+position = Vector2( 32, -240 )
+SpawnLevel = 20
+
+[node name="SpawnPoint2D7" parent="ItemSpawner2D3" index="4" instance=ExtResource( 4 )]
+position = Vector2( 80, -144 )
+SpawnLevel = 20
+
+[node name="ItemSpawner2D2" parent="." index="2" instance=ExtResource( 7 )]
+ItemScene = ExtResource( 3 )
+
+[node name="SpawnPoint2D2" parent="ItemSpawner2D2" index="0" instance=ExtResource( 4 )]
+position = Vector2( 512, -80 )
+SpawnLevel = 6

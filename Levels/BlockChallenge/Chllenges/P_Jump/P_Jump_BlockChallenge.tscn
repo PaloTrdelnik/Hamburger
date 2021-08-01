@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Levels/BlockChallenge/BlockChallenge.tscn" type="PackedScene" id=1]
+
+[node name="TileMap" instance=ExtResource( 1 )]
+tile_data = PoolIntArray( -393216, 4, 0, -393215, 4, 0, -393212, 4, 0, -393211, 4, 0, -327676, 3, 0, -262140, 3, 0, -196608, 4, 0, -196607, 4, 0, -196606, 4, 0, -196605, 4, 0, -196604, 3, 0, -131072, 3, 0, -2, 4, 0, -1, 4, 0, -65536, 3, 0 )
