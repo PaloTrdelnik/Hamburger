@@ -4,7 +4,7 @@ using System;
 public class Player : KinematicBody2D
 {
     [Export]
-    public int MOVE_SPEED = 20;
+    public float MOVE_SPEED = 300f;
 
     [Export]
     public int JUMP_FORCE = 1200;
@@ -17,6 +17,9 @@ public class Player : KinematicBody2D
 
     [Signal]
     public delegate void SInvItemChange(Player player, string itemInvKey);
+
+    [Signal]
+    public delegate void SInvResized(Player player);
 
     [Signal]
     public delegate void SSlowDownTime(int amount, int length); // length in milliseconds
@@ -34,6 +37,7 @@ public class Player : KinematicBody2D
     public Property ScoreProp = new Property();
     public ItemUser ItemUser;
     public AnimationPlayer AnimPlayer;
+    public ItemProperties ItemProp;
 
     private GUI _gui;
     private int _yVelo = 0;
@@ -58,6 +62,13 @@ public class Player : KinematicBody2D
         }
     }
 
+
+    public void ResizeInvertory(int size)
+    {
+        Inv.UsageProp.SetMaximum(size);
+        EmitSignal(nameof(SInvResized));
+    }
+
     public bool IsReadyForGameplay(Vector2 playerStartPos)
     {
         if (playerStartPos.DistanceTo(GlobalPosition) > 35 && bMoved)
@@ -72,6 +83,7 @@ public class Player : KinematicBody2D
         _gui = GetParent().GetNode<GUI>("GUI");
         AnimPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         ItemUser = GetNode<ItemUser>("ItemUser");
+        ItemProp = GetParent().GetNode<ItemProperties>("ItemProperties");
     }
 
     public override void _PhysicsProcess(float delta)
@@ -240,7 +252,7 @@ public class Player : KinematicBody2D
                 if(ItemUser.UseItem(itemKey))
                 {
                     EmitSignal(nameof(SInvItemChange), this, itemKey);
-                    EmitSignal(nameof(SSlowDownTime), 5, 10000);
+                    EmitSignal(nameof(SSlowDownTime), 5, ItemProp.TimeDilation_UseDurabilityTime * 1000);
                     EmitSignal(nameof(SItemUseDurabilityBegin), itemKey);
                 }
             }

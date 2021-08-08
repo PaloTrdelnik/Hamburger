@@ -8,7 +8,7 @@ public class ItemSpawner2D_HeightProbSpawn : ItemSpawner2D
     [Export]
     public float HeightOffset = 0.0f;
     [Export]
-    public float LevelHeight = 23360.0f;
+    public float LevelHeight = 10f * 23360.0f;
     [Export]
     public float SpawnProbability = 0.001f;
     // SpawnProbability is stored in float but it is not as precise (0.6 works same as 0.5)

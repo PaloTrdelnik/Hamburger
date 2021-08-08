@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Items/TimeDilation/TimeDilation.jpg" type="Texture" id=1]
 [ext_resource path="res://GUI/ItemAmount/Text/ItemAmountTextContainer.tscn" type="PackedScene" id=2]
@@ -32,7 +32,7 @@ corner_radius_bottom_left = 20
 texture = ExtResource( 8 )
 region_rect = Rect2( 200, 0, 20, 512 )
 
-[sub_resource type="DynamicFontData" id=13]
+[sub_resource type="DynamicFontData" id=7]
 font_path = "res://GUI/Fonts/mayor.regular.ttf"
 
 [sub_resource type="DynamicFont" id=8]
@@ -40,20 +40,14 @@ size = 60
 outline_size = 3
 outline_color = Color( 1, 0.34902, 0, 1 )
 use_filter = true
-font_data = SubResource( 13 )
+font_data = SubResource( 7 )
 
-[sub_resource type="InputEventAction" id=14]
-action = "Game_Back"
-
-[sub_resource type="ShortCut" id=10]
-shortcut = SubResource( 14 )
-
-[sub_resource type="DynamicFontData" id=23]
+[sub_resource type="DynamicFontData" id=9]
 font_path = "res://GUI/Fonts/angerpoise-lampshade.regular.ttf"
 
-[sub_resource type="DynamicFont" id=24]
+[sub_resource type="DynamicFont" id=10]
 size = 50
-font_data = SubResource( 23 )
+font_data = SubResource( 9 )
 
 [node name="BuySellItemGUI" type="VBoxContainer"]
 anchor_right = 1.0
@@ -133,7 +127,6 @@ custom_styles/focus = SubResource( 4 )
 custom_styles/disabled = SubResource( 5 )
 custom_styles/normal = SubResource( 6 )
 custom_fonts/font = SubResource( 8 )
-shortcut = SubResource( 10 )
 text = "Buy"
 icon = null
 
@@ -147,13 +140,13 @@ margin_bottom = 61.0
 [node name="Amount" parent="CenterContainer/VBoxContainer/HBoxContainer/BuyPriceAmountContainer" index="0"]
 margin_right = 25.0
 margin_bottom = 61.0
-custom_fonts/font = SubResource( 24 )
+custom_fonts/font = SubResource( 10 )
 
 [node name="Unit" parent="CenterContainer/VBoxContainer/HBoxContainer/BuyPriceAmountContainer" index="1"]
 margin_left = 29.0
 margin_right = 51.0
 margin_bottom = 61.0
-custom_fonts/font = SubResource( 24 )
+custom_fonts/font = SubResource( 10 )
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
 margin_top = 284.0
@@ -184,7 +177,6 @@ custom_styles/focus = SubResource( 4 )
 custom_styles/disabled = SubResource( 5 )
 custom_styles/normal = SubResource( 6 )
 custom_fonts/font = SubResource( 8 )
-shortcut = SubResource( 10 )
 text = "Sell"
 icon = null
 
@@ -198,13 +190,13 @@ margin_bottom = 61.0
 [node name="Amount" parent="CenterContainer/VBoxContainer/HBoxContainer2/SellPriceAmountContainer" index="0"]
 margin_right = 25.0
 margin_bottom = 61.0
-custom_fonts/font = SubResource( 24 )
+custom_fonts/font = SubResource( 10 )
 
 [node name="Unit" parent="CenterContainer/VBoxContainer/HBoxContainer2/SellPriceAmountContainer" index="1"]
 margin_left = 29.0
 margin_right = 51.0
 margin_bottom = 61.0
-custom_fonts/font = SubResource( 24 )
+custom_fonts/font = SubResource( 10 )
 
 [connection signal="button_down" from="CenterContainer/VBoxContainer/HBoxContainer/Buy" to="." method="OnBuyButtonDown"]
 [connection signal="button_down" from="CenterContainer/VBoxContainer/HBoxContainer/BuyButtonText" to="." method="OnBuyButtonDown"]

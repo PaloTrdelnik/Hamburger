@@ -13,6 +13,12 @@ public class Shop : Node2D
     [Signal]
     public delegate void SGLockBought(string gLockKey);
 
+    [Signal]
+    public delegate void SLackOfMoneyToBuy();
+
+    [Signal]
+    public delegate void SLackOfItemToSell();
+
     public Dictionary<string, ShopItem> ShopPrizes = new Dictionary<string, ShopItem>
     {
         {"Money", new ShopItem{ MarketValue = 1, ValueBuyOffset = 0, ValueSellOffset = 0 } },
@@ -21,7 +27,11 @@ public class Shop : Node2D
 
     public Dictionary<string, ShopGoods> ShopGLocks = new Dictionary<string, ShopGoods>
     {
-        {"GL_Jump", new ShopGoods{ MarketValue = 2 } }
+        {"GL_Jump", new ShopGoods{ MarketValue = 2 } },
+        {"GL_AcidRaise", new ShopGoods{ MarketValue = 3 } },
+        {"GL_FasterPlayer", new ShopGoods{ MarketValue = 4 } },
+        {"GL_BiggerIventory", new ShopGoods{ MarketValue = 5 } },
+        {"GL_TimeDilationLonger", new ShopGoods{ MarketValue = 2 } }
     };
 
     public void OnGUISBuyItem(Player player, string itemKeyToBuy, int amount)
@@ -51,6 +61,14 @@ public class Shop : Node2D
                     EmitSignal(nameof(SItemBought), itemKeyToBuy);
                 }
             }
+            else
+            {
+                EmitSignal(nameof(SLackOfMoneyToBuy));
+            }
+        }
+        else
+        {
+            EmitSignal(nameof(SLackOfMoneyToBuy));
         }
     }
 
@@ -71,6 +89,10 @@ public class Shop : Node2D
 
             EmitSignal(nameof(SItemSold), itemKeyToSell);
             EmitSignal(nameof(SItemBought), MoneyItemKey);
+        }
+        else
+        {
+            EmitSignal(nameof(SLackOfItemToSell));
         }
     }
 
@@ -97,8 +119,15 @@ public class Shop : Node2D
                 EmitSignal(nameof(SItemSold), MoneyItemKey);
                 EmitSignal(nameof(SGLockBought), gLockKey);
             }
+            else
+            {
+                EmitSignal(nameof(SLackOfMoneyToBuy));
+            }
         }
-
+        else
+        {
+            EmitSignal(nameof(SLackOfMoneyToBuy));
+        }
     }
 
     // Called when the node enters the scene tree for the first time.

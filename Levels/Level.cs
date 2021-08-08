@@ -31,6 +31,8 @@ public class Level : Node2D
     public float TimeSpeed = 1.0f;
     public float Difficulty = 5.0f;
     public float DifficultyStep = 5.0f; // this variable can be changed by PreloadedGameplay
+    public bool bFirstPlay = true; // this variable can be changed by PreloadedGameplay
+
 
     private float _timeSpeedUp = 0.0f;
     private float _timeSlowDownDifference = 0.0f;
@@ -41,12 +43,14 @@ public class Level : Node2D
     private MoveIntervalChecker _diffInterChecker;
     private MoveIntervalChecker _scoreInterChecker;
 
+    private Notification _keyNotification;
+
     //private ItemSpawner2D _moneySpawner;
     //private ItemSpawner2D _timeDilSpawner;
 
     private Acid _acid;
 
-    public void OnGUISRestartLevel()
+    public void OnGUISRestartLevel(bool firstPlay)
     {
         //reset acid scale
         _acid.ResetAcid();
@@ -85,16 +89,12 @@ public class Level : Node2D
         //Respawn items in block challenges
         EmitSignal(nameof(SRespawnItems));
 
-        //////// DELETE WHEN YOU IMPLEMENT SPAWNING
-        ////randomize item spawn
-        //_moneySpawner.RemoveItems();
-        //_moneySpawner.RandomizeSpawnLevel(0, 2);
-
-        //_timeDilSpawner.RemoveItems();
-        //_timeDilSpawner.RandomizeSpawnLevel(0, 2);
-        ////spawn items
-        //_moneySpawner.SpawnItemByLevel();
-        //_timeDilSpawner.SpawnItemByLevel();
+        //refer that this is not first game
+        //this can be changed if I use different implementation of Play and Restart signals
+        if (bFirstPlay)
+            bFirstPlay = firstPlay;
+        //check for key binding tutorial visibility
+        _keyNotification.CheckSatisfaction(bFirstPlay);
     }
     public void OnGUISQuitLevel()
     {
@@ -128,6 +128,8 @@ public class Level : Node2D
             player.bFreeze = true;
             //reset item use
             player.ItemUser.ResetItemUse();
+            //refer that this is not first game
+            bFirstPlay = false;
         }
     }
 
@@ -177,13 +179,7 @@ public class Level : Node2D
         _diffInterChecker = GetNode<MoveIntervalChecker>("DifficultyIntervalChecker");
         _diffInterChecker.InstanceToCheck = _player;
 
-        ////find refs for itm spawn
-        //_moneySpawner = GetNode<ItemSpawner2D>("MoneySpawner2D");
-        //_timeDilSpawner = GetNode<ItemSpawner2D>("TimeDilationSpawner2D");
-
-        ////randomize item spawn
-        //_moneySpawner.RandomizeSpawnPointLevels(0, 2);
-        //_timeDilSpawner.RandomizeSpawnPointLevels(0, 2);
+        _keyNotification = GetNode<Notification>("PlayerStart/KeyNotification");
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.

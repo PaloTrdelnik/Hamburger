@@ -10,6 +10,7 @@ public class GameplayUnlocker : Node2D
 
     private GUI _gui;
     private Player _player;
+    private PreloadedGameplay_Level _preloadedLevel;
     //private Level _level;
 
     public Dictionary<string, GameplayLock> GLocks = new Dictionary<string, GameplayLock>{ };
@@ -52,9 +53,14 @@ public class GameplayUnlocker : Node2D
     {
         _gui = GetParent().GetNode<GUI>("GUI");
         _player = GetParent().GetNode<Player>("Player");
+        _preloadedLevel = GetParent().GetNode<PreloadedGameplay_Level>("PreloadedGameplay_Level");
 
         //define all GameplayLocks
         GLocks.Add("GL_Jump", new GameplayLock_Jump { LockedPlayer = _player , ReachedScore = 20});
+        GLocks.Add("GL_AcidRaise", new GameplayLock_AcidRaise { LockedPlayer = _player, PercentageMultiplier = 0.85f, PreloadedLevel = _preloadedLevel, ReachedScore = 25 });
+        GLocks.Add("GL_FasterPlayer", new GameplayLock_FasterPlayer { LockedPlayer = _player, PercentageMultiplier = 1.15f, ReachedScore = 30 });
+        GLocks.Add("GL_BiggerIventory", new GameplayLock_BiggerInventory { LockedPlayer = _player, PlacesAdded = 5, ReachedScore = 50 }) ;
+        GLocks.Add("GL_TimeDilationLonger", new GameplayLock_TimeDilationLonger { LockedPlayer = _player,TimeAdded = 1f, ReachedScore = 700 });
 
         //call this function to fill _prevAvailabGLocks dictionary
         //TODO:Remake this code, because is sets dictionary two times (function, here)

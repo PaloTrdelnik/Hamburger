@@ -12,17 +12,27 @@ text = "Higher Jump"
 
 [node name="HBoxContainer" parent="." index="1"]
 margin_right = 494.0
+margin_bottom = 246.0
+
+[node name="CenterContainer" parent="HBoxContainer" index="0"]
+margin_bottom = 157.0
+
+[node name="TextureRect" parent="HBoxContainer/CenterContainer" index="0"]
+margin_top = 14.0
+margin_bottom = 142.0
 
 [node name="Label" parent="HBoxContainer" index="1"]
-margin_top = 5.0
+margin_top = 0.0
 margin_right = 494.0
-margin_bottom = 122.0
+margin_bottom = 157.0
 text = "This improvement makes your
 player jumps higher. 
 (Jump force +200)"
 
 [node name="CenterContainer" parent="." index="2"]
+margin_top = 250.0
 margin_right = 494.0
+margin_bottom = 311.0
 
 [node name="HBoxContainer" parent="CenterContainer" index="0"]
 margin_left = 108.0

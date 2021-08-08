@@ -3,7 +3,8 @@ using System;
 
 public class PreloadedGameplay_Level : PreloadedGameplay
 {
-    public float DifficultyStep = 10f;
+    public float DifficultyStep = 5f;
+    public bool bFirstPlay = true;
 
     public void OnMainSLevelLoaded(Node level)
     {
@@ -13,12 +14,14 @@ public class PreloadedGameplay_Level : PreloadedGameplay
         }
 
         MoveDataToDataChild();
+        DataChildLoaded = true;
     }
 
     public void OnMainSLevelUnloaded()
     {
         CopyDataFromDataChild();
         DataChild = null;
+        DataChildLoaded = false;
     }
 
     public override void MoveDataToDataChild()
@@ -28,6 +31,7 @@ public class PreloadedGameplay_Level : PreloadedGameplay
             Level level = (Level)DataChild;
 
             level.DifficultyStep = DifficultyStep;
+            level.bFirstPlay = bFirstPlay;
         }
     }
 
@@ -38,6 +42,7 @@ public class PreloadedGameplay_Level : PreloadedGameplay
             Level level = (Level)DataChild;
 
             DifficultyStep = level.DifficultyStep;
+            bFirstPlay = level.bFirstPlay;
         }
     }
 

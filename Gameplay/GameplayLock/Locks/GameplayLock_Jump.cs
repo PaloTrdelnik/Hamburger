@@ -13,14 +13,11 @@ public class GameplayLock_Jump : GameplayLock
         {
             LockedPlayer.JUMP_FORCE += 200;
             bIsLocked = false;
-            GD.Print("Unlocked");
         }
     }
 
     public override bool IsAvailable()
     {
-        GD.Print(LockedPlayer.ScoreProp.GetRecord());
-        GD.Print(bIsLocked);
         if (LockedPlayer.ScoreProp.GetRecord() < ReachedScore || !bIsLocked)
             return false;
         else

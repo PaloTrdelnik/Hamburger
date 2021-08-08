@@ -31,7 +31,7 @@ public class BuySellItemGUI : VBoxContainer
         }
     }
 
-    public void OnGUISUpdateShopPrizes(Shop shop)
+    public void UpdateShopPrizes(Shop shop)
     {
         _buyPriceAmount.UpdateAmount(shop.ShopPrizes[ItemKey].GetRealBuyPrize());
         _sellPriceAmount.UpdateAmount(shop.ShopPrizes[ItemKey].GetRealSellPrize());

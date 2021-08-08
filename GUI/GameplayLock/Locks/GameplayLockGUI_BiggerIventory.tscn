@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://GUI/GameplayLock/GameplayLockGUI.tscn" type="PackedScene" id=1]
+
+[node name="GameplayLockGUI" instance=ExtResource( 1 )]
+margin_right = 494.0
+GlockKey = "GL_BiggerIventory"
+
+[node name="Caption" parent="." index="0"]
+margin_right = 494.0
+text = "Bigger Inventory"
+
+[node name="HBoxContainer" parent="." index="1"]
+margin_right = 494.0
+
+[node name="Label" parent="HBoxContainer" index="1"]
+margin_top = 5.0
+margin_right = 494.0
+margin_bottom = 122.0
+text = "Makes Player's inventory bigger
+(Player Inventory places +5)"
+
+[node name="CenterContainer" parent="." index="2"]
+margin_right = 494.0
+
+[node name="HBoxContainer" parent="CenterContainer" index="0"]
+margin_left = 108.0
+margin_right = 386.0
+
+[editable path="Caption"]
+[editable path="CenterContainer/HBoxContainer/BuyPriceAmountContainer"]

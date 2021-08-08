@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Character/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Items/Shop/Shop.cs" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://GUI/GUI.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Gameplay/GameplayUnlocker/GameplayUnlocker.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Gameplay/PreloadedGameplay/Gameplays/PreloadedGameplay_Level.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Items/ItemProperties.tscn" type="PackedScene" id=7]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 3 )
@@ -25,6 +26,8 @@ JUMP_FORCE = 1080
 
 [node name="PreloadedGameplay_Level" parent="." instance=ExtResource( 6 )]
 
+[node name="ItemProperties" parent="." instance=ExtResource( 7 )]
+
 [connection signal="SLevelLoaded" from="." to="PreloadedGameplay_Level" method="OnMainSLevelLoaded"]
 [connection signal="SLevelLoaded" from="." to="GUI" method="OnMainSLevelLoaded"]
 [connection signal="SLevelUnloaded" from="." to="PreloadedGameplay_Level" method="OnMainSLevelUnloaded"]
@@ -39,6 +42,9 @@ JUMP_FORCE = 1080
 [connection signal="SGLockBought" from="Shop" to="GameplayUnlocker" method="OnShopSGLockBought"]
 [connection signal="SItemBought" from="Shop" to="GUI" method="OnShopSItemBought"]
 [connection signal="SItemSold" from="Shop" to="GUI" method="OnShopSItemSold"]
+[connection signal="SLackOfItemToSell" from="Shop" to="GUI" method="OnShopSLackOfItemToSell"]
+[connection signal="SLackOfMoneyToBuy" from="Shop" to="GUI" method="OnShopSLackOfMoneyToBuy"]
 [connection signal="SInvItemChange" from="Player" to="GUI" method="OnPlayerSInvItemChange"]
+[connection signal="SInvResized" from="Player" to="GUI" method="OnPlayerSInvResized"]
 [connection signal="SItemUseDurabilityBegin" from="Player" to="GUI" method="OnPlayerSItemUseDurabilityBegin"]
 [connection signal="SItemUseDurabilityEnd" from="Player" to="GUI" method="OnPlayerSItemUseDurabilityEnd"]

@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://GUI/GameplayLock/GameplayLockGUI.tscn" type="PackedScene" id=1]
+
+[node name="GameplayLockGUI" instance=ExtResource( 1 )]
+margin_right = 494.0
+GlockKey = "GL_TimeDilationLonger"
+
+[node name="Caption" parent="." index="0"]
+margin_right = 587.0
+text = "Longer Time dilation"
+
+[node name="HBoxContainer" parent="." index="1"]
+margin_right = 587.0
+
+[node name="Label" parent="HBoxContainer" index="1"]
+margin_right = 587.0
+text = "Increases time dilation's time of use
+(Time of use +1s)"
+
+[node name="CenterContainer" parent="." index="2"]
+margin_right = 587.0
+
+[node name="HBoxContainer" parent="CenterContainer" index="0"]
+margin_left = 154.0
+margin_right = 432.0
+
+[editable path="Caption"]
+[editable path="CenterContainer/HBoxContainer/BuyPriceAmountContainer"]

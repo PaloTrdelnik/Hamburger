@@ -8,6 +8,7 @@ public class GameplayLockConainer : Control
     public delegate void SRequestUnlockGLock(string gLockKey);
 
     private HBoxContainer _hBoxLocksContainer;
+    private Label _noAvaliabLabel;
 
     public void OnGUISUpdateShopPrizes(Shop shop)
     {
@@ -24,13 +25,25 @@ public class GameplayLockConainer : Control
 
     public void UpdateAvailableGLocksVisibility(Dictionary<string, bool> dictOfLocks)
     {
+        bool bIsSomeGLockAvailable = false;
+
         foreach (GameplayLockGUI gLockGUI in _hBoxLocksContainer.GetChildren())
         {
-            //GD.Print(dictOfLocks[gLockGUI.GlockKey]);
             if (dictOfLocks[gLockGUI.GlockKey])
+            {
                 gLockGUI.Show();
+                bIsSomeGLockAvailable = true;
+            }
             else
                 gLockGUI.Hide();
+        }
+        if (bIsSomeGLockAvailable)
+        {
+            _noAvaliabLabel.Hide();
+        }
+        else
+        {
+            _noAvaliabLabel.Show();
         }
     }
 
@@ -38,6 +51,7 @@ public class GameplayLockConainer : Control
     public override void _Ready()
     {
         _hBoxLocksContainer = GetNode<HBoxContainer>("ScrollContainer/CenterContainer/HBoxContainer");
+        _noAvaliabLabel = GetNode<Label>("ScrollContainer/CenterContainer/NoAvailabilityLabel");
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.

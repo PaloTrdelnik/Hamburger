@@ -1,13 +1,15 @@
-[gd_scene load_steps=85 format=2]
+[gd_scene load_steps=87 format=2]
 
 [ext_resource path="res://Levels/Acid/Acid.cs" type="Script" id=1]
 [ext_resource path="res://Levels/End/End.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Levels/MoveInterval/MoveIntervalChecker.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Levels/BlockChallenge/Chllenges/Start_OneWay/Start_OneWay_Factory.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Levels/Acid/Acid.tscn" type="PackedScene" id=5]
+[ext_resource path="res://GUI/Messages/MessageBubble/Notifications/Notification.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Levels/MoveInterval/Interval/Interval.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Levels/Background/Background.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Levels/Level.cs" type="Script" id=9]
+[ext_resource path="res://Levels/Trigger/Triggers/NotifcationAppearTrigger2D.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Levels/BlockChallenge/Chllenges/LinearJump_Alter/LinearJump_D2_AlterVar_BlockChallenge.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Levels/BlockChallenge/Chllenges/J_Jump/J_Jump_BlockChallenge.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Levels/BlockChallenge/Chllenges/StairJump/StairJump_D1_SmallVar_BlockChallenge.tscn" type="PackedScene" id=14]
@@ -90,7 +92,7 @@ position = Vector2( 13.3484, 0 )
 script = ExtResource( 9 )
 
 [node name="Acid" parent="." instance=ExtResource( 5 )]
-position = Vector2( 162.652, -32 )
+position = Vector2( 162.652, -24 )
 scale = Vector2( 1.9, 1e-05 )
 z_index = 4
 gravity_distance_scale = 0.001
@@ -209,6 +211,25 @@ position = Vector2( 178.652, -176 )
 __meta__ = {
 "_editor_description_": ""
 }
+
+[node name="KeyNotification" parent="PlayerStart" instance=ExtResource( 6 )]
+visible = false
+margin_left = -304.0
+margin_right = -48.0004
+
+[node name="ColorRect" parent="PlayerStart/KeyNotification" index="0"]
+margin_left = 256.0
+margin_right = 272.0
+
+[node name="Label" parent="PlayerStart/KeyNotification" index="1"]
+margin_left = -0.000396729
+margin_top = -138.0
+margin_bottom = 22.0
+text = "You can move your character with
+'A' 'S' 'W' 'D' or Arrow keys"
+
+[node name="NotifcationAppearTrigger2D" parent="PlayerStart" instance=ExtResource( 10 )]
+NotifyPath = NodePath("../KeyNotification")
 
 [node name="DifficultyIntervalChecker" parent="." instance=ExtResource( 3 )]
 position = Vector2( -381.348, -32 )
@@ -1016,3 +1037,5 @@ position = Vector2( -589.348, -23952 )
 [connection signal="body_entered" from="World/End" to="." method="OnEndBodyEntered"]
 
 [editable path="ParallaxBackground"]
+[editable path="PlayerStart/KeyNotification"]
+[editable path="PlayerStart/NotifcationAppearTrigger2D"]

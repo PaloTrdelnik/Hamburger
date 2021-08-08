@@ -1,4 +1,4 @@
-#define INV_DEBUG
+//#define INV_DEBUG
 
 using Godot;
 using System;
@@ -8,12 +8,12 @@ public class Inventory : Node
 {
     public PropertyUsage UsageProp;
 
-    public int INVENTORY_SIZE = 30;
+    //public int INVENTORY_SIZE = 30;
 
     public bool bAddedItem = false;
     public bool bRemovedItem = false;
 
-    private int _numOfItemsInside = 0;
+    //private int _numOfItemsInside = 0;
     
     private Dictionary<string, Item> _items = new Dictionary<string, Item>();
 

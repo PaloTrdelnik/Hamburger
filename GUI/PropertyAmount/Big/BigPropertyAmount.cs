@@ -6,7 +6,7 @@ public class BigPropertyAmount : CenterContainer
     public AnimationPlayer NewRecAnimPlayer;
 
     private PropertyAmountV _propAmount;
-    private CenterContainer _newRecordLab;
+    public CenterContainer _newRecordLabContainer;
     private PropertyAmountH _actualMaximum;
 
     public void UpdatePropertyAmount(Property property)
@@ -15,21 +15,20 @@ public class BigPropertyAmount : CenterContainer
 
         if (property.IsNewRecord)
         {
-            _newRecordLab.Show();
+            _newRecordLabContainer.Show();
             _actualMaximum.Hide();
-
             _actualMaximum.UpdateAmount(property.GetRecord());
         }
         else
         {
-            _newRecordLab.Hide();
+            _newRecordLabContainer.Hide();
             _actualMaximum.Show();
         }
     }
 
     public void HideNewRecord()
     {
-        _newRecordLab.Hide();
+        _newRecordLabContainer.Hide();
     }
 
     public void PlayShowUpAnim()
@@ -40,6 +39,7 @@ public class BigPropertyAmount : CenterContainer
 
     public void PlayNewRecAnim()
     {
+        //GD.Print(_newRecordLabContainer.Visible);
         NewRecAnimPlayer.Play("Fall_anim");
     }
 
@@ -65,7 +65,7 @@ public class BigPropertyAmount : CenterContainer
         NewRecAnimPlayer = GetNode<AnimationPlayer>("CanvasLayer/CenterContainer/AnimationPlayer");
 
         _propAmount = GetNode<PropertyAmountV>("VBoxContainer/PropertyAmountV");
-        _newRecordLab = GetNode<CenterContainer>("CanvasLayer/CenterContainer");
+        _newRecordLabContainer = GetNode<CenterContainer>("CanvasLayer/CenterContainer");
         _actualMaximum = GetNode<PropertyAmountH>("VBoxContainer/CenterContainer/PropertyAmountH");
     }
 

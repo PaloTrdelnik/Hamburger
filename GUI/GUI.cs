@@ -10,7 +10,7 @@ public class GUI : CanvasLayer
     public delegate void SUnloadLevel();
 
     [Signal]
-    public delegate void SRestartLevel();
+    public delegate void SRestartLevel(bool firstPlay);
 
     [Signal]
     public delegate void SQuitLevel();
@@ -28,21 +28,25 @@ public class GUI : CanvasLayer
     public delegate void SUpdateShopPrizes(Shop shop);
 
     public string ActualGUI = "MainMenuGUI";
-    private bool _bMuted = false;
 
     private string _previusGUI = "MainMenuGUI";
     private string _levelResPath = "res://Levels/Level.tscn";
 
-    private bool _bAllowedInput = false; // screen cover input fix
+    private bool _bAllowedBackgroundInput = false; // screen cover input fix
+    private bool _bAllowedForegroundInput = false;
     //double restart fix
     private bool _actionJustPressed = false;
     private bool _bButtonReleased = false;
+    //music
+    private bool _bMusicFadeWithoutCover = false;
 
     private Player _player;
     private Shop _shop;
     private Level _level;
     private GameplayUnlocker _gUnlocker;
 
+    private bool _mainMenuGUIFirstAppear = true;
+    private bool _gameOverGUIFirstAppear = true;
     private AnimationPlayer _mainScreenCaptAnimPlayer;
     private AnimationPlayer _gameOverScreenCaptAnimPlayer;
     private AnimationPlayer _finishedGameUnbScreenCaptAnimPlayer;
@@ -53,13 +57,20 @@ public class GUI : CanvasLayer
     private MenuV _inGameMenuV;
     private MenuV _finishedGameMenuV;
     private ButtonImageMute _muteButton;
-    private Notification _gameOverImprovementNotify;
     private Notification _mainMenuImprovementNotify;
+    private Notification _gameOverImprovementNotify;
+    private Notification _mainMenuKeyPlayNotify;
+    private Notification _mainMenuKeyShopNotify;
+    private Notification _mainMenuKeyQuitNotify;
+    private Notification _gameOverKeyRestartNotify;
+    private Notification _gameOverKeyMainMenuNotify;
+    private ContextualInfoConfirm _contextualInfoConfirm;
+    private ContextualInfoNotify _contextualInfoNotify;
     private ItemAmountImageContainer _moneyAmount;
     private ItemAmountImageContainer _moneyShopAmount;
     private PropertyUsageHGUI _invUsage;
     private PropertyUsageHGUI _invShopUsage;
-    private BuySellItemGUI _buySellTDGui;
+    private ItemContainer _ItemContainer;
     private BigPropertyAmount _bigScoreProp;
     private PropertyAmountH _inGameScoreProp;
     private PropertyAmountH _finishrdGameScoreProp;
@@ -69,17 +80,24 @@ public class GUI : CanvasLayer
     private ToolBar _toolBar;
     private ScreenCover _chanScreenCover;
     private StartScreenCover _startScreenCover;
+    private MusicManager _musicManager;
+    private AudioStreamPlayer _mainMenuAPlayer;
+    private AudioStreamPlayer _inGameAPlayer;
+    private AudioStreamPlayer _gameOverAPlayer;
+    private AudioStreamPlayer _gameFinishedAPlayer;
 
+    private PropertyAmountH _creditsLabel;
+    private PropertyAmountH _versionLabel;
 
     public async void OnPlayButtonDown()
     {
-        if (_bAllowedInput)
+        if (_bAllowedBackgroundInput)
         {
             _chanScreenCover.PlayHideScreenAnim();
             await ToSignal(GetTree().CreateTimer(_chanScreenCover.AnimLength + 0.1f), "timeout");
 
             EmitSignal(nameof(SLoadlevel), _levelResPath);
-            EmitSignal(nameof(SRestartLevel));
+            EmitSignal(nameof(SRestartLevel), true);
 
             ChangeGUI("InGameGUI");
         }
@@ -87,17 +105,39 @@ public class GUI : CanvasLayer
 
     public void OnQuitButtonDown()
     {
-        GetTree().Quit();
+        if (_bAllowedBackgroundInput)
+        {
+            if (!_actionJustPressed)
+            {
+                _bAllowedBackgroundInput = false;
+                _bAllowedForegroundInput = true;
+                _contextualInfoConfirm.ShowInfo(_contextualInfoConfirm.GetInfoText());
+            }
+        }
+    }
+
+    public void OnQuitContextualInfoConfirmSConfirmed()
+    {
+        if (_bAllowedForegroundInput)
+            GetTree().Quit();
+    }
+
+    public void OnContextualInfoConfirmSCanceled()
+    {
+        _bAllowedBackgroundInput = true;
+        _bAllowedForegroundInput = false;
+        _actionJustPressed = true;
+        _bButtonReleased = true;
     }
 
     public void OnRestartButtonDown()
     {
-        if (_bAllowedInput)
+        if (_bAllowedBackgroundInput)
         {
             //Double restart fix
             if (!_actionJustPressed)
             {
-                EmitSignal(nameof(SRestartLevel));
+                EmitSignal(nameof(SRestartLevel), false);
 
                 _actionJustPressed = true;
                 ChangeGUI("InGameGUI");
@@ -112,18 +152,33 @@ public class GUI : CanvasLayer
 
     public async void OnMainMenuButtonDown()
     {
-        _chanScreenCover.PlayHideScreenAnim();
-        await ToSignal(GetTree().CreateTimer(_chanScreenCover.AnimLength), "timeout");
+        if (_bAllowedBackgroundInput)
+        {
+            //Double restart fix
+            if (!_actionJustPressed)
+            {
+                _chanScreenCover.PlayHideScreenAnim();
+                await ToSignal(GetTree().CreateTimer(_chanScreenCover.AnimLength), "timeout");
 
-        EmitSignal(nameof(SUnloadLevel));
-        EmitSignal(nameof(SQuitLevel));
+                EmitSignal(nameof(SUnloadLevel));
+                EmitSignal(nameof(SQuitLevel));
 
-        ChangeGUI("MainMenuGUI");
+                ChangeGUI("MainMenuGUI");
+            }
+        }
     }
 
     public void OnBackButtonDown()
     {
-        ChangeGUI(_previusGUI);
+        if (_bAllowedBackgroundInput)
+        {
+            //Double restart fix
+            if (!_actionJustPressed)
+            {
+                ChangeGUI(_previusGUI);
+                _actionJustPressed = true;
+            }
+        }
     }
 
     public void OnShopButtonDown()
@@ -142,30 +197,27 @@ public class GUI : CanvasLayer
         _gLockContainer.UpdateAvailableGLocksVisibility(_gUnlocker.GetDictOfLocksAvilability());
     }
 
-    public void OnBuySellItemGUISRequestBuyItem(string itemKey)
+    public void OnItemContainerSRequestBuyItem(string itemKey)
     {
         EmitSignal(nameof(SBuyItem), _player, itemKey, 1);
     }
 
-    public void OnBuySellItemGUISRequestSellItem(string itemKey)
+    public void OnItemContainerSRequestSellItem(string itemKey)
     {
         EmitSignal(nameof(SSellItem), _player, itemKey, 1);
     }
 
     public void OnMuteButtonTextButtonDown()
     {
-        _muteButton.SwapTexture(_bMuted);
+        _muteButton.SwapTexture(_musicManager.GetMuteForActual());
 
-        SetMuted(!_bMuted);
+        _musicManager.SetMuteForActual(!_musicManager.GetMuteForActual());
     }
 
     //temporary label changing
     public void OnShopSItemBought(string itemKey)
     {
-        if (itemKey == "TimeDilation")
-        {
-            _buySellTDGui.UpdateAmount(_player);
-        }
+        _ItemContainer.UpdateAmount(_player, itemKey);
 
         _moneyShopAmount.UpdateAmount(_player);
         _moneyShopAmount.PlayUpdateAmountAnim();
@@ -176,10 +228,7 @@ public class GUI : CanvasLayer
     //temporary label changing
     public void OnShopSItemSold(string itemKey)
     {
-        if (itemKey == "TimeDilation")
-        {
-            _buySellTDGui.UpdateAmount(_player);
-        }
+        _ItemContainer.UpdateAmount(_player, itemKey);
 
         _moneyShopAmount.UpdateAmount(_player);
         _moneyShopAmount.PlayUpdateAmountAnim();
@@ -188,6 +237,21 @@ public class GUI : CanvasLayer
         _invShopUsage.PlayUpdateAmountAnim();
     }
 
+    public void OnShopSLackOfMoneyToBuy()
+    {
+        _contextualInfoNotify.ShowInfo("You haven't got enough money to buy this.");
+    }
+
+    public void OnShopSLackOfItemToSell()
+    {
+        _contextualInfoNotify.ShowInfo("You haven't got enough items to sell them.");
+    }
+
+    public void OnLackOfContextualInfoNotifySConfirmed()
+    {
+        _actionJustPressed = true;
+        _bButtonReleased = true;
+    }
 
     public async void OnMainSLevelLoaded(Node level)
     {
@@ -225,6 +289,12 @@ public class GUI : CanvasLayer
         //update ussage of inventory
         _invUsage.UpdateAmount(_player.Inv.UsageProp.GetAmount());
         _invUsage.PlayUpdateAmountAnim();
+    }
+
+    public void OnPlayerSInvResized()
+    {
+        _invShopUsage.UpdateMaximum(_player.Inv.UsageProp);
+        _invShopUsage.PlayUpdateMaximum();
     }
 
     public void OnPlayerSItemUseDurabilityBegin(string itemKey)
@@ -265,20 +335,22 @@ public class GUI : CanvasLayer
 
     public void OnScreenCoverCoveringStarted()
     {
-        _bAllowedInput = false;
+        _bAllowedBackgroundInput = false;
+
+        _musicManager.FadeTime = 0.3f;
+        _musicManager.FadeOut();
     }
 
     public void OnScreenCoverCoveringFinished()
     {
-        _bAllowedInput = true;
+        _bAllowedBackgroundInput = true;
+        _musicManager.FadeTime = 0.1f;
+        _musicManager.FadeIn();
     }
 
     public async void OnMainFinalReady()
     {
         await ToSignal(GetTree().CreateTimer(1.5f), "timeout");
-
-        //AnimationPlayer animP = GetNode<AnimationPlayer>("Cover/BeginScreenCover/ColorRect/CenterContainer/AnimationPlayer");
-        //animP.Play("Blink_anim");
 
         _startScreenCover.PlayBlinkAnim();
 
@@ -292,6 +364,8 @@ public class GUI : CanvasLayer
         _mainMenuV.PlayShowUpAnim();
 
         _muteButton.PlayShowUpAnim();
+        _creditsLabel.PlayShowUpAnim();
+        _versionLabel.PlayShowUpAnim();
 
         //// LEVELDASIGN SHORTCUT
         //_startScreenCover.Hide();
@@ -300,24 +374,32 @@ public class GUI : CanvasLayer
 
     public void ChangeGUI(string nameOfGUI)
     {
+        //variable for improvement notify check
+        //because of gUnlocker.IsNewGLockAvailable() is little bit more exxpensive i save its result to this variable
+        //this bool is placed here bacause definition in switch can couse some problems
+        bool newAvailabImrovements = false;
+
         if (nameOfGUI != ActualGUI)
         {
             switch (ActualGUI)
             {
                 case "GameOverGUI":
-                    if (!_bMuted)
-                        GetNode<AudioStreamPlayer>("GameOverGUIControl/GameOverSndPlayer").Stop();
+                    _bMusicFadeWithoutCover = true;
 
                     GetNode<Control>("GameOverGUIControl").Hide();
+
+                    //hide new record
+                    _bigScoreProp.HideNewRecord();
 
                     //Double restart fix
                     _bButtonReleased = true;
 
+                    _gameOverGUIFirstAppear = false;
+
                     break;
 
                 case "InGameGUI":
-                    if (!_bMuted)
-                        GetNode<AudioStreamPlayer>("InGameGUIControl/InGameSndPlayer").Stop();
+                    _bMusicFadeWithoutCover = false;
 
                     GetNode<Control>("InGameGUIControl").Hide();
                     //animation
@@ -327,22 +409,23 @@ public class GUI : CanvasLayer
                     break;
 
                 case "MainMenuGUI":
-                    if (!_bMuted)
-                        GetNode<AudioStreamPlayer>("MainMenuGUIControl/MainMenuSndPlayer").Stop();
+                    _bMusicFadeWithoutCover = false;
 
                     GetNode<Control>("MainMenuGUIControl").Hide();
+
+                    _mainMenuGUIFirstAppear = false;
+
                     break;
 
                 case "ShopGUI":
-                    if (!_bMuted)
-                        GetNode<AudioStreamPlayer>("ShopGUIControl/ShopSndPlayer").Stop();
+                    _bButtonReleased = true;
+                    _bMusicFadeWithoutCover = false;
 
                     GetNode<Control>("ShopGUIControl").Hide();
                     break;
 
                 case "GameFinishedGUI":
-                    if (!_bMuted)
-                        GetNode<AudioStreamPlayer>("GameFinishedGUIControl/GameFinishedSndPlayer").Stop();
+                    _bMusicFadeWithoutCover = true;
 
                     GetNode<Control>("GameFinishedGUIControl").Hide();
 
@@ -371,14 +454,15 @@ public class GUI : CanvasLayer
             switch (nameOfGUI)
             {
                 case "GameOverGUI":
-                    if (!_bMuted)
-                        GetNode<AudioStreamPlayer>("GameOverGUIControl/GameOverSndPlayer").Play();
+                    _bMusicFadeWithoutCover = true;
 
-                    _bigScoreProp.HideNewRecord();
+                    _musicManager.FutureForeground = _gameOverAPlayer;
+                    _musicManager.FutureBackground = _mainMenuAPlayer;
+                    _musicManager.FadeTime = 0f;
+
                     //animation
                     _gameOverMenuV.ResetAnim();
                     _bigScoreProp.ResetAnim();
-                    GD.Print("animatoin reset");
 
                     GetNode<Control>("GameOverGUIControl").Show();
 
@@ -386,16 +470,12 @@ public class GUI : CanvasLayer
                     _actionJustPressed = false;
 
                     //show and hide notifications
-                    if (_gUnlocker.IsNewGLockAvailable())
-                    {
-                        _gameOverImprovementNotify.UnSatisfy();
-                        _mainMenuImprovementNotify.UnSatisfy();
-                    }
-                    else
-                    {
-                        _gameOverImprovementNotify.Satisfy();
-                        _mainMenuImprovementNotify.Satisfy();
-                    }
+                    newAvailabImrovements = _gUnlocker.IsNewGLockAvailable();
+                    _gameOverImprovementNotify.CheckSatisfaction(newAvailabImrovements);
+                    _mainMenuImprovementNotify.CheckSatisfaction(newAvailabImrovements);
+
+                    _gameOverKeyRestartNotify.CheckSatisfaction(_gameOverGUIFirstAppear);
+                    _gameOverKeyMainMenuNotify.CheckSatisfaction(_gameOverGUIFirstAppear);
 
                     //animation
                     _gameOverScreenCaptAnimPlayer.Play("ShowUp_anim", -1, 0.8f);
@@ -406,8 +486,7 @@ public class GUI : CanvasLayer
                     break;
 
                 case "InGameGUI":
-                    if (!_bMuted)
-                        GetNode<AudioStreamPlayer>("InGameGUIControl/InGameSndPlayer").Play();
+                    _musicManager.FutureForeground = _inGameAPlayer;
 
                     GetNode<Control>("InGameGUIControl").Show();
 
@@ -426,45 +505,46 @@ public class GUI : CanvasLayer
                     break;
 
                 case "MainMenuGUI":
-                    if (!_bMuted)
-                        GetNode<AudioStreamPlayer>("MainMenuGUIControl/MainMenuSndPlayer").Play();
+                    _bButtonReleased = true;
+                    _bMusicFadeWithoutCover = false;
+
+                    _musicManager.FutureForeground = _mainMenuAPlayer;
 
                     GetNode<Control>("MainMenuGUIControl").Show();
 
                     //show and hide notifications
-                    if (_gUnlocker.IsNewGLockAvailable())
-                    {
-                        _gameOverImprovementNotify.UnSatisfy();
-                        _mainMenuImprovementNotify.UnSatisfy();
-                    }
-                    else
-                    {
-                        _gameOverImprovementNotify.Satisfy();
-                        _mainMenuImprovementNotify.Satisfy();
-                    }
+                    newAvailabImrovements = _gUnlocker.IsNewGLockAvailable();
+                    _gameOverImprovementNotify.CheckSatisfaction(newAvailabImrovements);
+                    _mainMenuImprovementNotify.CheckSatisfaction(newAvailabImrovements);
+
+                    _mainMenuKeyShopNotify.CheckSatisfaction(_mainMenuGUIFirstAppear);
+                    _mainMenuKeyPlayNotify.CheckSatisfaction(_mainMenuGUIFirstAppear);
+                    _mainMenuKeyQuitNotify.CheckSatisfaction(_mainMenuGUIFirstAppear);
 
                     break;
 
                 case "ShopGUI":
-                    if (!_bMuted)
-                        GetNode<AudioStreamPlayer>("ShopGUIControl/ShopSndPlayer").Play();
+                    _bMusicFadeWithoutCover = false;
 
                     GetNode<Control>("ShopGUIControl").Show();
-
-                    EmitSignal(nameof(SUpdateShopPrizes), _shop);
 
                     //update gLockContainer of improvements
                     _gLockContainer.UpdateAvailableGLocksVisibility(_gUnlocker.GetDictOfLocksAvilability());
 
-                    _buySellTDGui.UpdateAmount(_player);
+                    EmitSignal(nameof(SUpdateShopPrizes), _shop);
+
+                    _ItemContainer.UpdateAmount(_player);
                     //update ussage of inventory
                     _invShopUsage.UpdateMaximum(_player.Inv.UsageProp);
                     _invShopUsage.UpdateAmount(_player.Inv.UsageProp);
                     break;
 
                 case "GameFinishedGUI":
-                    if (!_bMuted)
-                        GetNode<AudioStreamPlayer>("GameFinishedGUIControl/GameFinishedSndPlayer").Play();
+                    _bMusicFadeWithoutCover = true;
+
+                    _musicManager.FutureForeground = _gameFinishedAPlayer;
+                    _musicManager.FutureBackground = _mainMenuAPlayer;
+                    _musicManager.FadeTime = 0.1f;
 
                     GetNode<Control>("GameFinishedGUIControl").Show();
 
@@ -477,8 +557,14 @@ public class GUI : CanvasLayer
                     _finishrdGameTimeOfAttempt.PlayShowUpAnim();
                     _finishrdGameNumberOfAttempts.PlayShowUpAnim();
                     _finishedGameMenuV.PlayShowUpAnim();
+
                     break;
             }
+
+            if (_bMusicFadeWithoutCover)
+            {
+                _musicManager.Fade();
+            }    
 
             _previusGUI = ActualGUI;
             ActualGUI = nameOfGUI;
@@ -508,13 +594,22 @@ public class GUI : CanvasLayer
         _gameOverImprovementNotify = GetNode<Notification>("GameOverGUIControl/CenterContainer/VBoxContainer/MenuV/CenterContainer3/ShopButtonText/Notification");
         _mainMenuImprovementNotify = GetNode<Notification>("MainMenuGUIControl/MenuV/CenterContainer2/ShopButtonText/Notification");
 
+        _mainMenuKeyPlayNotify = GetNode<Notification>("MainMenuGUIControl/MenuV/CenterContainer/PlayButtonText/KeyNotification");
+        _mainMenuKeyShopNotify = GetNode<Notification>("MainMenuGUIControl/MenuV/CenterContainer2/ShopButtonText/KeyNotification");
+        _mainMenuKeyQuitNotify = GetNode<Notification>("MainMenuGUIControl/MenuV/CenterContainer3/QuitButtonText/KeyNotification");
+        _gameOverKeyRestartNotify = GetNode<Notification>("GameOverGUIControl/CenterContainer/VBoxContainer/MenuV/CenterContainer2/RestartButtonText/KeyNotification");
+        _gameOverKeyMainMenuNotify = GetNode<Notification>("GameOverGUIControl/CenterContainer/VBoxContainer/MenuV/CenterContainer/MainMenuButtonText/KeyNotification");
+
+        _contextualInfoConfirm = GetNode<ContextualInfoConfirm>("Cover/CenterContainer/ContextualInfoConfirm");
+        _contextualInfoNotify = GetNode<ContextualInfoNotify>("Cover/CenterContainer/ContextualInfoNotify");
+
         _moneyAmount = GetNode<ItemAmountImageContainer>("InGameGUIControl/VBoxContainer/MoneyAmountImageContainer");
         _moneyShopAmount = GetNode<ItemAmountImageContainer>("ShopGUIControl/VBoxContainer/MoneyAmountImageContainer");
 
         _invUsage = GetNode<PropertyUsageHGUI>("InGameGUIControl/VBoxContainer/InventoryPropertyUsageHImageGUI");
         _invShopUsage = GetNode<PropertyUsageHGUI>("ShopGUIControl/VBoxContainer/InventoryPropertyUsageHImageGUI");
 
-        _buySellTDGui = GetNode<BuySellItemGUI>("ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI");
+        _ItemContainer = GetNode<ItemContainer>("ShopGUIControl/ItemContainer");
 
         _bigScoreProp = GetNode<BigPropertyAmount>("GameOverGUIControl/CenterContainer/VBoxContainer/BigScoreAmount");
         _inGameScoreProp = GetNode<PropertyAmountH>("InGameGUIControl/PropertyAmountH");
@@ -528,75 +623,29 @@ public class GUI : CanvasLayer
         _chanScreenCover = GetNode<ScreenCover>("Cover/ChangeScreenCover");
         _startScreenCover = GetNode<StartScreenCover>("Cover/StartScreenCover");
 
+        //music
+        _musicManager = GetNode<MusicManager>("MusicManager");
+        _mainMenuAPlayer = GetNode<AudioStreamPlayer>("MainMenuGUIControl/MainMenuSndPlayer");
+        _gameOverAPlayer =  GetNode<AudioStreamPlayer>("GameOverGUIControl/GameOverSndPlayer");
+        _inGameAPlayer = GetNode<AudioStreamPlayer>("InGameGUIControl/InGameSndPlayer");
+        _gameFinishedAPlayer = GetNode<AudioStreamPlayer>("GameFinishedGUIControl/GameFinishedSndPlayer");
+        _musicManager.ActualForeground = _mainMenuAPlayer;
+        _musicManager.PlayActual();
+
         _gLockContainer = GetNode<GameplayLockConainer>("ShopGUIControl/GameplayLockContainer");
+
+        _creditsLabel = GetNode<PropertyAmountH>("MainMenuGUIControl/PropertyAmountH");
+        _versionLabel = GetNode<PropertyAmountH>("MainMenuGUIControl/PropertyAmountH2");
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
         //Double restart fix
-        if (Input.IsActionJustReleased ("Game_Restart") || _bButtonReleased)
+        if (Input.IsActionJustReleased ("Game_Restart") || Input.IsActionJustReleased("Game_Back") || _bButtonReleased)
         {
             _actionJustPressed = false;
             _bButtonReleased = false;
-        }
-    }
-
-    private void SetMuted(bool bMuted)
-    {
-        if (_bMuted != bMuted)
-        {
-            _bMuted = bMuted;
-            if (_bMuted)
-            {
-                switch (ActualGUI)
-                {
-                    case "GameOverGUI":
-                        GetNode<AudioStreamPlayer>("GameOverGUIControl/GameOverSndPlayer").Stop();
-                        break;
-
-                    case "InGameGUI":
-                        GetNode<AudioStreamPlayer>("InGameGUIControl/InGameSndPlayer").Stop();
-                        break;
-
-                    case "MainMenuGUI":
-                        GetNode<AudioStreamPlayer>("MainMenuGUIControl/MainMenuSndPlayer").Stop();
-                        break;
-
-                    case "ShopGUI":
-                        GetNode<AudioStreamPlayer>("ShopGUIControl/ShopSndPlayer").Stop();
-                        break;
-
-                    case "GameFinishedGUI":
-                        GetNode<AudioStreamPlayer>("GameFinishedGUIControl/GameFinishedSndPlayer").Stop();
-                        break;
-                }
-            }
-            else
-            {
-                switch (ActualGUI)
-                {
-                    case "GameOverGUI":
-                        GetNode<AudioStreamPlayer>("GameOverGUIControl/GameOverSndPlayer").Play();
-                        break;
-
-                    case "InGameGUI":
-                        GetNode<AudioStreamPlayer>("InGameGUIControl/InGameSndPlayer").Play();
-                        break;
-
-                    case "MainMenuGUI":
-                        GetNode<AudioStreamPlayer>("MainMenuGUIControl/MainMenuSndPlayer").Play();
-                        break;
-
-                    case "ShopGUI":
-                        GetNode<AudioStreamPlayer>("ShopGUIControl/ShopSndPlayer").Play();
-                        break;
-
-                    case "GameFinishedGUI":
-                        GetNode<AudioStreamPlayer>("GameFinishedGUIControl/GameFinishedSndPlayer").Play();
-                        break;
-                }
-            }
         }
     }
 

@@ -200,7 +200,6 @@ __meta__ = {
 }
 
 [node name="NewRecordLab" type="Label" parent="CanvasLayer/CenterContainer"]
-modulate = Color( 1, 1, 1, 0 )
 self_modulate = Color( 0.45098, 0, 0, 1 )
 light_mask = 0
 margin_left = 327.0

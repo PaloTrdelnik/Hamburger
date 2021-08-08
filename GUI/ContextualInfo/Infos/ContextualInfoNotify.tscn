@@ -1,0 +1,81 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://GUI/ContextualInfo/ContextualInfo.tscn" type="PackedScene" id=1]
+[ext_resource path="res://GraphicDesign/Button_background.png" type="Texture" id=2]
+[ext_resource path="res://GraphicDesign/Button_background_hover.png" type="Texture" id=3]
+[ext_resource path="res://GraphicDesign/Button_background_click.png" type="Texture" id=4]
+[ext_resource path="res://GUI/Buttons/Text/ButtonText.tscn" type="PackedScene" id=5]
+[ext_resource path="res://GUI/ContextualInfo/Infos/ContextualInfoNotify.cs" type="Script" id=6]
+
+[sub_resource type="Theme" id=1]
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 3 )
+region_rect = Rect2( 200, 0, 20, 512 )
+
+[sub_resource type="StyleBoxTexture" id=3]
+texture = ExtResource( 4 )
+region_rect = Rect2( 200, 0, 20, 512 )
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 2 )
+region_rect = Rect2( 200, 0, 20, 512 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.501961, 0.501961, 0.501961, 1 )
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="DynamicFontData" id=6]
+font_path = "res://GUI/Fonts/mayor.regular.ttf"
+
+[sub_resource type="DynamicFont" id=7]
+size = 60
+outline_size = 3
+outline_color = Color( 1, 0.34902, 0, 1 )
+use_filter = true
+font_data = SubResource( 6 )
+
+[sub_resource type="InputEventAction" id=8]
+action = "GUI_ConfirmNotify"
+
+[sub_resource type="ShortCut" id=9]
+shortcut = SubResource( 8 )
+
+[node name="ContextualInfoNotify" instance=ExtResource( 1 )]
+margin_bottom = 155.0
+script = ExtResource( 6 )
+
+[node name="VBoxContainer" parent="." index="0"]
+margin_bottom = 155.0
+
+[node name="CenterContainer" parent="VBoxContainer" index="0"]
+margin_bottom = 101.0
+
+[node name="Label" parent="VBoxContainer/CenterContainer" index="0"]
+margin_top = 0.0
+margin_bottom = 101.0
+text = "Contextual Info
+Notify "
+
+[node name="ConfirmationButtonText" parent="VBoxContainer" index="1" instance=ExtResource( 5 )]
+modulate = Color( 1, 1, 1, 1 )
+margin_top = 105.0
+margin_right = 400.0
+margin_bottom = 155.0
+focus_mode = 2
+mouse_filter = 0
+size_flags_horizontal = 3
+theme = SubResource( 1 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/disabled = SubResource( 5 )
+custom_styles/normal = SubResource( 4 )
+custom_fonts/font = SubResource( 7 )
+shortcut_in_tooltip = false
+shortcut = SubResource( 9 )
+text = "ok"
+icon = null
+
+[connection signal="button_down" from="VBoxContainer/ConfirmationButtonText" to="." method="OnConfirmationButtonTextButtonDown"]

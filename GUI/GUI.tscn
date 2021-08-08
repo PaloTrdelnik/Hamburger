@@ -1,8 +1,9 @@
-[gd_scene load_steps=72 format=2]
+[gd_scene load_steps=102 format=2]
 
 [ext_resource path="res://Sounds/InGame_snd.wav" type="AudioStream" id=1]
 [ext_resource path="res://Sounds/GameOver_snd.wav" type="AudioStream" id=2]
 [ext_resource path="res://GUI/GUI.cs" type="Script" id=3]
+[ext_resource path="res://GUI/GameplayLock/Locks/GameplayLockGUI_AcidRaise.tscn" type="PackedScene" id=4]
 [ext_resource path="res://GUI/ScreenCover/ScreenCover.tscn" type="PackedScene" id=5]
 [ext_resource path="res://GUI/ToolBar/ToolBar.tscn" type="PackedScene" id=6]
 [ext_resource path="res://GUI/BuySellItem/Items/BuySellTimeDilationGUI.tscn" type="PackedScene" id=7]
@@ -25,6 +26,13 @@
 [ext_resource path="res://GUI/Buttons/Image/Buttons/ButtonImageMute.tscn" type="PackedScene" id=24]
 [ext_resource path="res://Sounds/MainMenu_snd.wav" type="AudioStream" id=25]
 [ext_resource path="res://Sounds/GameFinished_snd.wav" type="AudioStream" id=26]
+[ext_resource path="res://GUI/GameplayLock/Locks/GameplayLockGUI_FasterPlayer.tscn" type="PackedScene" id=27]
+[ext_resource path="res://GUI/GameplayLock/Locks/GameplayLockGUI_BiggerIventory.tscn" type="PackedScene" id=28]
+[ext_resource path="res://GUI/GameplayLock/Locks/GameplayLockGUI_TimeDilationLonger.tscn" type="PackedScene" id=29]
+[ext_resource path="res://Sounds/MusicManager/MusicManager.tscn" type="PackedScene" id=30]
+[ext_resource path="res://GUI/ItemContainer/ItemContainer.tscn" type="PackedScene" id=31]
+[ext_resource path="res://GUI/ContextualInfo/Infos/ContextualInfoNotify.tscn" type="PackedScene" id=32]
+[ext_resource path="res://GUI/ContextualInfo/Infos/ContextualInfoConfirm.tscn" type="PackedScene" id=33]
 
 [sub_resource type="InputEventAction" id=1]
 action = "Game_Back"
@@ -49,694 +57,7 @@ font_data = SubResource( 5 )
 texture = ExtResource( 15 )
 region_rect = Rect2( 200, 0, 20, 512 )
 
-[sub_resource type="StyleBoxTexture" id=8]
-texture = ExtResource( 15 )
-region_rect = Rect2( 200, 0, 20, 512 )
-
-[sub_resource type="InputEventAction" id=9]
-action = "Game_Shop"
-
-[sub_resource type="ShortCut" id=10]
-shortcut = SubResource( 9 )
-
-[sub_resource type="StyleBoxTexture" id=11]
-texture = ExtResource( 15 )
-region_rect = Rect2( 200, 0, 20, 512 )
-
-[sub_resource type="Animation" id=12]
-resource_name = "Hide_anim"
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:rect_scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 0.95, 0.95 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
-}
-
-[sub_resource type="Animation" id=13]
-step = 0.025
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.125 ),
-"transitions": PoolRealArray( 1, 2 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:rect_scale")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.125, 0.325, 0.4 ),
-"transitions": PoolRealArray( 2, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 0.99, 0.99 ), Vector2( 1, 1 ) ]
-}
-
-[sub_resource type="DynamicFont" id=14]
-size = 50
-font_data = SubResource( 5 )
-
-[sub_resource type="Animation" id=15]
-resource_name = "Hide_anim"
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:rect_scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 0.95, 0.95 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
-}
-
-[sub_resource type="Animation" id=16]
-step = 0.025
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.125 ),
-"transitions": PoolRealArray( 1, 2 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:rect_scale")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.125, 0.325, 0.4 ),
-"transitions": PoolRealArray( 2, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 0.99, 0.99 ), Vector2( 1, 1 ) ]
-}
-
-[sub_resource type="DynamicFont" id=17]
-size = 70
-font_data = SubResource( 5 )
-
-[sub_resource type="Animation" id=18]
-resource_name = "Hide_anim"
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:rect_scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 0.95, 0.95 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
-}
-
-[sub_resource type="Animation" id=19]
-step = 0.025
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.125 ),
-"transitions": PoolRealArray( 1, 2 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:rect_scale")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.125, 0.325, 0.4 ),
-"transitions": PoolRealArray( 2, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 0.99, 0.99 ), Vector2( 1, 1 ) ]
-}
-
-[sub_resource type="DynamicFont" id=20]
-size = 40
-font_data = SubResource( 5 )
-
-[sub_resource type="Animation" id=21]
-resource_name = "Hide_anim"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/path = NodePath("HBoxContainer:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
-}
-
-[sub_resource type="Animation" id=22]
-resource_name = "ScaleJumpShowUp_anim"
-length = 0.4
-step = 0.025
-tracks/0/type = "value"
-tracks/0/path = NodePath("HBoxContainer:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.125 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("HBoxContainer:rect_scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.125, 0.325, 0.4 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 0.99, 0.99 ), Vector2( 1, 1 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("HBoxContainer/AmountContainer/Amount:rect_scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.25, 0.4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1.3, 1.3 ), Vector2( 1, 1 ) ]
-}
-
-[sub_resource type="Animation" id=23]
-length = 0.3
-step = 0.025
-tracks/0/type = "value"
-tracks/0/path = NodePath("HBoxContainer:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
-}
-
-[sub_resource type="Animation" id=24]
-resource_name = "UpdateAmount_anim"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/path = NodePath("HBoxContainer/AmountContainer/Amount:rect_scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 1, 1 ) ]
-}
-
-[sub_resource type="Animation" id=25]
-resource_name = "Hide_anim"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/path = NodePath("HBoxContainer:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
-}
-
-[sub_resource type="Animation" id=26]
-resource_name = "ScaleJumpShowUp_anim"
-length = 0.4
-step = 0.025
-tracks/0/type = "value"
-tracks/0/path = NodePath("HBoxContainer:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.125 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("HBoxContainer:rect_scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.125, 0.325, 0.4 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 0.99, 0.99 ), Vector2( 1, 1 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("HBoxContainer/AmountContainer/Amount:rect_scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.25, 0.4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1.3, 1.3 ), Vector2( 1, 1 ) ]
-}
-
-[sub_resource type="Animation" id=27]
-length = 0.3
-step = 0.025
-tracks/0/type = "value"
-tracks/0/path = NodePath("HBoxContainer:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
-}
-
-[sub_resource type="Animation" id=28]
-resource_name = "UpdateAmount_anim"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/path = NodePath("HBoxContainer/AmountContainer/Amount:rect_scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 1, 1 ) ]
-}
-
-[sub_resource type="Animation" id=29]
-resource_name = "Hide_anim"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/path = NodePath("HBoxContainer:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
-}
-
-[sub_resource type="Animation" id=30]
-resource_name = "ScaleJumpShowUp_anim"
-length = 0.4
-step = 0.025
-tracks/0/type = "value"
-tracks/0/path = NodePath("HBoxContainer:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.125 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("HBoxContainer:rect_scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.125, 0.325, 0.4 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 0.99, 0.99 ), Vector2( 1, 1 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("HBoxContainer/AmountContainer/Amount:rect_scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.25, 0.4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1.3, 1.3 ), Vector2( 1, 1 ) ]
-}
-
-[sub_resource type="Animation" id=31]
-length = 0.3
-step = 0.025
-tracks/0/type = "value"
-tracks/0/path = NodePath("HBoxContainer:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
-}
-
-[sub_resource type="Animation" id=32]
-resource_name = "UpdateAmount_anim"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/path = NodePath("HBoxContainer/AmountContainer/Amount:rect_scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 1, 1 ) ]
-}
-
-[sub_resource type="Animation" id=33]
-resource_name = "Hide_anim"
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:rect_position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = false
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 0, 15 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:custom_styles/normal:expand_margin_bottom")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, 15.0 ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath(".:mouse_filter")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ 0, 2 ]
-}
-
-[sub_resource type="Animation" id=34]
-step = 0.025
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.125 ),
-"transitions": PoolRealArray( 1, 2 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:rect_scale")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.125, 0.325, 0.4 ),
-"transitions": PoolRealArray( 2, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1.2, 1.2 ), Vector2( 0.99, 0.99 ), Vector2( 1, 1 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:custom_fonts/font:size")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = false
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.2, 0.45 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
-"values": [ 70, 100, 70 ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath(".:custom_styles/normal:expand_margin_bottom")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 0.125, 0.4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ 0.0, 20.0, 0.0 ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath(".:mouse_filter")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0, 0.4 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ 2, 0 ]
-}
-
-[sub_resource type="Animation" id=35]
-resource_name = "Hide_anim"
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:rect_position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = false
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 0, 15 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:custom_styles/normal:expand_margin_bottom")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, 15.0 ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath(".:mouse_filter")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ 0, 2 ]
-}
-
-[sub_resource type="Animation" id=36]
-step = 0.025
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.125 ),
-"transitions": PoolRealArray( 1, 2 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:rect_scale")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.125, 0.325, 0.4 ),
-"transitions": PoolRealArray( 2, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1.2, 1.2 ), Vector2( 0.99, 0.99 ), Vector2( 1, 1 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:custom_fonts/font:size")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = false
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.2, 0.45 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
-"values": [ 70, 100, 70 ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath(".:custom_styles/normal:expand_margin_bottom")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 0.125, 0.4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ 0.0, 20.0, 0.0 ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath(".:mouse_filter")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0, 0.4 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ 2, 0 ]
-}
-
-[sub_resource type="StyleBoxTexture" id=37]
-texture = ExtResource( 15 )
-region_rect = Rect2( 200, 0, 20, 512 )
-
-[sub_resource type="Animation" id=38]
+[sub_resource type="Animation" id=8]
 resource_name = "Hide_anim"
 length = 0.3
 tracks/0/type = "value"
@@ -752,7 +73,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=39]
+[sub_resource type="Animation" id=69]
 resource_name = "ShowUp_anim"
 length = 0.3
 tracks/0/type = "value"
@@ -768,26 +89,482 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="StyleBoxTexture" id=40]
+[sub_resource type="StyleBoxTexture" id=70]
 texture = ExtResource( 15 )
 region_rect = Rect2( 200, 0, 20, 512 )
-expand_margin_bottom = 15.0
 
-[sub_resource type="DynamicFontData" id=41]
-font_path = "res://GUI/Fonts/angerpoise-lampshade.regular.ttf"
+[sub_resource type="InputEventAction" id=71]
+action = "Game_Shop"
 
-[sub_resource type="DynamicFont" id=42]
+[sub_resource type="ShortCut" id=72]
+shortcut = SubResource( 71 )
+
+[sub_resource type="StyleBoxTexture" id=73]
+texture = ExtResource( 15 )
+region_rect = Rect2( 200, 0, 20, 512 )
+
+[sub_resource type="Animation" id=74]
+resource_name = "Hide_anim"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=75]
+resource_name = "ShowUp_anim"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=76]
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.95, 0.95 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=77]
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.125 ),
+"transitions": PoolRealArray( 1, 2 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.125, 0.325, 0.4 ),
+"transitions": PoolRealArray( 2, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 0.99, 0.99 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="DynamicFont" id=78]
+size = 50
+font_data = SubResource( 5 )
+
+[sub_resource type="Animation" id=79]
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.95, 0.95 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=80]
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.125 ),
+"transitions": PoolRealArray( 1, 2 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.125, 0.325, 0.4 ),
+"transitions": PoolRealArray( 2, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 0.99, 0.99 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="DynamicFont" id=81]
 size = 70
-font_data = SubResource( 41 )
+font_data = SubResource( 5 )
 
-[sub_resource type="DynamicFontData" id=43]
-font_path = "res://GUI/Fonts/mayor.regular.ttf"
+[sub_resource type="Animation" id=82]
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.95, 0.95 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
 
-[sub_resource type="DynamicFont" id=44]
-size = 120
-font_data = SubResource( 43 )
+[sub_resource type="Animation" id=83]
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.125 ),
+"transitions": PoolRealArray( 1, 2 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.125, 0.325, 0.4 ),
+"transitions": PoolRealArray( 2, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 0.99, 0.99 ), Vector2( 1, 1 ) ]
+}
 
-[sub_resource type="Animation" id=45]
+[sub_resource type="DynamicFont" id=84]
+size = 40
+font_data = SubResource( 5 )
+
+[sub_resource type="Animation" id=85]
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=86]
+length = 0.4
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.125 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("HBoxContainer:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.125, 0.325, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 0.99, 0.99 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("HBoxContainer/AmountContainer/Amount:rect_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.25, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.3, 1.3 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=87]
+length = 0.3
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=88]
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer/AmountContainer/Amount:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=89]
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=90]
+length = 0.4
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.125 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("HBoxContainer:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.125, 0.325, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 0.99, 0.99 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("HBoxContainer/AmountContainer/Amount:rect_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.25, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.3, 1.3 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=91]
+length = 0.3
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=92]
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer/AmountContainer/Amount:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=93]
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=94]
+length = 0.4
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.125 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("HBoxContainer:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.125, 0.325, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 0.99, 0.99 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("HBoxContainer/AmountContainer/Amount:rect_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.25, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.3, 1.3 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=95]
+length = 0.3
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=96]
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer/AmountContainer/Amount:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=97]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_position")
 tracks/0/interp = 1
@@ -837,7 +614,572 @@ tracks/3/keys = {
 "values": [ 0, 2 ]
 }
 
-[sub_resource type="Animation" id=46]
+[sub_resource type="Animation" id=98]
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.125 ),
+"transitions": PoolRealArray( 1, 2 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.125, 0.325, 0.4 ),
+"transitions": PoolRealArray( 2, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.2, 1.2 ), Vector2( 0.99, 0.99 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:custom_fonts/font:size")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.45 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 70, 100, 70 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:custom_styles/normal:expand_margin_bottom")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.125, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 20.0, 0.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:mouse_filter")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 2, 0 ]
+}
+
+[sub_resource type="Animation" id=99]
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 15 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:custom_styles/normal:expand_margin_bottom")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 15.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:mouse_filter")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 2 ]
+}
+
+[sub_resource type="Animation" id=100]
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.125 ),
+"transitions": PoolRealArray( 1, 2 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.125, 0.325, 0.4 ),
+"transitions": PoolRealArray( 2, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.2, 1.2 ), Vector2( 0.99, 0.99 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:custom_fonts/font:size")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.45 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 70, 100, 70 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:custom_styles/normal:expand_margin_bottom")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.125, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 20.0, 0.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:mouse_filter")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 2, 0 ]
+}
+
+[sub_resource type="StyleBoxTexture" id=101]
+texture = ExtResource( 15 )
+region_rect = Rect2( 200, 0, 20, 512 )
+
+[sub_resource type="ShortCut" id=102]
+shortcut = SubResource( 3 )
+
+[sub_resource type="Animation" id=103]
+resource_name = "Hide_anim"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=104]
+resource_name = "ShowUp_anim"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=105]
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=106]
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=47]
+resource_name = "Hide_anim"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=48]
+resource_name = "ShowUp_anim"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="StyleBoxTexture" id=107]
+texture = ExtResource( 15 )
+region_rect = Rect2( 200, 0, 20, 512 )
+
+[sub_resource type="InputEventAction" id=50]
+action = "Game_Back"
+
+[sub_resource type="ShortCut" id=51]
+shortcut = SubResource( 50 )
+
+[sub_resource type="Animation" id=52]
+resource_name = "Hide_anim"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=53]
+resource_name = "ShowUp_anim"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="DynamicFont" id=60]
+size = 30
+font_data = SubResource( 5 )
+
+[sub_resource type="Animation" id=61]
+resource_name = "Hide_anim"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=62]
+resource_name = "ScaleJumpShowUp_anim"
+length = 0.4
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.125 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("HBoxContainer:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.125, 0.325, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 0.99, 0.99 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("HBoxContainer/AmountContainer/Amount:rect_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.25, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.3, 1.3 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=63]
+length = 0.3
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=64]
+resource_name = "UpdateAmount_anim"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer/AmountContainer/Amount:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=65]
+resource_name = "Hide_anim"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=66]
+resource_name = "ScaleJumpShowUp_anim"
+length = 0.4
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.125 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("HBoxContainer:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.125, 0.325, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 0.99, 0.99 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("HBoxContainer/AmountContainer/Amount:rect_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.25, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.3, 1.3 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=67]
+length = 0.3
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=68]
+resource_name = "UpdateAmount_anim"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("HBoxContainer/AmountContainer/Amount:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="DynamicFontData" id=54]
+font_path = "res://GUI/Fonts/angerpoise-lampshade.regular.ttf"
+
+[sub_resource type="DynamicFont" id=55]
+size = 70
+font_data = SubResource( 54 )
+
+[sub_resource type="DynamicFontData" id=56]
+font_path = "res://GUI/Fonts/mayor.regular.ttf"
+
+[sub_resource type="DynamicFont" id=57]
+size = 120
+font_data = SubResource( 56 )
+
+[sub_resource type="Animation" id=58]
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 15 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:custom_styles/normal:expand_margin_bottom")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 15.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:mouse_filter")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 2 ]
+}
+
+[sub_resource type="Animation" id=59]
 step = 0.025
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -913,6 +1255,7 @@ __meta__ = {
 
 [node name="InGameSndPlayer" type="AudioStreamPlayer" parent="InGameGUIControl"]
 stream = ExtResource( 1 )
+volume_db = -80.0
 
 [node name="MenuV" parent="InGameGUIControl" instance=ExtResource( 17 )]
 margin_right = 64.0
@@ -1088,6 +1431,29 @@ shortcut = SubResource( 4 )
 text = "Restart"
 icon = null
 
+[node name="KeyNotification" parent="GameOverGUIControl/CenterContainer/VBoxContainer/MenuV/CenterContainer2/RestartButtonText" instance=ExtResource( 10 )]
+margin_left = -241.0
+margin_top = 5.0
+margin_right = -14.0
+margin_bottom = 53.0
+
+[node name="ColorRect" parent="GameOverGUIControl/CenterContainer/VBoxContainer/MenuV/CenterContainer2/RestartButtonText/KeyNotification" index="0"]
+margin_left = 228.072
+margin_top = -0.217133
+margin_right = 244.072
+margin_bottom = 15.7829
+
+[node name="Label" parent="GameOverGUIControl/CenterContainer/VBoxContainer/MenuV/CenterContainer2/RestartButtonText/KeyNotification" index="1"]
+margin_left = 0.31398
+margin_top = -0.217133
+margin_right = 227.314
+margin_bottom = 36.7829
+text = "Press key 'Enter'"
+
+[node name="AnimationPlayer" parent="GameOverGUIControl/CenterContainer/VBoxContainer/MenuV/CenterContainer2/RestartButtonText/KeyNotification" index="2"]
+anims/Hide_anim = SubResource( 8 )
+anims/ShowUp_anim = SubResource( 69 )
+
 [node name="CenterContainer3" type="CenterContainer" parent="GameOverGUIControl/CenterContainer/VBoxContainer/MenuV"]
 margin_top = 54.0
 margin_right = 666.0
@@ -1099,9 +1465,9 @@ margin_left = 257.0
 margin_right = 409.0
 rect_pivot_offset = Vector2( 73.5, 25 )
 focus_mode = 2
-custom_styles/normal = SubResource( 8 )
+custom_styles/normal = SubResource( 70 )
 shortcut_in_tooltip = false
-shortcut = SubResource( 10 )
+shortcut = SubResource( 72 )
 text = "Shop"
 icon = null
 
@@ -1125,14 +1491,34 @@ grow_vertical = 2
 margin_left = 166.0
 margin_right = 499.0
 rect_pivot_offset = Vector2( 166, 25 )
-custom_styles/normal = SubResource( 11 )
+custom_styles/normal = SubResource( 73 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 2 )
 text = "Main Menu"
 icon = null
 
+[node name="KeyNotification" parent="GameOverGUIControl/CenterContainer/VBoxContainer/MenuV/CenterContainer/MainMenuButtonText" instance=ExtResource( 10 )]
+margin_left = -256.0
+margin_top = 5.0
+margin_right = 0.0
+margin_bottom = 53.0
+
+[node name="ColorRect" parent="GameOverGUIControl/CenterContainer/VBoxContainer/MenuV/CenterContainer/MainMenuButtonText/KeyNotification" index="0"]
+margin_left = 243.0
+margin_right = 259.0
+
+[node name="Label" parent="GameOverGUIControl/CenterContainer/VBoxContainer/MenuV/CenterContainer/MainMenuButtonText/KeyNotification" index="1"]
+margin_left = 1.0
+margin_right = 243.0
+text = "Press key 'Escape'"
+
+[node name="AnimationPlayer" parent="GameOverGUIControl/CenterContainer/VBoxContainer/MenuV/CenterContainer/MainMenuButtonText/KeyNotification" index="2"]
+anims/Hide_anim = SubResource( 74 )
+anims/ShowUp_anim = SubResource( 75 )
+
 [node name="GameOverSndPlayer" type="AudioStreamPlayer" parent="GameOverGUIControl"]
 stream = ExtResource( 2 )
+volume_db = -80.0
 
 [node name="GameFinishedGUIControl" type="Control" parent="."]
 visible = false
@@ -1171,8 +1557,8 @@ rect_pivot_offset = Vector2( 424, 49.5 )
 text = "Unbelievable!"
 
 [node name="AnimationPlayer" parent="GameFinishedGUIControl/CenterContainer/VBoxContainer/Caption" index="0"]
-anims/Hide_anim = SubResource( 12 )
-anims/ShowUp_anim = SubResource( 13 )
+anims/Hide_anim = SubResource( 76 )
+anims/ShowUp_anim = SubResource( 77 )
 
 [node name="Caption2" parent="GameFinishedGUIControl/CenterContainer/VBoxContainer" instance=ExtResource( 12 )]
 self_modulate = Color( 0.427451, 0.92549, 0.117647, 1 )
@@ -1183,12 +1569,12 @@ margin_top = 103.0
 margin_right = 848.0
 margin_bottom = 164.0
 rect_pivot_offset = Vector2( 424, 30 )
-custom_fonts/font = SubResource( 14 )
+custom_fonts/font = SubResource( 78 )
 text = "You finished the game!"
 
 [node name="AnimationPlayer" parent="GameFinishedGUIControl/CenterContainer/VBoxContainer/Caption2" index="0"]
-anims/Hide_anim = SubResource( 15 )
-anims/ShowUp_anim = SubResource( 16 )
+anims/Hide_anim = SubResource( 79 )
+anims/ShowUp_anim = SubResource( 80 )
 
 [node name="Caption3" parent="GameFinishedGUIControl/CenterContainer/VBoxContainer" instance=ExtResource( 12 )]
 self_modulate = Color( 0.427451, 0.92549, 0.117647, 1 )
@@ -1199,12 +1585,12 @@ margin_top = 168.0
 margin_right = 848.0
 margin_bottom = 253.0
 rect_pivot_offset = Vector2( 424, 42 )
-custom_fonts/font = SubResource( 17 )
+custom_fonts/font = SubResource( 81 )
 text = "Thanks for playing it!"
 
 [node name="AnimationPlayer" parent="GameFinishedGUIControl/CenterContainer/VBoxContainer/Caption3" index="0"]
-anims/Hide_anim = SubResource( 18 )
-anims/ShowUp_anim = SubResource( 19 )
+anims/Hide_anim = SubResource( 82 )
+anims/ShowUp_anim = SubResource( 83 )
 
 [node name="PropertyAmountH" parent="GameFinishedGUIControl/CenterContainer/VBoxContainer" instance=ExtResource( 9 )]
 margin_top = 257.0
@@ -1221,7 +1607,7 @@ margin_bottom = 49.0
 [node name="Name" parent="GameFinishedGUIControl/CenterContainer/VBoxContainer/PropertyAmountH/HBoxContainer" index="0"]
 margin_right = 105.0
 margin_bottom = 49.0
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 84 )
 text = "Score:"
 uppercase = true
 
@@ -1233,13 +1619,13 @@ margin_bottom = 49.0
 [node name="Amount" parent="GameFinishedGUIControl/CenterContainer/VBoxContainer/PropertyAmountH/HBoxContainer/AmountContainer" index="0"]
 margin_right = 20.0
 margin_bottom = 49.0
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 84 )
 
 [node name="AnimationPlayer" parent="GameFinishedGUIControl/CenterContainer/VBoxContainer/PropertyAmountH" index="1"]
-anims/Hide_anim = SubResource( 21 )
-anims/ScaleJumpShowUp_anim = SubResource( 22 )
-anims/ShowUp_anim = SubResource( 23 )
-anims/UpdateAmount_anim = SubResource( 24 )
+anims/Hide_anim = SubResource( 85 )
+anims/ScaleJumpShowUp_anim = SubResource( 86 )
+anims/ShowUp_anim = SubResource( 87 )
+anims/UpdateAmount_anim = SubResource( 88 )
 
 [node name="PropertyAmountH2" parent="GameFinishedGUIControl/CenterContainer/VBoxContainer" instance=ExtResource( 9 )]
 margin_top = 310.0
@@ -1256,7 +1642,7 @@ margin_bottom = 49.0
 [node name="Name" parent="GameFinishedGUIControl/CenterContainer/VBoxContainer/PropertyAmountH2/HBoxContainer" index="0"]
 margin_right = 283.0
 margin_bottom = 49.0
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 84 )
 text = "Time of attempt:"
 uppercase = true
 
@@ -1268,13 +1654,13 @@ margin_bottom = 49.0
 [node name="Amount" parent="GameFinishedGUIControl/CenterContainer/VBoxContainer/PropertyAmountH2/HBoxContainer/AmountContainer" index="0"]
 margin_right = 20.0
 margin_bottom = 49.0
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 84 )
 
 [node name="AnimationPlayer" parent="GameFinishedGUIControl/CenterContainer/VBoxContainer/PropertyAmountH2" index="1"]
-anims/Hide_anim = SubResource( 25 )
-anims/ScaleJumpShowUp_anim = SubResource( 26 )
-anims/ShowUp_anim = SubResource( 27 )
-anims/UpdateAmount_anim = SubResource( 28 )
+anims/Hide_anim = SubResource( 89 )
+anims/ScaleJumpShowUp_anim = SubResource( 90 )
+anims/ShowUp_anim = SubResource( 91 )
+anims/UpdateAmount_anim = SubResource( 92 )
 
 [node name="PropertyAmountH3" parent="GameFinishedGUIControl/CenterContainer/VBoxContainer" instance=ExtResource( 9 )]
 margin_top = 363.0
@@ -1291,7 +1677,7 @@ margin_bottom = 49.0
 [node name="Name" parent="GameFinishedGUIControl/CenterContainer/VBoxContainer/PropertyAmountH3/HBoxContainer" index="0"]
 margin_right = 356.0
 margin_bottom = 49.0
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 84 )
 text = "Number of attempts:"
 uppercase = true
 
@@ -1303,13 +1689,13 @@ margin_bottom = 49.0
 [node name="Amount" parent="GameFinishedGUIControl/CenterContainer/VBoxContainer/PropertyAmountH3/HBoxContainer/AmountContainer" index="0"]
 margin_right = 20.0
 margin_bottom = 49.0
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 84 )
 
 [node name="AnimationPlayer" parent="GameFinishedGUIControl/CenterContainer/VBoxContainer/PropertyAmountH3" index="1"]
-anims/Hide_anim = SubResource( 29 )
-anims/ScaleJumpShowUp_anim = SubResource( 30 )
-anims/ShowUp_anim = SubResource( 31 )
-anims/UpdateAmount_anim = SubResource( 32 )
+anims/Hide_anim = SubResource( 93 )
+anims/ScaleJumpShowUp_anim = SubResource( 94 )
+anims/ShowUp_anim = SubResource( 95 )
+anims/UpdateAmount_anim = SubResource( 96 )
 
 [node name="MenuV" parent="GameFinishedGUIControl/CenterContainer/VBoxContainer" instance=ExtResource( 17 )]
 margin_top = 416.0
@@ -1326,15 +1712,15 @@ margin_left = 257.0
 margin_right = 590.0
 rect_pivot_offset = Vector2( 166, 25 )
 focus_mode = 2
-custom_styles/normal = SubResource( 11 )
+custom_styles/normal = SubResource( 73 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 2 )
 text = "Main Menu"
 icon = null
 
 [node name="AnimationPlayer" parent="GameFinishedGUIControl/CenterContainer/VBoxContainer/MenuV/CenterContainer/MainMenuButtonText" index="0"]
-anims/Hide_anim = SubResource( 33 )
-anims/ShowUp_anim = SubResource( 34 )
+anims/Hide_anim = SubResource( 97 )
+anims/ShowUp_anim = SubResource( 98 )
 
 [node name="CenterContainer2" type="CenterContainer" parent="GameFinishedGUIControl/CenterContainer/VBoxContainer/MenuV"]
 margin_top = 54.0
@@ -1354,11 +1740,12 @@ text = "Play angain"
 icon = null
 
 [node name="AnimationPlayer" parent="GameFinishedGUIControl/CenterContainer/VBoxContainer/MenuV/CenterContainer2/RestartButtonText" index="0"]
-anims/Hide_anim = SubResource( 35 )
-anims/ShowUp_anim = SubResource( 36 )
+anims/Hide_anim = SubResource( 99 )
+anims/ShowUp_anim = SubResource( 100 )
 
 [node name="GameFinishedSndPlayer" type="AudioStreamPlayer" parent="GameFinishedGUIControl"]
 stream = ExtResource( 26 )
+volume_db = -80.0
 
 [node name="MainMenuGUIControl" type="Control" parent="."]
 anchor_right = 1.0
@@ -1413,22 +1800,12 @@ Flood"
 
 [node name="MainMenuSndPlayer" type="AudioStreamPlayer" parent="MainMenuGUIControl"]
 stream = ExtResource( 25 )
-autoplay = true
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MainMenuGUIControl"]
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -271.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="MenuV" parent="MainMenuGUIControl" instance=ExtResource( 17 )]
-anchor_top = 1.0
+anchor_top = 0.528
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -283.0
+margin_top = 0.200012
 margin_right = 0.0
 margin_bottom = 0.0
 
@@ -1441,11 +1818,34 @@ grow_vertical = 2
 margin_left = 438.0
 margin_right = 585.0
 rect_pivot_offset = Vector2( 73.5, 25 )
-custom_styles/normal = SubResource( 37 )
+custom_styles/normal = SubResource( 101 )
 shortcut_in_tooltip = false
-shortcut = SubResource( 4 )
+shortcut = SubResource( 102 )
 text = "Play"
 icon = null
+
+[node name="KeyNotification" parent="MainMenuGUIControl/MenuV/CenterContainer/PlayButtonText" instance=ExtResource( 10 )]
+margin_left = -241.0
+margin_top = 5.0
+margin_right = -14.0
+margin_bottom = 53.0
+
+[node name="ColorRect" parent="MainMenuGUIControl/MenuV/CenterContainer/PlayButtonText/KeyNotification" index="0"]
+margin_left = 228.072
+margin_top = -0.217133
+margin_right = 244.072
+margin_bottom = 15.7829
+
+[node name="Label" parent="MainMenuGUIControl/MenuV/CenterContainer/PlayButtonText/KeyNotification" index="1"]
+margin_left = 0.31398
+margin_top = -0.217133
+margin_right = 227.314
+margin_bottom = 36.7829
+text = "Press key 'Enter'"
+
+[node name="AnimationPlayer" parent="MainMenuGUIControl/MenuV/CenterContainer/PlayButtonText/KeyNotification" index="2"]
+anims/Hide_anim = SubResource( 103 )
+anims/ShowUp_anim = SubResource( 104 )
 
 [node name="CenterContainer2" type="CenterContainer" parent="MainMenuGUIControl/MenuV"]
 margin_top = 54.0
@@ -1457,9 +1857,9 @@ grow_vertical = 2
 margin_left = 436.0
 margin_right = 588.0
 rect_pivot_offset = Vector2( 73.5, 25 )
-custom_styles/normal = SubResource( 8 )
+custom_styles/normal = SubResource( 70 )
 shortcut_in_tooltip = false
-shortcut = SubResource( 10 )
+shortcut = SubResource( 72 )
 text = "Shop"
 icon = null
 
@@ -1474,11 +1874,28 @@ margin_bottom = 53.0
 text = "New improvement"
 
 [node name="AnimationPlayer" parent="MainMenuGUIControl/MenuV/CenterContainer2/ShopButtonText/Notification" index="2"]
-anims/Hide_anim = SubResource( 38 )
-anims/ShowUp_anim = SubResource( 39 )
+anims/Hide_anim = SubResource( 105 )
+anims/ShowUp_anim = SubResource( 106 )
+
+[node name="KeyNotification" parent="MainMenuGUIControl/MenuV/CenterContainer2/ShopButtonText" instance=ExtResource( 10 )]
+margin_left = -188.0
+margin_top = 5.0
+margin_right = 2.0
+margin_bottom = 53.0
+
+[node name="ColorRect" parent="MainMenuGUIControl/MenuV/CenterContainer2/ShopButtonText/KeyNotification" index="0"]
+margin_left = 174.0
+margin_right = 190.0
+
+[node name="Label" parent="MainMenuGUIControl/MenuV/CenterContainer2/ShopButtonText/KeyNotification" index="1"]
+margin_right = 174.0
+text = "Press key 'S'"
+
+[node name="AnimationPlayer" parent="MainMenuGUIControl/MenuV/CenterContainer2/ShopButtonText/KeyNotification" index="2"]
+anims/Hide_anim = SubResource( 47 )
+anims/ShowUp_anim = SubResource( 48 )
 
 [node name="CenterContainer3" type="CenterContainer" parent="MainMenuGUIControl/MenuV"]
-visible = false
 margin_top = 108.0
 margin_right = 1024.0
 margin_bottom = 158.0
@@ -1488,10 +1905,30 @@ grow_vertical = 2
 margin_left = 448.0
 margin_right = 576.0
 rect_pivot_offset = Vector2( 73.5, 25 )
-custom_styles/normal = SubResource( 40 )
+custom_styles/normal = SubResource( 107 )
 shortcut_in_tooltip = false
+shortcut = SubResource( 51 )
 text = "Quit"
 icon = null
+
+[node name="KeyNotification" parent="MainMenuGUIControl/MenuV/CenterContainer3/QuitButtonText" instance=ExtResource( 10 )]
+margin_left = -256.0
+margin_top = 5.0
+margin_right = 0.0
+margin_bottom = 53.0
+
+[node name="ColorRect" parent="MainMenuGUIControl/MenuV/CenterContainer3/QuitButtonText/KeyNotification" index="0"]
+margin_left = 243.0
+margin_right = 259.0
+
+[node name="Label" parent="MainMenuGUIControl/MenuV/CenterContainer3/QuitButtonText/KeyNotification" index="1"]
+margin_left = 1.0
+margin_right = 243.0
+text = "Press key 'Escape'"
+
+[node name="AnimationPlayer" parent="MainMenuGUIControl/MenuV/CenterContainer3/QuitButtonText/KeyNotification" index="2"]
+anims/Hide_anim = SubResource( 52 )
+anims/ShowUp_anim = SubResource( 53 )
 
 [node name="ButtonImageMute" parent="MainMenuGUIControl" instance=ExtResource( 24 )]
 modulate = Color( 1, 1, 1, 0 )
@@ -1504,6 +1941,83 @@ margin_top = -64.0
 margin_right = 0.0
 margin_bottom = 0.0
 
+[node name="PropertyAmountH" parent="MainMenuGUIControl" instance=ExtResource( 9 )]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -179.5
+margin_top = -37.0
+margin_right = 179.5
+margin_bottom = 0.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" parent="MainMenuGUIControl/PropertyAmountH" index="0"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 359.0
+margin_bottom = 37.0
+
+[node name="Name" parent="MainMenuGUIControl/PropertyAmountH/HBoxContainer" index="0"]
+margin_right = 112.0
+margin_bottom = 37.0
+grow_horizontal = 0
+custom_fonts/font = SubResource( 60 )
+text = "Made by:"
+
+[node name="AmountContainer" parent="MainMenuGUIControl/PropertyAmountH/HBoxContainer" index="1"]
+margin_left = 116.0
+margin_right = 359.0
+margin_bottom = 37.0
+
+[node name="Amount" parent="MainMenuGUIControl/PropertyAmountH/HBoxContainer/AmountContainer" index="0"]
+margin_right = 243.0
+margin_bottom = 37.0
+custom_fonts/font = SubResource( 60 )
+text = "Lazy Cholerics - 2021"
+
+[node name="AnimationPlayer" parent="MainMenuGUIControl/PropertyAmountH" index="1"]
+anims/Hide_anim = SubResource( 61 )
+anims/ScaleJumpShowUp_anim = SubResource( 62 )
+anims/ShowUp_anim = SubResource( 63 )
+anims/UpdateAmount_anim = SubResource( 64 )
+
+[node name="PropertyAmountH2" parent="MainMenuGUIControl" instance=ExtResource( 9 )]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -37.0
+margin_right = 89.0
+margin_bottom = 0.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" parent="MainMenuGUIControl/PropertyAmountH2" index="0"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 89.0
+margin_bottom = 37.0
+
+[node name="Name" parent="MainMenuGUIControl/PropertyAmountH2/HBoxContainer" index="0"]
+margin_right = 47.0
+margin_bottom = 37.0
+grow_horizontal = 0
+custom_fonts/font = SubResource( 60 )
+text = "Ver:"
+
+[node name="AmountContainer" parent="MainMenuGUIControl/PropertyAmountH2/HBoxContainer" index="1"]
+margin_left = 51.0
+margin_right = 89.0
+margin_bottom = 37.0
+
+[node name="Amount" parent="MainMenuGUIControl/PropertyAmountH2/HBoxContainer/AmountContainer" index="0"]
+margin_right = 38.0
+margin_bottom = 37.0
+custom_fonts/font = SubResource( 60 )
+text = "0.5"
+
+[node name="AnimationPlayer" parent="MainMenuGUIControl/PropertyAmountH2" index="1"]
+anims/Hide_anim = SubResource( 65 )
+anims/ScaleJumpShowUp_anim = SubResource( 66 )
+anims/ShowUp_anim = SubResource( 67 )
+anims/UpdateAmount_anim = SubResource( 68 )
+
 [node name="ShopGUIControl" type="Control" parent="."]
 visible = false
 anchor_right = 1.0
@@ -1512,44 +2026,55 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ShopGUIControl"]
-anchor_top = 0.013
-anchor_right = 0.469
+[node name="ItemContainer" parent="ShopGUIControl" instance=ExtResource( 31 )]
+anchor_top = 0.107
+anchor_right = 0.5
 anchor_bottom = 1.0
-margin_top = -7.8
-margin_right = 20.744
-__meta__ = {
-"_edit_use_anchors_": false
-}
+margin_top = -0.200005
 
-[node name="CenterContainer" type="CenterContainer" parent="ShopGUIControl/HBoxContainer"]
-margin_right = 501.0
-margin_bottom = 600.0
-size_flags_horizontal = 3
+[node name="ScrollContainer" parent="ShopGUIControl/ItemContainer" index="1"]
+anchor_top = 0.164
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 1.096
+margin_right = 0.0
+margin_bottom = 0.0
+rect_min_size = Vector2( 0, 430 )
 
-[node name="BuySellTimeDilationGUI" parent="ShopGUIControl/HBoxContainer/CenterContainer" instance=ExtResource( 7 )]
+[node name="CenterContainer" parent="ShopGUIControl/ItemContainer/ScrollContainer" index="0"]
+margin_right = 512.0
+margin_bottom = 447.0
+rect_min_size = Vector2( 488, 430 )
+
+[node name="VBoxContainer" parent="ShopGUIControl/ItemContainer/ScrollContainer/CenterContainer" index="0"]
+margin_left = 52.0
+margin_top = 6.0
+margin_right = 460.0
+margin_bottom = 440.0
+
+[node name="BuySellTimeDilationGUI" parent="ShopGUIControl/ItemContainer/ScrollContainer/CenterContainer/VBoxContainer" index="0" instance=ExtResource( 7 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 46.0
-margin_top = 83.0
-margin_right = 454.0
-margin_bottom = 517.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 408.0
+margin_bottom = 434.0
 
-[node name="CenterContainer2" parent="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI" index="0"]
+[node name="CenterContainer2" parent="ShopGUIControl/ItemContainer/ScrollContainer/CenterContainer/VBoxContainer/BuySellTimeDilationGUI" index="0"]
 margin_top = 0.0
 margin_bottom = 85.0
 
-[node name="Amount" parent="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI/CenterContainer2/ItemAmountTextContainer/AmountContainer" index="0"]
+[node name="Amount" parent="ShopGUIControl/ItemContainer/ScrollContainer/CenterContainer/VBoxContainer/BuySellTimeDilationGUI/CenterContainer2/ItemAmountTextContainer/AmountContainer" index="0"]
 rect_pivot_offset = Vector2( 0, 0 )
-custom_fonts/font = SubResource( 42 )
+custom_fonts/font = SubResource( 55 )
 
-[node name="Unit" parent="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI/CenterContainer2/ItemAmountTextContainer/AmountContainer" index="1"]
+[node name="Unit" parent="ShopGUIControl/ItemContainer/ScrollContainer/CenterContainer/VBoxContainer/BuySellTimeDilationGUI/CenterContainer2/ItemAmountTextContainer/AmountContainer" index="1"]
 margin_left = 22.0
 margin_right = 40.0
 margin_bottom = 44.0
-custom_fonts/font = SubResource( 42 )
+custom_fonts/font = SubResource( 55 )
 
-[node name="CenterContainer" parent="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI" index="1"]
+[node name="CenterContainer" parent="ShopGUIControl/ItemContainer/ScrollContainer/CenterContainer/VBoxContainer/BuySellTimeDilationGUI" index="1"]
 margin_top = 89.0
 margin_bottom = 434.0
 
@@ -1567,7 +2092,7 @@ margin_left = 360.0
 margin_top = 13.0
 margin_right = 664.0
 margin_bottom = 112.0
-custom_fonts/font = SubResource( 44 )
+custom_fonts/font = SubResource( 57 )
 text = "Shop"
 align = 1
 __meta__ = {
@@ -1592,18 +2117,15 @@ margin_right = 152.0
 rect_pivot_offset = Vector2( 166, 25 )
 focus_mode = 2
 mouse_filter = 0
-custom_styles/normal = SubResource( 11 )
+custom_styles/normal = SubResource( 73 )
 shortcut_in_tooltip = false
 shortcut = SubResource( 2 )
 text = "Back"
 icon = null
 
 [node name="AnimationPlayer" parent="ShopGUIControl/ShopMenuContainer/CenterContainer/BackButtonText" index="0"]
-anims/Hide_anim = SubResource( 45 )
-anims/ShowUp_anim = SubResource( 46 )
-
-[node name="ShopSndPlayer" type="AudioStreamPlayer" parent="ShopGUIControl"]
-stream = ExtResource( 25 )
+anims/Hide_anim = SubResource( 58 )
+anims/ShowUp_anim = SubResource( 59 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ShopGUIControl"]
 anchor_left = 1.0
@@ -1640,16 +2162,54 @@ margin_top = 0.199982
 margin_right = 0.0
 margin_bottom = 0.0
 
+[node name="Caption" parent="ShopGUIControl/GameplayLockContainer" index="0"]
+align = 1
+
 [node name="ScrollContainer" parent="ShopGUIControl/GameplayLockContainer" index="1"]
-margin_right = 512.0
+anchor_top = 0.199
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.152016
+margin_right = 0.0
+margin_bottom = -3.05176e-05
 
 [node name="CenterContainer" parent="ShopGUIControl/GameplayLockContainer/ScrollContainer" index="0"]
-margin_right = 359.0
-margin_bottom = 311.0
+margin_right = 512.0
+margin_bottom = 359.0
 
 [node name="HBoxContainer" parent="ShopGUIControl/GameplayLockContainer/ScrollContainer/CenterContainer" index="0"]
+margin_left = 256.0
+margin_right = 256.0
+margin_bottom = 179.0
+
+[node name="GameplayLockGUI" parent="ShopGUIControl/GameplayLockContainer/ScrollContainer/CenterContainer/HBoxContainer" index="0"]
+visible = false
 margin_right = 359.0
-margin_bottom = 311.0
+margin_bottom = 351.0
+
+[node name="GameplayLockGUI2" parent="ShopGUIControl/GameplayLockContainer/ScrollContainer/CenterContainer/HBoxContainer" index="1" instance=ExtResource( 4 )]
+visible = false
+margin_right = 348.0
+margin_bottom = 351.0
+
+[node name="GameplayLockGUI3" parent="ShopGUIControl/GameplayLockContainer/ScrollContainer/CenterContainer/HBoxContainer" index="2" instance=ExtResource( 27 )]
+visible = false
+margin_right = 403.0
+margin_bottom = 282.0
+
+[node name="GameplayLockGUI4" parent="ShopGUIControl/GameplayLockContainer/ScrollContainer/CenterContainer/HBoxContainer" index="3" instance=ExtResource( 28 )]
+visible = false
+margin_right = 483.0
+margin_bottom = 282.0
+
+[node name="GameplayLockGUI5" parent="ShopGUIControl/GameplayLockContainer/ScrollContainer/CenterContainer/HBoxContainer" index="4" instance=ExtResource( 29 )]
+visible = false
+margin_right = 587.0
+margin_bottom = 282.0
+
+[node name="NoAvailabilityLabel" parent="ShopGUIControl/GameplayLockContainer/ScrollContainer/CenterContainer" index="1"]
+margin_left = 74.0
+margin_right = 437.0
 
 [node name="Cover" type="CanvasLayer" parent="."]
 layer = 3
@@ -1659,7 +2219,34 @@ layer = 3
 [node name="ChangeScreenCover" parent="Cover" instance=ExtResource( 5 )]
 visible = false
 
-[connection signal="SUpdateShopPrizes" from="." to="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI" method="OnGUISUpdateShopPrizes"]
+[node name="CenterContainer" type="CenterContainer" parent="Cover"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ContextualInfoConfirm" parent="Cover/CenterContainer" instance=ExtResource( 33 )]
+visible = false
+margin_left = 512.0
+margin_top = 300.0
+margin_right = 512.0
+margin_bottom = 300.0
+
+[node name="Label" parent="Cover/CenterContainer/ContextualInfoConfirm/VBoxContainer/CenterContainer" index="0"]
+text = "Do you really want to quit?"
+
+[node name="ContextualInfoNotify" parent="Cover/CenterContainer" instance=ExtResource( 32 )]
+visible = false
+margin_left = 512.0
+margin_top = 300.0
+margin_right = 512.0
+margin_bottom = 300.0
+
+[node name="MusicManager" parent="." instance=ExtResource( 30 )]
+
+[connection signal="SUpdateShopPrizes" from="." to="ShopGUIControl/ItemContainer" method="OnGUISUpdateShopPrizes"]
 [connection signal="SUpdateShopPrizes" from="." to="ShopGUIControl/GameplayLockContainer" method="OnGUISUpdateShopPrizes"]
 [connection signal="button_down" from="InGameGUIControl/MenuV/CenterContainer/MainMenuTextureButton/Button" to="." method="OnMainMenuButtonDown"]
 [connection signal="button_down" from="InGameGUIControl/MenuV/CenterContainer2/RestartTextureButton/Button" to="." method="OnRestartButtonDown"]
@@ -1674,14 +2261,23 @@ visible = false
 [connection signal="button_down" from="MainMenuGUIControl/MenuV/CenterContainer2/ShopButtonText" to="." method="OnShopButtonDown"]
 [connection signal="button_down" from="MainMenuGUIControl/MenuV/CenterContainer3/QuitButtonText" to="." method="OnQuitButtonDown"]
 [connection signal="button_down" from="MainMenuGUIControl/ButtonImageMute/Button" to="." method="OnMuteButtonTextButtonDown"]
-[connection signal="SRequestBuyItem" from="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI" to="." method="OnBuySellItemGUISRequestBuyItem"]
-[connection signal="SRequestSellItem" from="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI" to="." method="OnBuySellItemGUISRequestSellItem"]
+[connection signal="SRequestBuyItem" from="ShopGUIControl/ItemContainer" to="." method="OnItemContainerSRequestBuyItem"]
+[connection signal="SRequestSellItem" from="ShopGUIControl/ItemContainer" to="." method="OnItemContainerSRequestSellItem"]
+[connection signal="SRequestBuyItem" from="ShopGUIControl/ItemContainer/ScrollContainer/CenterContainer/VBoxContainer/BuySellTimeDilationGUI" to="ShopGUIControl/ItemContainer" method="OnBuySellItemGUISRequestBuyItem"]
+[connection signal="SRequestSellItem" from="ShopGUIControl/ItemContainer/ScrollContainer/CenterContainer/VBoxContainer/BuySellTimeDilationGUI" to="ShopGUIControl/ItemContainer" method="OnBuySellItemGUISRequestSellItem"]
 [connection signal="button_down" from="ShopGUIControl/ShopMenuContainer/CenterContainer/BackButtonText" to="." method="OnBackButtonDown"]
 [connection signal="SRequestUnlockGLock" from="ShopGUIControl/GameplayLockContainer" to="." method="OnGameplayLockContainerSRequestUnlockGLock"]
+[connection signal="SRequestUnlockGLock" from="ShopGUIControl/GameplayLockContainer/ScrollContainer/CenterContainer/HBoxContainer/GameplayLockGUI2" to="ShopGUIControl/GameplayLockContainer" method="OnGameplayLockGUISRequestUnlockGLock"]
+[connection signal="SRequestUnlockGLock" from="ShopGUIControl/GameplayLockContainer/ScrollContainer/CenterContainer/HBoxContainer/GameplayLockGUI3" to="ShopGUIControl/GameplayLockContainer" method="OnGameplayLockGUISRequestUnlockGLock"]
+[connection signal="SRequestUnlockGLock" from="ShopGUIControl/GameplayLockContainer/ScrollContainer/CenterContainer/HBoxContainer/GameplayLockGUI4" to="ShopGUIControl/GameplayLockContainer" method="OnGameplayLockGUISRequestUnlockGLock"]
+[connection signal="SRequestUnlockGLock" from="ShopGUIControl/GameplayLockContainer/ScrollContainer/CenterContainer/HBoxContainer/GameplayLockGUI5" to="ShopGUIControl/GameplayLockContainer" method="OnGameplayLockGUISRequestUnlockGLock"]
 [connection signal="CoveringFinished" from="Cover/StartScreenCover" to="." method="OnScreenCoverCoveringFinished"]
 [connection signal="CoveringStarted" from="Cover/StartScreenCover" to="." method="OnScreenCoverCoveringStarted"]
 [connection signal="CoveringFinished" from="Cover/ChangeScreenCover" to="." method="OnScreenCoverCoveringFinished"]
 [connection signal="CoveringStarted" from="Cover/ChangeScreenCover" to="." method="OnScreenCoverCoveringStarted"]
+[connection signal="SCanceled" from="Cover/CenterContainer/ContextualInfoConfirm" to="." method="OnContextualInfoConfirmSCanceled"]
+[connection signal="SConfirmed" from="Cover/CenterContainer/ContextualInfoConfirm" to="." method="OnQuitContextualInfoConfirmSConfirmed"]
+[connection signal="SConfirmed" from="Cover/CenterContainer/ContextualInfoNotify" to="." method="OnLackOfContextualInfoNotifySConfirmed"]
 
 [editable path="InGameGUIControl/MenuV/CenterContainer/MainMenuTextureButton"]
 [editable path="InGameGUIControl/MenuV/CenterContainer2/RestartTextureButton"]
@@ -1689,8 +2285,10 @@ visible = false
 [editable path="InGameGUIControl/PropertyAmountH/HBoxContainer/AmountContainer"]
 [editable path="GameOverGUIControl/CenterContainer/VBoxContainer/Caption"]
 [editable path="GameOverGUIControl/CenterContainer/VBoxContainer/MenuV/CenterContainer2/RestartButtonText"]
+[editable path="GameOverGUIControl/CenterContainer/VBoxContainer/MenuV/CenterContainer2/RestartButtonText/KeyNotification"]
 [editable path="GameOverGUIControl/CenterContainer/VBoxContainer/MenuV/CenterContainer3/ShopButtonText/Notification"]
 [editable path="GameOverGUIControl/CenterContainer/VBoxContainer/MenuV/CenterContainer/MainMenuButtonText"]
+[editable path="GameOverGUIControl/CenterContainer/VBoxContainer/MenuV/CenterContainer/MainMenuButtonText/KeyNotification"]
 [editable path="GameFinishedGUIControl/CenterContainer/VBoxContainer/Caption"]
 [editable path="GameFinishedGUIControl/CenterContainer/VBoxContainer/Caption2"]
 [editable path="GameFinishedGUIControl/CenterContainer/VBoxContainer/Caption3"]
@@ -1703,14 +2301,24 @@ visible = false
 [editable path="GameFinishedGUIControl/CenterContainer/VBoxContainer/MenuV/CenterContainer/MainMenuButtonText"]
 [editable path="GameFinishedGUIControl/CenterContainer/VBoxContainer/MenuV/CenterContainer2/RestartButtonText"]
 [editable path="MainMenuGUIControl/CenterContainer/Caption"]
-[editable path="MainMenuGUIControl/MenuV/CenterContainer/PlayButtonText"]
+[editable path="MainMenuGUIControl/MenuV/CenterContainer/PlayButtonText/KeyNotification"]
 [editable path="MainMenuGUIControl/MenuV/CenterContainer2/ShopButtonText/Notification"]
+[editable path="MainMenuGUIControl/MenuV/CenterContainer2/ShopButtonText/KeyNotification"]
+[editable path="MainMenuGUIControl/MenuV/CenterContainer3/QuitButtonText/KeyNotification"]
 [editable path="MainMenuGUIControl/ButtonImageMute"]
-[editable path="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI"]
-[editable path="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI/CenterContainer2/ItemAmountTextContainer"]
-[editable path="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI/CenterContainer2/ItemAmountTextContainer/AmountContainer"]
-[editable path="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI/CenterContainer/VBoxContainer/HBoxContainer/BuyPriceAmountContainer"]
-[editable path="ShopGUIControl/HBoxContainer/CenterContainer/BuySellTimeDilationGUI/CenterContainer/VBoxContainer/HBoxContainer2/SellPriceAmountContainer"]
+[editable path="MainMenuGUIControl/PropertyAmountH"]
+[editable path="MainMenuGUIControl/PropertyAmountH/HBoxContainer/AmountContainer"]
+[editable path="MainMenuGUIControl/PropertyAmountH2"]
+[editable path="MainMenuGUIControl/PropertyAmountH2/HBoxContainer/AmountContainer"]
+[editable path="ShopGUIControl/ItemContainer"]
+[editable path="ShopGUIControl/ItemContainer/ScrollContainer/CenterContainer/VBoxContainer/BuySellTimeDilationGUI"]
+[editable path="ShopGUIControl/ItemContainer/ScrollContainer/CenterContainer/VBoxContainer/BuySellTimeDilationGUI/CenterContainer2/ItemAmountTextContainer"]
+[editable path="ShopGUIControl/ItemContainer/ScrollContainer/CenterContainer/VBoxContainer/BuySellTimeDilationGUI/CenterContainer2/ItemAmountTextContainer/AmountContainer"]
+[editable path="ShopGUIControl/ItemContainer/ScrollContainer/CenterContainer/VBoxContainer/BuySellTimeDilationGUI/CenterContainer/VBoxContainer/HBoxContainer/BuyPriceAmountContainer"]
+[editable path="ShopGUIControl/ItemContainer/ScrollContainer/CenterContainer/VBoxContainer/BuySellTimeDilationGUI/CenterContainer/VBoxContainer/HBoxContainer2/SellPriceAmountContainer"]
 [editable path="ShopGUIControl/ShopMenuContainer/CenterContainer/BackButtonText"]
 [editable path="ShopGUIControl/GameplayLockContainer"]
 [editable path="ShopGUIControl/GameplayLockContainer/Caption"]
+[editable path="Cover/CenterContainer/ContextualInfoConfirm"]
+[editable path="Cover/CenterContainer/ContextualInfoConfirm/VBoxContainer/HBoxContainer/ConfirmationButtonText"]
+[editable path="Cover/CenterContainer/ContextualInfoConfirm/VBoxContainer/HBoxContainer/CancelButtonText"]

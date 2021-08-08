@@ -46,5 +46,5 @@ SpawnLevel = 6
 ItemScene = ExtResource( 2 )
 
 [node name="SpawnPoint2D2" parent="ItemSpawner2D" index="0" instance=ExtResource( 4 )]
-position = Vector2( 144, -176 )
+position = Vector2( 160, -176 )
 SpawnLevel = 30

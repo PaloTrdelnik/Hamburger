@@ -47,6 +47,7 @@ public class ItemUser : Node
                     Item item = _items[itemKey];
 
                     item.Connect("SItemUsed", this, nameof(OnSItemUsed));
+                    item.UseDurabilityTimer.WaitTime = _player.ItemProp.TimeDilation_UseDurabilityTime;
 
                     AddChild(item.UseDurabilityTimer);
                     item.UseDurabilityTimer.Start();

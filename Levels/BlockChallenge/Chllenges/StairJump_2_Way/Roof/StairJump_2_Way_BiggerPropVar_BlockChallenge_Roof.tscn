@@ -22,23 +22,19 @@ SpawnLevel = 30
 [node name="ItemSpawner2D3" parent="." index="1" instance=ExtResource( 6 )]
 ItemScene = ExtResource( 8 )
 
-[node name="SpawnPoint2D4" parent="ItemSpawner2D3" index="0" instance=ExtResource( 4 )]
-position = Vector2( 544, -272 )
-SpawnLevel = 30
-
-[node name="SpawnPoint2D3" parent="ItemSpawner2D3" index="1" instance=ExtResource( 4 )]
+[node name="SpawnPoint2D3" parent="ItemSpawner2D3" index="0" instance=ExtResource( 4 )]
 position = Vector2( 480, -80 )
 SpawnLevel = 20
 
-[node name="SpawnPoint2D5" parent="ItemSpawner2D3" index="2" instance=ExtResource( 4 )]
+[node name="SpawnPoint2D5" parent="ItemSpawner2D3" index="1" instance=ExtResource( 4 )]
 position = Vector2( 256, -272 )
 SpawnLevel = 20
 
-[node name="SpawnPoint2D6" parent="ItemSpawner2D3" index="3" instance=ExtResource( 4 )]
+[node name="SpawnPoint2D6" parent="ItemSpawner2D3" index="2" instance=ExtResource( 4 )]
 position = Vector2( 32, -240 )
 SpawnLevel = 20
 
-[node name="SpawnPoint2D7" parent="ItemSpawner2D3" index="4" instance=ExtResource( 4 )]
+[node name="SpawnPoint2D7" parent="ItemSpawner2D3" index="3" instance=ExtResource( 4 )]
 position = Vector2( 80, -144 )
 SpawnLevel = 20
 

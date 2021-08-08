@@ -7,6 +7,8 @@ public abstract class PreloadedGameplay : Node
 
     public Node DataChild;
 
+    public bool DataChildLoaded = false;
+
     public abstract void MoveDataToDataChild();
 
     public abstract void CopyDataFromDataChild();
